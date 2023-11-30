@@ -1,5 +1,6 @@
 package ch.epfl.cs107.icmon.area.maps;
 
+import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.play.engine.actor.Background;
 import ch.epfl.cs107.play.engine.actor.Foreground;
@@ -26,6 +27,9 @@ public final class Town extends ICMonArea {
     protected void createArea() {
         registerActor(new Background(this));
         registerActor(new Foreground(this));
+
+        ICBall ball = new ICBall(this, new DiscreteCoordinates(6, 6));
+        registerActor(ball);
     }
 
     /**

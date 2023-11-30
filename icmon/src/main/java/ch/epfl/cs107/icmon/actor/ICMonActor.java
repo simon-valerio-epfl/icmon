@@ -1,17 +1,16 @@
 package ch.epfl.cs107.icmon.actor;
 
 import ch.epfl.cs107.icmon.area.ICMonArea;
-import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.actor.MovableAreaEntity;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
-import ch.epfl.cs107.play.window.Canvas;
 
 import java.util.Collections;
 import java.util.List;
 
-public abstract class ICMonActor extends MovableAreaEntity implements Interactable {
+public abstract class ICMonActor extends MovableAreaEntity {
 
+    // todo demander à fabrice. créer constructeur classe abstraite ??
     public ICMonActor(ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition) {
         super(area, orientation, spawnPosition);
         resetMotion();
