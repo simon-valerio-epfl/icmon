@@ -5,7 +5,9 @@ import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.Town;
 import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.RegisterEventAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.RegisterInAreaAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.UnRegisterEventAction;
 import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.EndOfTheGameEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
@@ -34,6 +36,8 @@ public final class ICMon extends AreaGame {
     /** ??? */
     private int areaIndex;
     private ArrayList<ICMonEvent> events = new ArrayList<>();
+    private ArrayList<ICMonEvent> startingEvents = new ArrayList<>();
+    private ArrayList<ICMonEvent> completedEvents = new ArrayList<>();
     private ICMonGameState gameState = new ICMonGameState();
 
     /**
@@ -59,19 +63,23 @@ public final class ICMon extends AreaGame {
             // todo: créer une fonction getAreaFromName()
             ICMonArea townArea = (ICMonArea) getCurrentArea();
             ICBall ball = new ICBall(townArea, new DiscreteCoordinates(6, 6));
-            ICMonEvent event = new CollectItemEvent(ball, player);
+            ICMonEvent collectBallEvent = new CollectItemEvent(ball, player);
             RegisterInAreaAction registerBall = new RegisterInAreaAction(townArea, ball);
-            event.onStart(new LogAction("the event started !"));
-            event.onStart(registerBall);
-            event.onComplete(new LogAction("player is interacting with ball!"));
-            event.start();
+            collectBallEvent.onStart(new LogAction("the event started !"));
+            collectBallEvent.onStart(registerBall);
+            collectBallEvent.onComplete(new LogAction("player is interacting with ball!"));
 
             EndOfTheGameEvent endOfTheGameEvent = new EndOfTheGameEvent(player);
 
-            event.onComplete(endOfTheGameEvent::start);
+            collectBallEvent.onStart(new RegisterEventAction(collectBallEvent, startingEvents));
+            endOfTheGameEvent.onStart(new RegisterEventAction(endOfTheGameEvent, startingEvents));
 
-            events.add(event);
-            events.add(endOfTheGameEvent);
+            collectBallEvent.onComplete(new UnRegisterEventAction(collectBallEvent, completedEvents));
+            endOfTheGameEvent.onComplete(new UnRegisterEventAction(endOfTheGameEvent, completedEvents));
+
+            collectBallEvent.onComplete(endOfTheGameEvent::start);
+
+            collectBallEvent.start();
 
             return true;
         }
@@ -91,6 +99,14 @@ public final class ICMon extends AreaGame {
         if (resetButton.isDown()) {
             reset();
         }
+
+        events.addAll(startingEvents);
+        events.removeAll(completedEvents);
+
+        startingEvents.clear();
+        completedEvents.clear();
+
+        System.out.println(events.size());
 
         events.forEach((ICMonEvent event) -> {
             event.update(deltaTime);
