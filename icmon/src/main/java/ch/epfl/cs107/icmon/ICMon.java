@@ -2,6 +2,7 @@ package ch.epfl.cs107.icmon;
 
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
+import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.Town;
 import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
@@ -9,6 +10,7 @@ import ch.epfl.cs107.icmon.gamelogic.actions.RegisterInAreaAction;
 import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.play.areagame.AreaGame;
+import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
@@ -32,6 +34,7 @@ public final class ICMon extends AreaGame {
     /** ??? */
     private int areaIndex;
     private ArrayList<ICMonEvent> events = new ArrayList<>();
+    private ICMonGameState gameState = new ICMonGameState();
 
     /**
      * ???
@@ -120,7 +123,7 @@ public final class ICMon extends AreaGame {
     private void initArea(String areaKey) {
         ICMonArea area = (ICMonArea) setCurrentArea(areaKey, true);
         DiscreteCoordinates coords = area.getPlayerSpawnPosition();
-        player = new ICMonPlayer(area, Orientation.DOWN, coords);
+        player = new ICMonPlayer(area, Orientation.DOWN, coords, gameState);
         player.enterArea(area, coords);
         player.centerCamera();
     }
@@ -133,6 +136,18 @@ public final class ICMon extends AreaGame {
         areaIndex = (areaIndex == 0) ? 1 : 0;
         ICMonArea currentArea = (ICMonArea) setCurrentArea(areas[areaIndex], false);
         player.enterArea(currentArea, currentArea.getPlayerSpawnPosition());*/
+    }
+
+    public class ICMonGameState {
+
+        private ICMonGameState() {}
+
+        public void acceptInteraction (Interactable interactable, boolean isCellInteraction) {
+            for (var event : ICMon.this.events) {
+                interactable.acceptInteraction(event, isCellInteraction);
+            }
+        }
+
     }
 
 }

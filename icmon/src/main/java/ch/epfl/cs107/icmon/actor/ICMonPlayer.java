@@ -1,5 +1,6 @@
 package ch.epfl.cs107.icmon.actor;
 
+import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
@@ -29,11 +30,14 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     private OrientedAnimation runningOrientedAnimation;
     private SpriteType currentSprite = SpriteType.RUNNING_SPRITE;
     final private ICMonPlayerInteractionHandler handler = new ICMonPlayerInteractionHandler();
+    final private ICMon.ICMonGameState gameState;
 
-    public ICMonPlayer(ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition) {
+    public ICMonPlayer(ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMon.ICMonGameState gameState) {
         super(area, orientation, spawnPosition);
         this.swimmingOrientedAnimation = new OrientedAnimation(SPRITE_SWIMMING_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
         this.runningOrientedAnimation = new OrientedAnimation(SPRITE_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
+        this.gameState = gameState;
+
     }
 
     public OrientedAnimation getCurrentOrientedAnimation () {
@@ -114,6 +118,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     @Override
     public void interactWith(Interactable other, boolean isCellInteraction) {
         other.acceptInteraction(handler, isCellInteraction);
+        this.gameState.acceptInteraction(other, isCellInteraction);
     }
 
     private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor {
