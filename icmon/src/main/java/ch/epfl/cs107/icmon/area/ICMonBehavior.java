@@ -93,7 +93,7 @@ public final class ICMonBehavior extends AreaBehavior {
                     cellIsTaken = true;
                 }
             }
-            return cellIsTaken;
+            return !cellIsTaken;
         }
 
         @Override
