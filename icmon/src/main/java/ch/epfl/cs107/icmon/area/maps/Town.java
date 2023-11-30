@@ -34,7 +34,7 @@ public final class Town extends ICMonArea {
      */
     @Override
     public String getTitle() {
-        return "ICMon/Town";
+        return "town";
     }
 
 }

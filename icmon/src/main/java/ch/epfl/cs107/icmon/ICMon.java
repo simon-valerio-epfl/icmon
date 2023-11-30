@@ -1,6 +1,7 @@
 package ch.epfl.cs107.icmon;
 
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
+import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.Town;
 import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.io.FileSystem;
@@ -16,7 +17,7 @@ public final class ICMon extends AreaGame {
     /** ??? */
     public final static float CAMERA_SCALE_FACTOR = 13.f;
     /** ??? */
-    private final String[] areas = {"zelda/Ferme", "zelda/Village"};
+    private final String[] areas = {"town"};
     /** ??? */
     private ICMonPlayer player;
     /** ??? */
@@ -52,8 +53,6 @@ public final class ICMon extends AreaGame {
      */
     @Override
     public void update(float deltaTime) {
-        if (player.isWeak())
-            switchArea();
         super.update(deltaTime);
     }
 
@@ -79,22 +78,21 @@ public final class ICMon extends AreaGame {
      * @param areaKey ???
      */
     private void initArea(String areaKey) {
-        Tuto2Area area = (Tuto2Area) setCurrentArea(areaKey, true);
-        DiscreteCoordinates coords = area.getPlayerSpawnPosition();
-        player = new GhostPlayer(area, Orientation.DOWN, coords, "ghost.1");
+        ICMonArea area = (ICMonArea) setCurrentArea(areaKey, true);
+        //DiscreteCoordinates coords = area.getPlayerSpawnPosition();
+        /*player = new ICMonPlayer(area, Orientation.DOWN, coords, "player");
         player.enterArea(area, coords);
-        player.centerCamera();
+        player.centerCamera();*/
     }
 
     /**
      * ???
      */
     private void switchArea() {
-        player.leaveArea();
+        /*player.leaveArea();
         areaIndex = (areaIndex == 0) ? 1 : 0;
-        Tuto2Area currentArea = (Tuto2Area) setCurrentArea(areas[areaIndex], false);
-        player.enterArea(currentArea, currentArea.getPlayerSpawnPosition());
-        player.strengthen();
+        ICMonArea currentArea = (ICMonArea) setCurrentArea(areas[areaIndex], false);
+        player.enterArea(currentArea, currentArea.getPlayerSpawnPosition());*/
     }
 
 }
