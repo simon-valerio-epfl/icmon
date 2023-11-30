@@ -7,6 +7,8 @@ import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
+import ch.epfl.cs107.play.window.Button;
+import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
 
 /**
@@ -53,7 +55,19 @@ public final class ICMon extends AreaGame {
      */
     @Override
     public void update(float deltaTime) {
+        Keyboard keyboard = getWindow().getKeyboard();
+        Button resetButton = keyboard.get(Keyboard.R);
+        if (resetButton.isDown()) {
+            reset();
+        }
         super.update(deltaTime);
+    }
+
+    private void reset () {
+        player.leaveArea();
+        getCurrentArea().end();
+
+        begin(this.getWindow(), this.getFileSystem());
     }
 
     /**
