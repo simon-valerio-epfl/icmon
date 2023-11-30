@@ -1,16 +1,21 @@
 package ch.epfl.cs107.icmon.actor;
 
 import ch.epfl.cs107.icmon.area.ICMonArea;
+import ch.epfl.cs107.icmon.area.ICMonBehavior;
+import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
+import ch.epfl.cs107.play.areagame.actor.Interactor;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.OrientedAnimation;
-import ch.epfl.cs107.play.engine.actor.Sprite;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
-public class ICMonPlayer extends ICMonActor {
+import java.util.Collections;
+import java.util.List;
+
+public class ICMonPlayer extends ICMonActor implements Interactor {
 
     final private static String SPRITE_NAME = "actors/player";
     final private static int ANIMATION_DURATION = 8;
@@ -30,6 +35,7 @@ public class ICMonPlayer extends ICMonActor {
 
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
+        ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
     }
 
     @Override
@@ -64,4 +70,34 @@ public class ICMonPlayer extends ICMonActor {
         getOwnerArea().setViewCandidate(this);
     }
 
+    @Override
+    public List<DiscreteCoordinates> getCurrentCells() {
+        return super.getCurrentCells();
+    }
+
+    @Override
+    public List<DiscreteCoordinates> getFieldOfViewCells() {
+        return Collections.singletonList(getCurrentMainCellCoordinates().jump(getOrientation().toVector()));
+    }
+
+    @Override
+    public boolean wantsCellInteraction() {
+        return false;
+    }
+
+    @Override
+    public boolean wantsViewInteraction() {
+        Keyboard keyboard = getOwnerArea().getKeyboard();
+        Button lKey = keyboard.get(Keyboard.L);
+        return lKey.isDown();
+    }
+
+    private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor {
+        @Override
+        public void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {
+            if (isCellInteraction) {
+                
+            }
+        }
+    }
 }

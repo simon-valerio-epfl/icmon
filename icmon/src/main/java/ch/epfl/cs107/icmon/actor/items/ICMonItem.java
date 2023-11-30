@@ -7,6 +7,7 @@ import ch.epfl.cs107.play.engine.actor.RPGSprite;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.window.Canvas;
+import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 
 import java.util.Collections;
 import java.util.List;
@@ -40,10 +41,5 @@ public abstract class ICMonItem extends CollectableAreaEntity {
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         return Collections.singletonList(getCurrentMainCellCoordinates());
-    }
-
-    @Override
-    public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
-
     }
 }
