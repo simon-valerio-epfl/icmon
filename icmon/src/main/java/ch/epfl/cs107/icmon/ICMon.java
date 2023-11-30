@@ -79,10 +79,10 @@ public final class ICMon extends AreaGame {
      */
     private void initArea(String areaKey) {
         ICMonArea area = (ICMonArea) setCurrentArea(areaKey, true);
-        //DiscreteCoordinates coords = area.getPlayerSpawnPosition();
-        /*player = new ICMonPlayer(area, Orientation.DOWN, coords, "player");
+        DiscreteCoordinates coords = area.getPlayerSpawnPosition();
+        player = new ICMonPlayer(area, Orientation.DOWN, coords);
         player.enterArea(area, coords);
-        player.centerCamera();*/
+        player.centerCamera();
     }
 
     /**
