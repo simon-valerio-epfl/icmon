@@ -2,12 +2,12 @@ package ch.epfl.cs107.icmon;
 
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
-import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.Town;
 import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.RegisterInAreaAction;
 import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
+import ch.epfl.cs107.icmon.gamelogic.events.EndOfTheGameEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
@@ -66,7 +66,12 @@ public final class ICMon extends AreaGame {
             event.onComplete(new LogAction("player is interacting with ball!"));
             event.start();
 
+            EndOfTheGameEvent endOfTheGameEvent = new EndOfTheGameEvent(player);
+
+            event.onComplete(endOfTheGameEvent::start);
+
             events.add(event);
+            events.add(endOfTheGameEvent);
 
             return true;
         }
