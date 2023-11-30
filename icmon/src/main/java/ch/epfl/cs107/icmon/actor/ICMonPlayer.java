@@ -1,5 +1,6 @@
 package ch.epfl.cs107.icmon.actor;
 
+import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
@@ -130,6 +131,13 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
                         // do nothing
                     }
                 }
+            }
+        }
+
+        @Override
+        public void interactWith(ICBall ball, boolean isCellInteraction) {
+            if (!isCellInteraction && wantsViewInteraction()) {
+                ball.collect();
             }
         }
     }
