@@ -14,8 +14,6 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
  */
 public final class Town extends ICMonArea {
 
-    private ICMonEvent event;
-
     /**
      * ???
      * @return ???
@@ -32,22 +30,11 @@ public final class Town extends ICMonArea {
     protected void createArea() {
         registerActor(new Background(this));
         registerActor(new Foreground(this));
-
-        ICBall ball = new ICBall(this, new DiscreteCoordinates(6, 6));
-        registerActor(ball);
-
-        event = new CollectItemEvent(ball);
-
-        event.onStart(new LogAction("CollectItemEvent started !"));
-        event.onComplete(new LogAction("CollectItemEvent completed !"));
-
-        event.start();
     }
 
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-        event.update(deltaTime);
     }
 
     /**
