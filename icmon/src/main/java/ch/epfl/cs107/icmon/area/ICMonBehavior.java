@@ -5,6 +5,7 @@ import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.area.AreaBehavior;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.Entity;
+import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
 
 public final class ICMonBehavior extends AreaBehavior {
@@ -25,6 +26,7 @@ public final class ICMonBehavior extends AreaBehavior {
             }
         }
     }
+
     public enum AllowedWalkingType {
         NONE, // None
         SURF, // Only with surf
@@ -44,11 +46,11 @@ public final class ICMonBehavior extends AreaBehavior {
         GRASS (-16743680, AllowedWalkingType.FEET);
 
         final int type;
-        final AllowedWalkingType surfaceType;
+        final AllowedWalkingType walkingType;
 
-        ICMonCellType(int type, AllowedWalkingType surfaceType) {
+        ICMonCellType(int type, AllowedWalkingType walkingType) {
             this.type = type;
-            this.surfaceType = surfaceType;
+            this.walkingType = walkingType;
         }
 
         public static ICMonCellType toType(int type) {
@@ -79,6 +81,10 @@ public final class ICMonBehavior extends AreaBehavior {
         public ICMonCell(int x, int y, ICMonCellType type) {
             super(x, y);
             this.type = type;
+        }
+
+        public AllowedWalkingType getWalkingType () {
+            return this.type.walkingType;
         }
 
         @Override

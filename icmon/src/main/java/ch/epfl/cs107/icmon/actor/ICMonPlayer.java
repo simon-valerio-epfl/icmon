@@ -3,6 +3,7 @@ package ch.epfl.cs107.icmon.actor;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
+import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.actor.Interactor;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.OrientedAnimation;
@@ -17,20 +18,37 @@ import java.util.List;
 
 public class ICMonPlayer extends ICMonActor implements Interactor {
 
+    private enum SpriteType { SWIMMING_SPRITE, RUNNING_SPRITE };
+
     final private static String SPRITE_NAME = "actors/player";
+    final private static String SPRITE_SWIMMING_NAME = "actors/player_water";
     final private static int ANIMATION_DURATION = 8;
     final private static int MOVE_DURATION = 8;
-    private OrientedAnimation orientedAnimation;
+    private OrientedAnimation swimmingOrientedAnimation;
+    private OrientedAnimation runningOrientedAnimation;
+    private SpriteType currentSprite = SpriteType.RUNNING_SPRITE;
+    final private ICMonPlayerInteractionHandler handler = new ICMonPlayerInteractionHandler();
 
     public ICMonPlayer(ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition) {
         super(area, orientation, spawnPosition);
-        this.orientedAnimation = new OrientedAnimation(SPRITE_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
+        this.swimmingOrientedAnimation = new OrientedAnimation(SPRITE_SWIMMING_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
+        this.runningOrientedAnimation = new OrientedAnimation(SPRITE_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
+    }
+
+    public OrientedAnimation getCurrentOrientedAnimation () {
+        switch (this.currentSprite) {
+            case SWIMMING_SPRITE:
+                return swimmingOrientedAnimation;
+            case RUNNING_SPRITE:
+            default:
+                return runningOrientedAnimation;
+        }
     }
 
     @Override
     public void draw(Canvas canvas) {
-        orientedAnimation.orientate(this.getOrientation());
-        orientedAnimation.draw(canvas);
+        this.getCurrentOrientedAnimation().orientate(getOrientation());
+        this.getCurrentOrientedAnimation().draw(canvas);
     }
 
     @Override
@@ -50,9 +68,9 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         moveIfPressed(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
         moveIfPressed(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
         if (isDisplacementOccurs()) {
-            orientedAnimation.update(deltaTime);
+            this.getCurrentOrientedAnimation().update(deltaTime);
         } else {
-            orientedAnimation.reset();
+            this.getCurrentOrientedAnimation().reset();
         }
         super.update(deltaTime);
     }
@@ -82,7 +100,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
     @Override
     public boolean wantsCellInteraction() {
-        return false;
+        return true;
     }
 
     @Override
@@ -92,11 +110,26 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         return lKey.isDown();
     }
 
+    @Override
+    public void interactWith(Interactable other, boolean isCellInteraction) {
+        other.acceptInteraction(handler, isCellInteraction);
+    }
+
     private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor {
         @Override
         public void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {
             if (isCellInteraction) {
-                
+                switch (cell.getWalkingType()) {
+                    case FEET -> {
+                        currentSprite = SpriteType.RUNNING_SPRITE;
+                    }
+                    case SURF -> {
+                        currentSprite = SpriteType.SWIMMING_SPRITE;
+                    }
+                    default -> {
+                        // do nothing
+                    }
+                }
             }
         }
     }
