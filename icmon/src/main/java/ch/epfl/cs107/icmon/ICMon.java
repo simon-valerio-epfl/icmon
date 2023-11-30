@@ -105,9 +105,7 @@ public final class ICMon extends AreaGame {
 
         startingEvents.clear();
         completedEvents.clear();
-
-        System.out.println(events.size());
-
+        
         events.forEach((ICMonEvent event) -> {
             event.update(deltaTime);
         });
