@@ -7,7 +7,7 @@ import ch.epfl.cs107.play.engine.Updatable;
 
 import java.util.ArrayList;
 
-abstract class ICMonEvent implements Updatable {
+public abstract class ICMonEvent implements Updatable {
 
     private boolean started = false;
     private boolean completed = false;

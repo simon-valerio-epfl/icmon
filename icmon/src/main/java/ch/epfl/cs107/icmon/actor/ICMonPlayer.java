@@ -63,6 +63,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     }
 
     public void update(float deltaTime) {
+        super.update(deltaTime);
         Keyboard keyboard = getOwnerArea().getKeyboard();
         moveIfPressed(Orientation.LEFT, keyboard.get(Keyboard.LEFT));
         moveIfPressed(Orientation.UP, keyboard.get(Keyboard.UP));
@@ -73,7 +74,6 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         } else {
             this.getCurrentOrientedAnimation().reset();
         }
-        super.update(deltaTime);
     }
 
     private void moveIfPressed(Orientation orientation, Button b) {
