@@ -15,15 +15,17 @@ public class ICMonPlayer extends ICMonActor {
     final private static String SPRITE_NAME = "actors/player";
     final private static int ANIMATION_DURATION = 8;
     final private static int MOVE_DURATION = 8;
+    private OrientedAnimation orientedAnimation;
 
     public ICMonPlayer(ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition) {
         super(area, orientation, spawnPosition);
+        this.orientedAnimation = new OrientedAnimation(SPRITE_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
     }
 
     @Override
     public void draw(Canvas canvas) {
-        OrientedAnimation orientedSprite = new OrientedAnimation(SPRITE_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
-        orientedSprite.draw(canvas);
+        orientedAnimation.orientate(this.getOrientation());
+        orientedAnimation.draw(canvas);
     }
 
     @Override
@@ -41,6 +43,11 @@ public class ICMonPlayer extends ICMonActor {
         moveIfPressed(Orientation.UP, keyboard.get(Keyboard.UP));
         moveIfPressed(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
         moveIfPressed(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
+        if (isDisplacementOccurs()) {
+            orientedAnimation.update(deltaTime);
+        } else {
+            orientedAnimation.reset();
+        }
         super.update(deltaTime);
     }
 
@@ -56,5 +63,5 @@ public class ICMonPlayer extends ICMonActor {
     public void centerCamera() {
         getOwnerArea().setViewCandidate(this);
     }
-    
+
 }
