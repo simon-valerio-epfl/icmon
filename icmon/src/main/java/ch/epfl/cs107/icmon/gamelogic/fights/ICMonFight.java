@@ -21,6 +21,7 @@ public class ICMonFight extends PauseMenu {
     private FightState state = FightState.INTRODUCTION;
     private ICMonFightTextGraphics introductionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "Welcome to the fight");
     private ICMonFightTextGraphics conclusionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "Good fight!");
+    private ICMonFightTextGraphics emptyTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, null);
 
     public ICMonFight(Pokemon playerPokemon, Pokemon opponent) {
         this.playerPokemon = playerPokemon;
@@ -40,17 +41,15 @@ public class ICMonFight extends PauseMenu {
 
         switch (this.state) {
             case INTRODUCTION -> {
-                this.arena.setInteractionGraphics(introductionTextGraphics);
 
                 Keyboard keyboard = getKeyboard();
                 if (keyboard.get(Keyboard.SPACE).isDown()) {
                     this.state = FightState.COUNTER;
+                    this.arena.setInteractionGraphics(emptyTextGraphics);
                 }
 
             }
             case CONCLUSION -> {
-                this.arena.setInteractionGraphics(conclusionTextGraphics);
-
                 Keyboard keyboard = getKeyboard();
                 if (keyboard.get(Keyboard.SPACE).isDown()) {
                     this.state = FightState.ENDED;
@@ -60,6 +59,7 @@ public class ICMonFight extends PauseMenu {
                 timeCounter -= deltaTime;
                 if (timeCounter <= 0) {
                     state = FightState.CONCLUSION;
+                    this.arena.setInteractionGraphics(conclusionTextGraphics);
                 }
                 System.out.println(timeCounter);
             }
