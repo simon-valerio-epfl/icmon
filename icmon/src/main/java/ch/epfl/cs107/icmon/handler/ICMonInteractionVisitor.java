@@ -1,6 +1,7 @@
 package ch.epfl.cs107.icmon.handler;
 
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
+import ch.epfl.cs107.icmon.actor.area_entities.Door;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
@@ -21,6 +22,10 @@ public interface ICMonInteractionVisitor extends AreaInteractionVisitor {
     }
 
     default void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
+
+    }
+
+    default void interactWith(Door door, boolean isCellInteration) {
 
     }
 }

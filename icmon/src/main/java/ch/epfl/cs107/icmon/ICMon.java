@@ -1,8 +1,10 @@
 package ch.epfl.cs107.icmon;
 
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
+import ch.epfl.cs107.icmon.actor.area_entities.Door;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.area.ICMonArea;
+import ch.epfl.cs107.icmon.area.maps.Lab;
 import ch.epfl.cs107.icmon.area.maps.Town;
 import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.RegisterEventAction;
@@ -13,6 +15,7 @@ import ch.epfl.cs107.icmon.gamelogic.events.EndOfTheGameEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
+import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
@@ -21,6 +24,8 @@ import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * ???
@@ -30,11 +35,14 @@ public final class ICMon extends AreaGame {
     /** ??? */
     public final static float CAMERA_SCALE_FACTOR = 13.f;
     /** ??? */
-    private final String[] areas = {"town"};
+    // todo fabrice ce truc est implémenté dans la classe AreaGame, on peut pas
+    // récupérer l'aire directement depuis la classe d'en haut au lieu de faire
+    // notre propre map ?
+    //private final Map<String, Area> areas = new HashMap<>();
+    private final static String STARTING_MAP = "town";
     /** ??? */
     private ICMonPlayer player;
     /** ??? */
-    private int areaIndex;
     private ArrayList<ICMonEvent> events = new ArrayList<>();
     private ArrayList<ICMonEvent> startingEvents = new ArrayList<>();
     private ArrayList<ICMonEvent> completedEvents = new ArrayList<>();
@@ -44,7 +52,12 @@ public final class ICMon extends AreaGame {
      * ???
      */
     private void createAreas() {
-        addArea(new Town());
+        Town town = new Town();
+        addArea(town);
+        //areas.put("town", town);
+        Lab lab = new Lab();
+        addArea(lab);
+        //areas.put("lab", lab);
     }
 
     /**
@@ -64,8 +77,7 @@ public final class ICMon extends AreaGame {
 
         if (super.begin(window, fileSystem)) {
             createAreas();
-            areaIndex = 0;
-            initArea(areas[areaIndex]);
+            initArea(STARTING_MAP);
 
             // todo: créer une fonction getAreaFromName()
             ICMonArea townArea = (ICMonArea) getCurrentArea();
@@ -116,6 +128,8 @@ public final class ICMon extends AreaGame {
         events.forEach((ICMonEvent event) -> {
             event.update(deltaTime);
         });
+
+        gameState.readMessage();
     }
 
     private void reset () {
@@ -164,9 +178,33 @@ public final class ICMon extends AreaGame {
         player.enterArea(currentArea, currentArea.getPlayerSpawnPosition());*/
     }
 
+    public class GamePlayMessage {
+        public void process() {
+
+        }
+    }
+
+    public class PassDoorMessage extends GamePlayMessage {
+        private Door door;
+        public PassDoorMessage (Door door) {
+            this.door = door;
+        }
+        @Override
+        public void process () {
+            player.leaveArea();
+            String landingAreaName = this.door.getLandingArea();
+            initArea(landingAreaName);
+            player.changePosition(this.door.getLandingPosition());
+        }
+    }
+
     public class ICMonGameState {
 
-        private ICMonGameState() {}
+        private GamePlayMessage message;
+
+        private ICMonGameState() {
+
+        }
 
         public void acceptInteraction (Interactable interactable, boolean isCellInteraction) {
             for (var event : ICMon.this.events) {
@@ -174,6 +212,21 @@ public final class ICMon extends AreaGame {
             }
         }
 
+        public void send (GamePlayMessage message) {
+            this.message = message;
+        }
+
+        // todo comment faire mieux ?
+        public PassDoorMessage createPassDoorMessage (Door door) {
+            return new PassDoorMessage(door);
+        }
+
+        public void readMessage () {
+            if (this.message != null) {
+                this.message.process();
+                this.message = null;
+            }
+        }
     }
 
 }

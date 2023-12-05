@@ -1,6 +1,7 @@
 package ch.epfl.cs107.icmon.actor;
 
 import ch.epfl.cs107.icmon.ICMon;
+import ch.epfl.cs107.icmon.actor.area_entities.Door;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
@@ -167,6 +168,13 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         public void interactWith(ICBall ball, boolean isCellInteraction) {
             if (!isCellInteraction && wantsViewInteraction()) {
                 ball.collect();
+            }
+        }
+
+        @Override
+        public void interactWith(Door door, boolean isCellInteration) {
+            if (isCellInteration) {
+                gameState.send(gameState.createPassDoorMessage(door));
             }
         }
     }

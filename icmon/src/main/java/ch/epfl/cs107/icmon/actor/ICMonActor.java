@@ -2,6 +2,7 @@ package ch.epfl.cs107.icmon.actor;
 
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.play.areagame.actor.MovableAreaEntity;
+import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
@@ -31,7 +32,7 @@ public abstract class ICMonActor extends MovableAreaEntity {
         getOwnerArea().unregisterActor(this);
     }
 
-    public void enterArea (ICMonArea area, DiscreteCoordinates spawnPosition) {
+    public void enterArea (Area area, DiscreteCoordinates spawnPosition) {
         area.registerActor(this);
         area.setViewCandidate(this);
         setOwnerArea(area);
