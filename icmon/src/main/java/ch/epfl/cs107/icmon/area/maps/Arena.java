@@ -15,7 +15,7 @@ import ch.epfl.cs107.play.math.Orientation;
 /**
  * ???
  */
-public final class Town extends ICMonArea {
+public final class Arena extends ICMonArea {
 
     /**
      * ???
@@ -23,7 +23,7 @@ public final class Town extends ICMonArea {
      */
     @Override
     public DiscreteCoordinates getPlayerSpawnPosition() {
-        return new DiscreteCoordinates(5, 5);
+        return new DiscreteCoordinates(6, 2);
     }
 
     /**
@@ -34,13 +34,8 @@ public final class Town extends ICMonArea {
         registerActor(new Background(this));
         registerActor(new Foreground(this));
 
-        ICShopAssistant assistant = new ICShopAssistant(this, Orientation.DOWN, new DiscreteCoordinates(8, 8));
-        assistant.enterArea(this, new DiscreteCoordinates(8, 8));
-
-        Door doorToLab = new Door("lab", new DiscreteCoordinates(6, 2), this, new DiscreteCoordinates(15, 24));
-        registerActor(doorToLab);
-        Door doorToArena = new Door("arena", new DiscreteCoordinates(4, 2), this, new DiscreteCoordinates(20, 16));
-        registerActor(doorToArena);
+        Door doorToTown = new Door("town", new DiscreteCoordinates(20, 15), this, new DiscreteCoordinates(4, 1), new DiscreteCoordinates(5, 1));
+        registerActor(doorToTown);
     }
 
     @Override
@@ -54,7 +49,7 @@ public final class Town extends ICMonArea {
      */
     @Override
     public String getTitle() {
-        return "town";
+        return "arena";
     }
 
 }
