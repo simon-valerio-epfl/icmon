@@ -22,8 +22,6 @@ import java.util.List;
 
 public class ICMonPlayer extends ICMonActor implements Interactor {
 
-    private enum DialogState { IN_DIALOG, NOT_IN_DIALOG };
-
     private enum SpriteType { SWIMMING_SPRITE, RUNNING_SPRITE };
 
     final private static String SPRITE_NAME = "actors/player";
@@ -36,7 +34,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     final private ICMonPlayerInteractionHandler handler = new ICMonPlayerInteractionHandler();
     final private ICMon.ICMonGameState gameState;
     private Dialog dialog;
-    private DialogState dialogState = DialogState.NOT_IN_DIALOG;
+    private boolean inDialog = false;
 
     public ICMonPlayer(ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMon.ICMonGameState gameState) {
         super(area, orientation, spawnPosition);
@@ -59,7 +57,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     public void draw(Canvas canvas) {
         this.getCurrentOrientedAnimation().orientate(getOrientation());
         this.getCurrentOrientedAnimation().draw(canvas);
-        if (this.dialogState.equals(DialogState.IN_DIALOG)) {
+        if (this.inDialog) {
             this.dialog.draw(canvas);
         }
     }
@@ -77,14 +75,14 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     public void update(float deltaTime) {
         super.update(deltaTime);
 
-        if (this.dialogState.equals(DialogState.IN_DIALOG)) {
+        if (this.inDialog) {
             Keyboard keyboard = getOwnerArea().getKeyboard();
             if (keyboard.get(Keyboard.SPACE).isDown()){
                 this.dialog.update(deltaTime);
             }
             if (this.dialog.isCompleted()) {
                this.dialog = null;
-               this.dialogState = DialogState.NOT_IN_DIALOG;
+               this.inDialog = false;
             }
         } else {
             Keyboard keyboard = getOwnerArea().getKeyboard();
@@ -132,7 +130,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     public boolean wantsViewInteraction() {
         Keyboard keyboard = getOwnerArea().getKeyboard();
         Button lKey = keyboard.get(Keyboard.L);
-        return lKey.isDown() && this.dialogState.equals(DialogState.NOT_IN_DIALOG);
+        return lKey.isDown() && !this.inDialog;
     }
 
     @Override
@@ -143,7 +141,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
 
     public void openDialog (Dialog dialog) {
         this.dialog = dialog;
-        this.dialogState = DialogState.IN_DIALOG;
+        this.inDialog = true;
     }
 
     private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor {
