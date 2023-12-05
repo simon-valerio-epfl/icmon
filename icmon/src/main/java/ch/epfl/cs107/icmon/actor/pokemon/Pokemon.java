@@ -2,6 +2,8 @@ package ch.epfl.cs107.icmon.actor.pokemon;
 
 import ch.epfl.cs107.icmon.actor.ICMonActor;
 import ch.epfl.cs107.icmon.area.ICMonArea;
+import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
+import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.RPGSprite;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
@@ -68,6 +70,11 @@ public abstract class Pokemon extends ICMonActor {
 
     public boolean isAlive () {
         return this.hp <= 0;
+    }
+
+    @Override
+    public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
+        ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
     }
 
     /**
