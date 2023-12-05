@@ -131,7 +131,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     public boolean wantsViewInteraction() {
         Keyboard keyboard = getOwnerArea().getKeyboard();
         Button lKey = keyboard.get(Keyboard.L);
-        return lKey.isDown();
+        return lKey.isDown() && this.dialogState.equals(DialogState.NOT_IN_DIALOG);
     }
 
     @Override
