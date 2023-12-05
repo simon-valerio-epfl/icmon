@@ -55,6 +55,13 @@ public final class ICMon extends AreaGame {
      */
     @Override
     public boolean begin(Window window, FileSystem fileSystem) {
+
+        // todo should we remove the actors and the areas?
+
+        startingEvents.clear();
+        completedEvents.clear();
+        events.clear();
+
         if (super.begin(window, fileSystem)) {
             createAreas();
             areaIndex = 0;
