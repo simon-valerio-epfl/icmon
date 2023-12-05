@@ -1,6 +1,8 @@
 package ch.epfl.cs107.icmon.actor.pokemon;
 
 import ch.epfl.cs107.icmon.actor.ICMonActor;
+import ch.epfl.cs107.icmon.gamelogic.events.PokemonFightEvent;
+import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightableActor;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
@@ -16,7 +18,7 @@ import java.util.List;
  *
  * @author Hamza REMMAL (hamza.remmal@epfl.ch)
  */
-public abstract class Pokemon extends ICMonActor {
+public abstract class Pokemon extends ICMonActor implements ICMonFightableActor {
     private final String pokemonName;
     private int hp;
     private final int maxHp;

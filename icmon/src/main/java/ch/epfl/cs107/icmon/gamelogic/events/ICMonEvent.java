@@ -5,6 +5,7 @@ package ch.epfl.cs107.icmon.gamelogic.events;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.gamelogic.actions.Action;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
+import ch.epfl.cs107.play.engine.PauseMenu;
 import ch.epfl.cs107.play.engine.Updatable;
 
 import java.util.ArrayList;
@@ -80,5 +81,8 @@ public abstract class ICMonEvent implements Updatable, ICMonInteractionVisitor {
     public boolean isSuspended() {
         return suspended;
     }
+
+    public boolean hasPauseMenu() { return false; }
+    public PauseMenu getPauseMenu() { return null; }
 
 }

@@ -4,6 +4,7 @@ import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.area_entities.Door;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
+import ch.epfl.cs107.icmon.actor.pokemon.Bulbizarre;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 
@@ -25,7 +26,12 @@ public interface ICMonInteractionVisitor extends AreaInteractionVisitor {
 
     }
 
-    default void interactWith(Door door, boolean isCellInteration) {
+    default void interactWith(Door door, boolean isCellInteraction) {
 
     }
+
+    default void interactWith(Bulbizarre bulbizarre, boolean isCellInteraction) {
+
+    }
+
 }

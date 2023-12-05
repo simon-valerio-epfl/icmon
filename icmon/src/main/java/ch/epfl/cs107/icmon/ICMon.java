@@ -7,16 +7,13 @@ import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.Arena;
 import ch.epfl.cs107.icmon.area.maps.Lab;
 import ch.epfl.cs107.icmon.area.maps.Town;
-import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
-import ch.epfl.cs107.icmon.gamelogic.actions.RegisterEventAction;
-import ch.epfl.cs107.icmon.gamelogic.actions.RegisterInAreaAction;
-import ch.epfl.cs107.icmon.gamelogic.actions.UnRegisterEventAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.*;
 import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.EndOfTheGameEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
-import ch.epfl.cs107.play.areagame.area.Area;
+import ch.epfl.cs107.play.engine.PauseMenu;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
@@ -25,8 +22,6 @@ import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * ???
@@ -47,6 +42,8 @@ public final class ICMon extends AreaGame {
     private ArrayList<ICMonEvent> events = new ArrayList<>();
     private ArrayList<ICMonEvent> startingEvents = new ArrayList<>();
     private ArrayList<ICMonEvent> completedEvents = new ArrayList<>();
+    private ArrayList<ICMonEvent> suspendingEvents = new ArrayList<>();
+    private ArrayList<ICMonEvent> resumingEvents = new ArrayList<>();
     private ICMonGameState gameState = new ICMonGameState();
 
     /**
@@ -129,7 +126,9 @@ public final class ICMon extends AreaGame {
         completedEvents.clear();
         
         events.forEach((ICMonEvent event) -> {
-            event.update(deltaTime);
+            if (!event.isSuspended()) {
+                event.update(deltaTime);
+            }
         });
 
         gameState.readMessage();
@@ -202,6 +201,34 @@ public final class ICMon extends AreaGame {
         }
     }
 
+    public interface PauseMenuManager {
+        public void requestPause();
+        public void setPauseMenu(PauseMenu menu);
+        public void requestResume();
+    }
+
+    public class SuspendWithEventMessage extends GamePlayMessage {
+        private ICMonEvent event;
+
+        public SuspendWithEventMessage (ICMonEvent event) { this.event = event; }
+
+        @Override
+        public void process() {
+            if (event.hasPauseMenu()) {
+                event.onStart(new PauseGameAction((PauseMenuManager) this, event.getPauseMenu()));
+                event.onComplete(new ResumeGameAction((PauseMenuManager) this));
+
+                for (ICMonEvent eventToSuspend : events) {
+                    event.onStart(new SuspendEventAction(eventToSuspend));
+                    event.onComplete(new ResumeEventAction(eventToSuspend));
+                }
+            }
+
+            event.onStart(new RegisterEventAction(event, startingEvents));
+            event.start();
+        }
+    }
+
     public class ICMonGameState {
 
         private GamePlayMessage message;
@@ -224,6 +251,8 @@ public final class ICMon extends AreaGame {
         public PassDoorMessage createPassDoorMessage (Door door) {
             return new PassDoorMessage(door);
         }
+
+        public SuspendWithEventMessage createSuspendWithEventMessage (ICMonEvent event) { return new SuspendWithEventMessage() }
 
         public void readMessage () {
             if (this.message != null) {
