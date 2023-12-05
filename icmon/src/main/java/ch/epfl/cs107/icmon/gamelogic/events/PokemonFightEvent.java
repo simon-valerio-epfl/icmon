@@ -14,6 +14,9 @@ public class PokemonFightEvent extends ICMonEvent {
 
     @Override
     public void update(float deltaTime) {
+        if (!this.fightPauseMenu.isRunning()) {
+            this.complete();
+        }
     }
 
     @Override

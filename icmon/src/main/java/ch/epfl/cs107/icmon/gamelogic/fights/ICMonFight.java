@@ -8,7 +8,6 @@ public class ICMonFight extends PauseMenu {
     private float counter = 5f;
 
     public ICMonFight() {
-
     }
 
     @Override

@@ -125,10 +125,10 @@ public final class ICMon extends AreaGame {
         startingEvents.clear();
         completedEvents.clear();
 
-        System.out.println("Analyzing " + events.size() + " events");
+        //System.out.println("Analyzing " + events.size() + " events");
         events.forEach((ICMonEvent event) -> {
             if (!event.isSuspended()) {
-                System.out.println("Updating 1 event");
+                //System.out.println("Updating 1 event");
                 event.update(deltaTime);
             }
         });
@@ -239,6 +239,7 @@ public final class ICMon extends AreaGame {
             }
 
             event.onStart(new RegisterEventAction(event, startingEvents));
+            event.onComplete(new UnRegisterEventAction(event, completedEvents));
             event.start();
         }
     }
