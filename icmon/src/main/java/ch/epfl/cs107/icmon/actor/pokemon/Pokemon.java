@@ -1,7 +1,10 @@
 package ch.epfl.cs107.icmon.actor.pokemon;
 
 import ch.epfl.cs107.icmon.actor.ICMonActor;
+import ch.epfl.cs107.icmon.actor.pokemon.actions.AttackFightAction;
+import ch.epfl.cs107.icmon.actor.pokemon.actions.RunAwayFightAction;
 import ch.epfl.cs107.icmon.gamelogic.events.PokemonFightEvent;
+import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightAction;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightableActor;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
@@ -11,6 +14,7 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.window.Canvas;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,9 +25,11 @@ import java.util.List;
 public abstract class Pokemon extends ICMonActor implements ICMonFightableActor {
     private final PokemonProperties properties = new PokemonProperties();
     private final RPGSprite sprite;
+    private ArrayList<ICMonFightAction> actions;
+
 
     // todo ici on doit mettre un ICMONAREA OU UN AREA ?
-    public Pokemon(ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, String pokemonName, float maxHp, int damage) {
+    public Pokemon(ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, String pokemonName, float maxHp, int damage, ArrayList<ICMonFightAction> actions) {
         super(area, orientation, spawnPosition);
 
         this.properties.setName(pokemonName);
@@ -32,6 +38,8 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
         this.properties.setDamage(damage);
 
         this.sprite = new RPGSprite("pokemon/" + this.properties.name(), 1, 1, this);
+
+        this.actions = actions;
     }
 
     @Override
@@ -63,14 +71,17 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
         if (this.properties.hp() - damage <= 0) {
             this.properties.setHp(0);
         } else {
-            this.properties.setHp(
-                    this.properties.hp() - damage
-            );
+            this.properties.setHp(this.properties.hp() - damage);
         }
     }
 
     public boolean isAlive () {
-        return this.properties.hp() <= 0;
+        return this.properties.hp() > 0;
+    }
+
+    // todo est-ce qu'on doit déplacer ça dans les properties ?
+    public ArrayList<ICMonFightAction> getActions() {
+        return actions;
     }
 
     @Override
