@@ -2,6 +2,7 @@ package ch.epfl.cs107.icmon.gamelogic.fights;
 
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
+import ch.epfl.cs107.icmon.graphics.ICMonFightActionSelectionGraphics;
 import ch.epfl.cs107.icmon.graphics.ICMonFightArenaGraphics;
 import ch.epfl.cs107.icmon.graphics.ICMonFightTextGraphics;
 import ch.epfl.cs107.play.engine.PauseMenu;
@@ -25,6 +26,7 @@ public class ICMonFight extends PauseMenu {
     private ICMonFightTextGraphics deadConclusionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "The opponent has won the fight");
     private ICMonFightTextGraphics cancelledOpponentConclusionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "The opponent decided not to continue the fight");
     private ICMonFightTextGraphics emptyTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, null);
+    private ICMonFightActionSelectionGraphics selectionGraphics;
     private ICMonFightAction selectedAction;
     private ConclusionReason conclusionReason;
 
@@ -50,13 +52,20 @@ public class ICMonFight extends PauseMenu {
                 Keyboard keyboard = getKeyboard();
                 if (keyboard.get(Keyboard.SPACE).isDown()) {
                     this.state = FightState.SELECT_ACTION;
-                    this.arena.setInteractionGraphics(emptyTextGraphics);
+
+                    this.selectionGraphics = new ICMonFightActionSelectionGraphics(CAMERA_SCALE_FACTOR, getKeyboard(), this.playerPokemon.getActions());
                 }
 
             }
             case SELECT_ACTION -> {
-                selectedAction = this.playerPokemon.getActions().get(0);
-                state = FightState.EXECUTE_ACTION;
+                this.arena.setInteractionGraphics(this.selectionGraphics);
+                this.selectionGraphics.update(deltaTime);
+                if (this.selectionGraphics.choice() != null) {
+                    selectedAction = this.selectionGraphics.choice();
+
+                    state = FightState.EXECUTE_ACTION;
+                    this.selectionGraphics = new ICMonFightActionSelectionGraphics(CAMERA_SCALE_FACTOR, getKeyboard(), this.playerPokemon.getActions());
+                }
             }
             case SELECT_OPPONENT_ACTION -> {
                 for (ICMonFightAction action : this.opponent.getActions()) {
