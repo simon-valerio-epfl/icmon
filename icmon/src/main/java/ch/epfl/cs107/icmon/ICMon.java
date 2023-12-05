@@ -124,9 +124,11 @@ public final class ICMon extends AreaGame {
 
         startingEvents.clear();
         completedEvents.clear();
-        
+
+        System.out.println("Analyzing " + events.size() + " events");
         events.forEach((ICMonEvent event) -> {
             if (!event.isSuspended()) {
+                System.out.println("Updating 1 event");
                 event.update(deltaTime);
             }
         });
@@ -180,6 +182,24 @@ public final class ICMon extends AreaGame {
         player.enterArea(currentArea, currentArea.getPlayerSpawnPosition());*/
     }
 
+    public class ICMonPauseControlImpl implements ICMonPauseControl {
+        public void requestPause() {
+            ICMon.this.requestPause();
+        }
+
+        public PauseMenu setPauseMenu(PauseMenu menu) {
+            return ICMon.this.setPauseMenu(menu);
+        }
+
+        public void requestResume() {
+            ICMon.this.requestResume();
+        }
+    }
+
+    public ICMonPauseControl getPauseControl() {
+        return new ICMonPauseControlImpl();
+    }
+
     public class GamePlayMessage {
         public void process() {
 
@@ -201,12 +221,6 @@ public final class ICMon extends AreaGame {
         }
     }
 
-    public interface PauseMenuManager {
-        public void requestPause();
-        public void setPauseMenu(PauseMenu menu);
-        public void requestResume();
-    }
-
     public class SuspendWithEventMessage extends GamePlayMessage {
         private ICMonEvent event;
 
@@ -215,8 +229,8 @@ public final class ICMon extends AreaGame {
         @Override
         public void process() {
             if (event.hasPauseMenu()) {
-                event.onStart(new PauseGameAction((PauseMenuManager) this, event.getPauseMenu()));
-                event.onComplete(new ResumeGameAction((PauseMenuManager) this));
+                event.onStart(new PauseGameAction(getPauseControl(), event.getPauseMenu()));
+                event.onComplete(new ResumeGameAction(getPauseControl()));
 
                 for (ICMonEvent eventToSuspend : events) {
                     event.onStart(new SuspendEventAction(eventToSuspend));
@@ -252,7 +266,7 @@ public final class ICMon extends AreaGame {
             return new PassDoorMessage(door);
         }
 
-        public SuspendWithEventMessage createSuspendWithEventMessage (ICMonEvent event) { return new SuspendWithEventMessage() }
+        public SuspendWithEventMessage createSuspendWithEventMessage (ICMonEvent event) { return new SuspendWithEventMessage(event); }
 
         public void readMessage () {
             if (this.message != null) {

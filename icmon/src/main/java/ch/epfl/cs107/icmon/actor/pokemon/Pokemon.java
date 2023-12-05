@@ -76,7 +76,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
 
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
-        ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
+        ((ICMonInteractionVisitor) v).interactWith((ICMonFightableActor) this, isCellInteraction);
     }
 
     /**

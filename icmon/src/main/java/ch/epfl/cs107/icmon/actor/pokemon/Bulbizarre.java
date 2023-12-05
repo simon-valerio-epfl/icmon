@@ -16,4 +16,5 @@ public class Bulbizarre extends Pokemon {
     public Bulbizarre(ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition) {
         super(area, orientation, spawnPosition, POKEMON_NAME, MAX_HP, DAMAGE);
     }
+
 }

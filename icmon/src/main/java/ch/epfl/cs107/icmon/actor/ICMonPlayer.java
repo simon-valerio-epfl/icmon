@@ -5,6 +5,10 @@ import ch.epfl.cs107.icmon.actor.area_entities.Door;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
+import ch.epfl.cs107.icmon.gamelogic.actions.LeaveAreaAction;
+import ch.epfl.cs107.icmon.gamelogic.events.PokemonFightEvent;
+import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFight;
+import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightableActor;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.actor.Interactor;
@@ -144,6 +148,15 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         this.inDialog = true;
     }
 
+    public void fight(ICMonFightableActor actor) {
+        ICMonFight ourFight = new ICMonFight();
+        PokemonFightEvent pokemonFightEvent = new PokemonFightEvent(this, ourFight);
+        ICMon.SuspendWithEventMessage message = this.gameState.createSuspendWithEventMessage(pokemonFightEvent);
+        this.gameState.send(message);
+
+        pokemonFightEvent.onComplete(new LeaveAreaAction((ICMonActor) actor));
+    }
+
     private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor {
         @Override
         public void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {
@@ -170,9 +183,16 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         }
 
         @Override
-        public void interactWith(Door door, boolean isCellInteration) {
-            if (isCellInteration) {
+        public void interactWith(Door door, boolean isCellInteraction) {
+            if (isCellInteraction) {
                 gameState.send(gameState.createPassDoorMessage(door));
+            }
+        }
+
+        @Override
+        public void interactWith(ICMonFightableActor actor, boolean isCellInteraction) {
+            if (isCellInteraction) {
+                fight(actor);
             }
         }
     }

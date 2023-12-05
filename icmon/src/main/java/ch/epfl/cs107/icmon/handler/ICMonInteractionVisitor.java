@@ -6,6 +6,7 @@ import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.actor.pokemon.Bulbizarre;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
+import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightableActor;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 
 public interface ICMonInteractionVisitor extends AreaInteractionVisitor {
@@ -30,7 +31,12 @@ public interface ICMonInteractionVisitor extends AreaInteractionVisitor {
 
     }
 
+    /*
     default void interactWith(Bulbizarre bulbizarre, boolean isCellInteraction) {
+
+    }*/
+
+    default void interactWith(ICMonFightableActor actor, boolean isCellInteraction) {
 
     }
 
