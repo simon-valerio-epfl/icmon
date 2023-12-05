@@ -94,6 +94,9 @@ public final class ICMonBehavior extends AreaBehavior {
 
         @Override
         protected boolean canEnter(Interactable entity) {
+            if (this.type.walkingType.equals(AllowedWalkingType.NONE)) {
+                return false;
+            }
             boolean cellIsTaken = false;
             for (Interactable alreadyThereEntity : this.entities) {
                 if (alreadyThereEntity.takeCellSpace()) {

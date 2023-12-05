@@ -193,7 +193,8 @@ public final class ICMon extends AreaGame {
         public void process () {
             player.leaveArea();
             String landingAreaName = this.door.getLandingArea();
-            initArea(landingAreaName);
+            ICMonArea currentArea = (ICMonArea) setCurrentArea(landingAreaName, false);
+            player.enterArea(currentArea, currentArea.getPlayerSpawnPosition());
             player.changePosition(this.door.getLandingPosition());
         }
     }
