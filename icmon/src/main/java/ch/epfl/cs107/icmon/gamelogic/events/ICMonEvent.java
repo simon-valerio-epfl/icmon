@@ -18,7 +18,8 @@ public abstract class ICMonEvent implements Updatable, ICMonInteractionVisitor {
     private ArrayList<Action> onCompleteActions = new ArrayList<>();
     private ArrayList<Action> onSuspensionActions = new ArrayList<>();
     private ArrayList<Action> onResumeActions = new ArrayList<>();
-    final private ICMonPlayer player;
+    // todo est-ce que c'est vraiment une bonne idée de faire ça en terme d'encapsulation ?
+    final protected ICMonPlayer player;
 
     public ICMonEvent (ICMonPlayer player) {
         this.player = player;
