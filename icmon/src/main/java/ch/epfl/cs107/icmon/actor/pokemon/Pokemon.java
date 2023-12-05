@@ -19,22 +19,19 @@ import java.util.List;
  * @author Hamza REMMAL (hamza.remmal@epfl.ch)
  */
 public abstract class Pokemon extends ICMonActor implements ICMonFightableActor {
-    private final String pokemonName;
-    private int hp;
-    private final int maxHp;
-    private final int damage;
+    private final PokemonProperties properties = new PokemonProperties();
     private final RPGSprite sprite;
 
     // todo ici on doit mettre un ICMONAREA OU UN AREA ?
-    public Pokemon(ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, String pokemonName, int maxHp, int damage) {
+    public Pokemon(ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, String pokemonName, float maxHp, int damage) {
         super(area, orientation, spawnPosition);
-        this.pokemonName = pokemonName;
-        this.maxHp = maxHp;
-        this.damage = damage;
 
-        this.sprite = new RPGSprite("pokemon/" + this.pokemonName, 1, 1, this);
+        this.properties.setName(pokemonName);
+        this.properties.setHp(maxHp);
+        this.properties.setMaxHp(maxHp);
+        this.properties.setDamage(damage);
 
-        this.hp = maxHp;
+        this.sprite = new RPGSprite("pokemon/" + this.properties.name(), 1, 1, this);
     }
 
     @Override
@@ -63,15 +60,17 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     }
 
     public void damage (int damage) {
-        if (this.hp - damage <= 0) {
-            this.hp = 0;
+        if (this.properties.hp() - damage <= 0) {
+            this.properties.setHp(0);
         } else {
-            this.hp -= damage;
+            this.properties.setHp(
+                    this.properties.hp() - damage
+            );
         }
     }
 
     public boolean isAlive () {
-        return this.hp <= 0;
+        return this.properties.hp() <= 0;
     }
 
     @Override
@@ -79,25 +78,50 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
         ((ICMonInteractionVisitor) v).interactWith((ICMonFightableActor) this, isCellInteraction);
     }
 
+    public PokemonProperties properties() {
+        return this.properties;
+    }
+
     /**
      * @author Hamza REMMAL (hamza.remmal@epfl.ch)
      */
     public final class PokemonProperties {
 
+        private float hp;
+        private String name;
+        private float maxHp;
+        private int damage;
+
         public String name(){
-            return null;
+            return name;
         }
 
         public float hp(){
-            return 0f;
+            return hp;
         }
 
         public float maxHp(){
-            return 0f;
+            return maxHp;
         }
 
         public int damage(){
-            return 0;
+            return damage;
+        }
+
+        private void setName(String name) {
+            this.name = name;
+        }
+
+        private void setHp(float hp) {
+            this.hp = hp;
+        }
+
+        private void setMaxHp(float maxHp) {
+            this.maxHp = maxHp;
+        }
+
+        private void setDamage(int damage) {
+            this.damage = damage;
         }
 
     }

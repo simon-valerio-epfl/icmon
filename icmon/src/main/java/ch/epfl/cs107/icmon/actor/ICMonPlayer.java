@@ -3,6 +3,10 @@ package ch.epfl.cs107.icmon.actor;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.area_entities.Door;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
+import ch.epfl.cs107.icmon.actor.pokemon.Bulbizarre;
+import ch.epfl.cs107.icmon.actor.pokemon.Latios;
+import ch.epfl.cs107.icmon.actor.pokemon.Nidoqueen;
+import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.gamelogic.actions.LeaveAreaAction;
@@ -21,6 +25,7 @@ import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,12 +44,18 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     final private ICMon.ICMonGameState gameState;
     private Dialog dialog;
     private boolean inDialog = false;
+    private ArrayList<Pokemon> pokemons = new ArrayList<>();
 
     public ICMonPlayer(ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMon.ICMonGameState gameState) {
         super(area, orientation, spawnPosition);
         this.swimmingOrientedAnimation = new OrientedAnimation(SPRITE_SWIMMING_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
         this.runningOrientedAnimation = new OrientedAnimation(SPRITE_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
         this.gameState = gameState;
+
+        // test
+        this.pokemons.add(new Bulbizarre(area, Orientation.DOWN, spawnPosition));
+        this.pokemons.add(new Latios(area, Orientation.DOWN, spawnPosition));
+        this.pokemons.add(new Nidoqueen(area, Orientation.DOWN, spawnPosition));
     }
 
     public OrientedAnimation getCurrentOrientedAnimation () {
@@ -149,7 +160,11 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     }
 
     public void fight(ICMonFightableActor actor) {
-        ICMonFight ourFight = new ICMonFight();
+        if (!(actor instanceof Pokemon)) {
+            System.out.println("Something bad is happening. WHAT HAVE YOU CREATED?");
+            return;
+        }
+        ICMonFight ourFight = new ICMonFight(this.pokemons.get(0), (Pokemon) actor);
         PokemonFightEvent pokemonFightEvent = new PokemonFightEvent(this, ourFight);
         ICMon.SuspendWithEventMessage message = this.gameState.createSuspendWithEventMessage(pokemonFightEvent);
         this.gameState.send(message);
