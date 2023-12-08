@@ -11,6 +11,7 @@ import ch.epfl.cs107.play.engine.actor.Dialog;
 public class FirstInteractionWithProfOakEvent extends ICMonEvent {
 
     private Dialog dialog;
+    private boolean isFinalInDialog = false;
     private boolean isInDialog = false;
 
     public FirstInteractionWithProfOakEvent (ICMon.ICMonEventManager eventManager, ICMonPlayer player) {
@@ -20,29 +21,32 @@ public class FirstInteractionWithProfOakEvent extends ICMonEvent {
     @Override
     public void update(float deltaTime) {
         // lazy evaluation, we can access dialog
+        System.out.println(this.isInDialog ? this.dialog.isCompleted() : "pas en dialogue");
         if (this.isInDialog && this.dialog.isCompleted()) {
             this.isInDialog = false;
             getPlayer().giftPokemon("latios");
-            this.complete();
+            System.out.println(isFinalInDialog);
+            if (isFinalInDialog) this.complete();
         }
     }
 
-    public void openDialog(String dialogName) {
+    public void openDialog(String dialogName, boolean isFinalInDialog) {
         this.dialog = new Dialog(dialogName);
         this.isInDialog = true;
+        this.isFinalInDialog = isFinalInDialog;
         getPlayer().openDialog(this.dialog);
     }
 
     @Override
     public void interactWith(ProfOak profOak, boolean isCellInteraction) {
         if (this.isStarted() && !this.isCompleted()) {
-            openDialog("first_interaction_with_prof_oak");
+            openDialog("first_interaction_with_prof_oak", true);
         }
     }
     @Override
     public void interactWith(ICShopAssistant shopAssistant, boolean isCellInteraction) {
         if (this.isStarted() && !this.isCompleted()) {
-            openDialog("first_interaction_with_oak_event_icshopassistant");
+            openDialog("first_interaction_with_oak_event_icshopassistant", false);
         }
     }
 
