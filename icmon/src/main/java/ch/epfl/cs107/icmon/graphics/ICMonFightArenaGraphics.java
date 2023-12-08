@@ -34,7 +34,8 @@ public final class ICMonFightArenaGraphics implements Graphics {
     private ICMonFightInteractionGraphics interactionGraphics;
 
 
-    public ICMonFightArenaGraphics(float scaleFactor, PokemonProperties player, PokemonProperties opponent) {
+    // we reversed opponent and player because Hamza told us to do so
+    public ICMonFightArenaGraphics(float scaleFactor, PokemonProperties opponent, PokemonProperties player) {
         // HR : The background will be displayed in the top 2/3 part of the screen
         background = new ImageGraphics(getBackground("fight"), scaleFactor, scaleFactor * 2 / 3);
         background.setRelativeTransform(Transform.I.translated(0, scaleFactor / 3));
