@@ -1,13 +1,14 @@
 package ch.epfl.cs107.icmon.gamelogic.events;
 
+import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
 public class EndOfTheGameEvent extends ICMonEvent {
 
-    public EndOfTheGameEvent(ICMonPlayer player) {
-        super(player);
+    public EndOfTheGameEvent(ICMon.ICMonEventManager eventManager, ICMonPlayer player) {
+        super(eventManager, player);
     }
 
     @Override

@@ -16,6 +16,7 @@ import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightableActor;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.actor.Interactor;
+import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 import ch.epfl.cs107.play.engine.actor.OrientedAnimation;
@@ -42,17 +43,37 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     private SpriteType currentSprite = SpriteType.RUNNING_SPRITE;
     final private ICMonPlayerInteractionHandler handler = new ICMonPlayerInteractionHandler();
     final private ICMon.ICMonGameState gameState;
+    final private ICMon.ICMonEventManager eventManager;
     private Dialog dialog;
     private boolean inDialog = false;
     private ArrayList<Pokemon> pokemons = new ArrayList<>();
+    final private Area spawningArea;
 
-    public ICMonPlayer(ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMon.ICMonGameState gameState) {
+    public ICMonPlayer(Area area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMon.ICMonGameState gameState, ICMon.ICMonEventManager eventManager) {
         super(area, orientation, spawnPosition);
         this.swimmingOrientedAnimation = new OrientedAnimation(SPRITE_SWIMMING_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
         this.runningOrientedAnimation = new OrientedAnimation(SPRITE_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
         this.gameState = gameState;
+        this.eventManager = eventManager;
 
-        // test
+        this.spawningArea = area;
+    }
+
+    public void giftPokemon(String pokemonName) {
+        switch (pokemonName) {
+            case "latios" -> {
+                this.pokemons.add(new Latios(spawningArea, Orientation.UP, new DiscreteCoordinates(0, 0)));
+            }
+            case "bulbizarre" -> {
+                this.pokemons.add(new Bulbizarre(spawningArea, Orientation.UP, new DiscreteCoordinates(0, 0)));
+            }
+            case "nidoqueen" -> {
+                this.pokemons.add(new Nidoqueen(spawningArea, Orientation.UP, new DiscreteCoordinates(0, 0)));
+            }
+            default -> {
+
+            }
+        }
     }
 
     public OrientedAnimation getCurrentOrientedAnimation () {
@@ -162,7 +183,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
             return;
         }
         ICMonFight ourFight = new ICMonFight(this.pokemons.get(0), (Pokemon) actor);
-        PokemonFightEvent pokemonFightEvent = new PokemonFightEvent(this, ourFight);
+        PokemonFightEvent pokemonFightEvent = new PokemonFightEvent(eventManager, this, ourFight);
         this.gameState.createSuspendWithEventMessage(pokemonFightEvent);
 
         pokemonFightEvent.onComplete(new LeaveAreaAction((ICMonActor) actor));

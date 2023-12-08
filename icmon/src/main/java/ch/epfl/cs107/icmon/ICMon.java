@@ -39,6 +39,7 @@ public final class ICMon extends AreaGame {
     private final ArrayList<ICMonEvent> startingEvents = new ArrayList<>();
     private final ArrayList<ICMonEvent> completedEvents = new ArrayList<>();
     private final ICMonGameState gameState = new ICMonGameState();
+    private final ICMonEventManager eventManager = new ICMonEventManager();
 
     /**
      * ???
@@ -46,10 +47,8 @@ public final class ICMon extends AreaGame {
     private void createAreas() {
         Town town = new Town();
         addArea(town);
-        //areas.put("town", town);
         Lab lab = new Lab();
         addArea(lab);
-        //areas.put("lab", lab);
         Arena arena = new Arena();
         addArea(arena);
     }
@@ -72,19 +71,13 @@ public final class ICMon extends AreaGame {
 
             ICMonArea townArea = (ICMonArea) getCurrentArea();
             ICBall ball = new ICBall(townArea, new DiscreteCoordinates(6, 6));
-            ICMonEvent collectBallEvent = new CollectItemEvent(ball, player);
+            ICMonEvent collectBallEvent = new CollectItemEvent(eventManager, player, ball);
             RegisterInAreaAction registerBall = new RegisterInAreaAction(townArea, ball);
             collectBallEvent.onStart(new LogAction("the event started !"));
             collectBallEvent.onStart(registerBall);
             collectBallEvent.onComplete(new LogAction("player is interacting with ball!"));
 
-            EndOfTheGameEvent endOfTheGameEvent = new EndOfTheGameEvent(player);
-
-            collectBallEvent.onStart(new RegisterEventAction(collectBallEvent, startingEvents));
-            endOfTheGameEvent.onStart(new RegisterEventAction(endOfTheGameEvent, startingEvents));
-
-            collectBallEvent.onComplete(new UnRegisterEventAction(collectBallEvent, completedEvents));
-            endOfTheGameEvent.onComplete(new UnRegisterEventAction(endOfTheGameEvent, completedEvents));
+            EndOfTheGameEvent endOfTheGameEvent = new EndOfTheGameEvent(eventManager, player);
 
             collectBallEvent.onComplete(endOfTheGameEvent::start);
 
@@ -157,7 +150,7 @@ public final class ICMon extends AreaGame {
     private void initArea(String areaKey) {
         ICMonArea area = (ICMonArea) setCurrentArea(areaKey, true);
         DiscreteCoordinates coords = area.getPlayerSpawnPosition();
-        player = new ICMonPlayer(area, Orientation.DOWN, coords, gameState);
+        player = new ICMonPlayer(area, Orientation.DOWN, coords, gameState, eventManager);
         player.enterArea(area, coords);
         player.centerCamera();
     }
@@ -211,6 +204,18 @@ public final class ICMon extends AreaGame {
         }
     }
 
+    public class ICMonEventManager {
+
+        public void registerEvent(ICMonEvent event) {
+            startingEvents.add(event);
+        }
+
+        public void unRegisterEvent(ICMonEvent event) {
+            completedEvents.add(event);
+        }
+
+    }
+
     private class SuspendWithEventMessage extends GamePlayMessage {
         private final ICMonEvent event;
 
@@ -228,8 +233,6 @@ public final class ICMon extends AreaGame {
                 }
             }
 
-            event.onStart(new RegisterEventAction(event, startingEvents));
-            event.onComplete(new UnRegisterEventAction(event, completedEvents));
             event.start();
         }
     }
