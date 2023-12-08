@@ -27,14 +27,24 @@ public class FirstInteractionWithProfOakEvent extends ICMonEvent {
         }
     }
 
+    public void openDialog(String dialogName) {
+        this.dialog = new Dialog(dialogName);
+        this.isInDialog = true;
+        getPlayer().openDialog(this.dialog);
+    }
+
     @Override
     public void interactWith(ProfOak profOak, boolean isCellInteraction) {
-        System.out.println("test2");
         if (this.isStarted() && !this.isCompleted()) {
-            System.out.println("test");
-            this.dialog = new Dialog("first_interaction_with_prof_oak");
-            this.isInDialog = true;
-            getPlayer().openDialog(this.dialog);
+            openDialog("first_interaction_with_prof_oak");
         }
     }
+    @Override
+    public void interactWith(ICShopAssistant shopAssistant, boolean isCellInteraction) {
+        if (this.isStarted() && !this.isCompleted()) {
+            openDialog("first_interaction_with_oak_event_icshopassistant");
+        }
+    }
+
+
 }
