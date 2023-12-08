@@ -4,9 +4,7 @@ import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.area_entities.Door;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.area.ICMonArea;
-import ch.epfl.cs107.icmon.area.maps.Arena;
-import ch.epfl.cs107.icmon.area.maps.Lab;
-import ch.epfl.cs107.icmon.area.maps.Town;
+import ch.epfl.cs107.icmon.area.maps.*;
 import ch.epfl.cs107.icmon.gamelogic.actions.*;
 import ch.epfl.cs107.icmon.gamelogic.events.*;
 import ch.epfl.cs107.play.areagame.AreaGame;
@@ -32,7 +30,7 @@ public final class ICMon extends AreaGame {
     /** ??? */
     public final static float CAMERA_SCALE_FACTOR = 13.f;
     /** ??? */
-    private final static String STARTING_MAP = "lab";
+    private final static String STARTING_MAP = "house";
     private final Map<String, Area> eventAreas = new HashMap<>();
     /** ??? */
     private ICMonPlayer player;
@@ -48,6 +46,9 @@ public final class ICMon extends AreaGame {
      */
     private void createAreas() {
         eventAreas.clear();
+        House house = new House();
+        addArea(house);
+        eventAreas.put("house", house);
         Town town = new Town();
         addArea(town);
         eventAreas.put("town", town);
@@ -57,6 +58,9 @@ public final class ICMon extends AreaGame {
         Arena arena = new Arena();
         addArea(arena);
         eventAreas.put("arena", arena);
+        Shop shop = new Shop();
+        addArea(shop);
+        eventAreas.put("shop", shop);
 
         for (Area area : eventAreas.values()) {
             area.begin(getWindow(), getFileSystem());
@@ -99,6 +103,7 @@ public final class ICMon extends AreaGame {
     }
 
     public void events (ICMonEvent initialEvent, ICMonEvent ...events) {
+        // todo event doit créer la balle ?
         ICMonChainedEvent icMonChainedEvent = new ICMonChainedEvent(eventManager, player, initialEvent, events);
         icMonChainedEvent.start();
     }

@@ -9,15 +9,15 @@ import ch.epfl.cs107.play.engine.actor.Foreground;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
-public class House extends ICMonArea {
+public class Shop extends ICMonArea {
 
     @Override
     public String getTitle() {
-        return "house";
+        return "shop";
     }
     @Override
     public DiscreteCoordinates getPlayerSpawnPosition() {
-        return new DiscreteCoordinates(6, 2);
+        return new DiscreteCoordinates(3, 1);
     }
 
     @Override
@@ -25,12 +25,8 @@ public class House extends ICMonArea {
         registerActor(new Background(this));
         registerActor(new Foreground(this));
 
-        Door doorToTown = new Door("town", new DiscreteCoordinates(7,26), this, new DiscreteCoordinates(3,1), new DiscreteCoordinates(4, 1));
+        Door doorToTown = new Door("town", new DiscreteCoordinates(25,19), this, new DiscreteCoordinates(3,1), new DiscreteCoordinates(4, 1));
         registerActor(doorToTown);
-
-        Garry garry = new Garry(this, Orientation.DOWN, new DiscreteCoordinates(1, 3));
-        registerActor(garry);
-
     }
 
- }
+}

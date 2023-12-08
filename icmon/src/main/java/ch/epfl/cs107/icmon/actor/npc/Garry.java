@@ -18,5 +18,4 @@ public class Garry extends NPCActor {
         ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
     }
 
-
 }
