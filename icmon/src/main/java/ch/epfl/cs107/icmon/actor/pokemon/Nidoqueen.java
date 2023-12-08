@@ -15,7 +15,7 @@ public class Nidoqueen extends Pokemon {
     private final static int DAMAGE = 1;
 
     public Nidoqueen(Area area, Orientation orientation, DiscreteCoordinates spawnPosition) {
-        super(area, orientation, spawnPosition, POKEMON_NAME, MAX_HP, DAMAGE, new ICMonFightAction[]{});
+        super(area, orientation, spawnPosition, POKEMON_NAME, MAX_HP, DAMAGE);
     }
 
 }

@@ -17,7 +17,6 @@ public class Garry extends NPCActor implements ICMonFightableActor, PokemonOwner
 
     public Garry (ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition) {
         super(area, orientation, spawnPosition, SPRITE_NAME);
-
         addPokemon("nidoqueen");
     }
 

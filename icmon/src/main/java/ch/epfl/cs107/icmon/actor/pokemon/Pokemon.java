@@ -1,6 +1,8 @@
 package ch.epfl.cs107.icmon.actor.pokemon;
 
 import ch.epfl.cs107.icmon.actor.ICMonActor;
+import ch.epfl.cs107.icmon.actor.pokemon.actions.AttackFightAction;
+import ch.epfl.cs107.icmon.actor.pokemon.actions.RunAwayFightAction;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightAction;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightableActor;
 import ch.epfl.cs107.icmon.area.ICMonArea;
@@ -12,6 +14,9 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.window.Canvas;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -22,9 +27,12 @@ import java.util.List;
 public abstract class Pokemon extends ICMonActor implements ICMonFightableActor {
     private final PokemonProperties properties;
     private final RPGSprite sprite;
-    private ICMonFightAction[] actions;
+    private ArrayList<ICMonFightAction> actions;
+    private final static ICMonFightAction ATTACK_ACTION = new AttackFightAction();
+    private final static ICMonFightAction RUN_AWAY_ACTION = new RunAwayFightAction();
+    private final static ICMonFightAction[] DEFAULT_ACTIONS = {ATTACK_ACTION, RUN_AWAY_ACTION};
 
-    public Pokemon(Area area, Orientation orientation, DiscreteCoordinates spawnPosition, String pokemonName, float maxHp, int damage, ICMonFightAction[] actions) {
+    public Pokemon(Area area, Orientation orientation, DiscreteCoordinates spawnPosition, String pokemonName, float maxHp, int damage, ICMonFightAction ...extraActions) {
         super(area, orientation, spawnPosition);
 
         this.properties = new PokemonProperties(pokemonName);
@@ -34,7 +42,8 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
 
         this.sprite = new RPGSprite("pokemon/" + this.properties.name(), 1, 1, this);
 
-        this.actions = actions;
+        this.actions = new ArrayList<>(Arrays.asList(DEFAULT_ACTIONS));
+        Collections.addAll(this.actions, extraActions);
     }
 
     @Override
@@ -76,7 +85,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
 
     // todo list ou Array
     public List<ICMonFightAction> getActions() {
-        return List.of(actions);
+        return actions;
     }
 
     @Override
