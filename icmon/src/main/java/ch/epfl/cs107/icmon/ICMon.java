@@ -79,7 +79,7 @@ public final class ICMon extends AreaGame {
 
             EndOfTheGameEvent endOfTheGameEvent = new EndOfTheGameEvent(eventManager, player);
 
-            collectBallEvent.onComplete(endOfTheGameEvent::start);
+            collectBallEvent.onComplete(new StartEventAction(endOfTheGameEvent));
 
             collectBallEvent.start();
 
@@ -102,6 +102,7 @@ public final class ICMon extends AreaGame {
             reset();
         }
 
+        System.out.println(startingEvents.size());
         events.addAll(startingEvents);
         events.removeAll(completedEvents);
 
@@ -111,7 +112,7 @@ public final class ICMon extends AreaGame {
         //System.out.println("Analyzing " + events.size() + " events");
         events.forEach((ICMonEvent event) -> {
             if (!event.isSuspended()) {
-                //System.out.println("Updating 1 event");
+                System.out.println("Updating 1 event");
                 event.update(deltaTime);
             }
         });

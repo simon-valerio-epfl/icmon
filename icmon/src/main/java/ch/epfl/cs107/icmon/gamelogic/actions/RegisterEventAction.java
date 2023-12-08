@@ -16,6 +16,6 @@ public class RegisterEventAction implements Action {
     }
 
     public void perform() {
-        eventManager.unRegisterEvent(event);
+        eventManager.registerEvent(event);
     }
 }
