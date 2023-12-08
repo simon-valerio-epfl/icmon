@@ -5,10 +5,11 @@ import ch.epfl.cs107.icmon.actor.area_entities.Door;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.pokemon.*;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
-import ch.epfl.cs107.icmon.gamelogic.actions.LeaveAreaAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.AfterPokemonSelectionFightAction;
 import ch.epfl.cs107.icmon.gamelogic.events.PokemonFightEvent;
-import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFight;
+import ch.epfl.cs107.icmon.gamelogic.events.PokemonSelectionEvent;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightableActor;
+import ch.epfl.cs107.icmon.gamelogic.fights.PokemonSelectionMenu;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.actor.Interactor;
@@ -53,6 +54,9 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         this.eventManager = eventManager;
 
         this.spawningArea = area;
+
+        // todo remove this
+        addPokemon("bulbizarre");
     }
 
     @Override
@@ -161,6 +165,10 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         this.inDialog = true;
     }
 
+    public void suspendGameWithFightEvent(PokemonFightEvent pokemonFightEvent) {
+        this.gameState.createSuspendWithEventMessage(pokemonFightEvent);
+    }
+
     public void fight(ICMonFightableActor actor) {
         if (!(actor instanceof Pokemon)) {
             System.out.println("Something bad is happening. WHAT HAVE YOU CREATED?");
@@ -172,11 +180,12 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
             this.move(1);
             this.openDialog(new Dialog("no_pokemon"));
         } else {
-            ICMonFight ourFight = new ICMonFight(this.pokemons.get(0), (Pokemon) actor);
-            PokemonFightEvent pokemonFightEvent = new PokemonFightEvent(eventManager, this, ourFight);
-            this.gameState.createSuspendWithEventMessage(pokemonFightEvent);
 
-            pokemonFightEvent.onComplete(new LeaveAreaAction((ICMonActor) actor));
+            PokemonSelectionMenu pokemonSelectionMenu = new PokemonSelectionMenu(this);
+            PokemonSelectionEvent pokemonSelectionEvent = new PokemonSelectionEvent(eventManager, this, pokemonSelectionMenu);
+            this.gameState.createSuspendWithEventMessage(pokemonSelectionEvent);
+
+            pokemonSelectionEvent.onComplete(new AfterPokemonSelectionFightAction(this, this.eventManager, pokemonSelectionMenu.getPokemon(), (Pokemon) actor));
         }
 
     }
