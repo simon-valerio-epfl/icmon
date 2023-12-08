@@ -3,11 +3,7 @@ package ch.epfl.cs107.icmon.actor;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.area_entities.Door;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
-import ch.epfl.cs107.icmon.actor.pokemon.Bulbizarre;
-import ch.epfl.cs107.icmon.actor.pokemon.Latios;
-import ch.epfl.cs107.icmon.actor.pokemon.Nidoqueen;
-import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
-import ch.epfl.cs107.icmon.area.ICMonArea;
+import ch.epfl.cs107.icmon.actor.pokemon.*;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.gamelogic.actions.LeaveAreaAction;
 import ch.epfl.cs107.icmon.gamelogic.events.PokemonFightEvent;
@@ -30,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ICMonPlayer extends ICMonActor implements Interactor {
+public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner {
 
     private enum SpriteType { SWIMMING_SPRITE, RUNNING_SPRITE };
 
@@ -46,8 +42,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
     final private ICMon.ICMonEventManager eventManager;
     private Dialog dialog;
     private boolean inDialog = false;
-    private ArrayList<Pokemon> pokemons = new ArrayList<>();
     final private Area spawningArea;
+    final private ArrayList<Pokemon> pokemons = new ArrayList<>();
 
     public ICMonPlayer(Area area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMon.ICMonGameState gameState, ICMon.ICMonEventManager eventManager) {
         super(area, orientation, spawnPosition);
@@ -59,21 +55,9 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         this.spawningArea = area;
     }
 
-    public void giftPokemon(String pokemonName) {
-        switch (pokemonName) {
-            case "latios" -> {
-                this.pokemons.add(new Latios(spawningArea, Orientation.UP, new DiscreteCoordinates(0, 0)));
-            }
-            case "bulbizarre" -> {
-                this.pokemons.add(new Bulbizarre(spawningArea, Orientation.UP, new DiscreteCoordinates(0, 0)));
-            }
-            case "nidoqueen" -> {
-                this.pokemons.add(new Nidoqueen(spawningArea, Orientation.UP, new DiscreteCoordinates(0, 0)));
-            }
-            default -> {
-
-            }
-        }
+    @Override
+    public ArrayList<Pokemon> getPokemons() {
+        return pokemons;
     }
 
     public OrientedAnimation getCurrentOrientedAnimation () {

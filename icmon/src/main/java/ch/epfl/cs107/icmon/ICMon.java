@@ -93,9 +93,10 @@ public final class ICMon extends AreaGame {
 
             IntroductionEvent introductionEvent = new IntroductionEvent(eventManager, player);
             FirstInteractionWithProfOakEvent firstInteractionWithProfOakEvent = new FirstInteractionWithProfOakEvent(eventManager, player);
+            FirstInteractionWithGarryEvent firstInteractionWithGarryEvent = new FirstInteractionWithGarryEvent(eventManager, player, gameState);
             EndOfTheGameEvent endOfTheGameEvent = new EndOfTheGameEvent(eventManager, player);
 
-            events(introductionEvent, firstInteractionWithProfOakEvent, collectBallEvent, endOfTheGameEvent);
+            events(introductionEvent, firstInteractionWithProfOakEvent, collectBallEvent, firstInteractionWithGarryEvent, endOfTheGameEvent);
 
             return true;
         }

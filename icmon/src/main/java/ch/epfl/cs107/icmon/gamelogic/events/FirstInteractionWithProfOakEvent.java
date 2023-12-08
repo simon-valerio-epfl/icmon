@@ -21,11 +21,9 @@ public class FirstInteractionWithProfOakEvent extends ICMonEvent {
     @Override
     public void update(float deltaTime) {
         // lazy evaluation, we can access dialog
-        System.out.println(this.isInDialog ? this.dialog.isCompleted() : "pas en dialogue");
         if (this.isInDialog && this.dialog.isCompleted()) {
             this.isInDialog = false;
-            getPlayer().giftPokemon("latios");
-            System.out.println(isFinalInDialog);
+            getPlayer().addPokemon("latios");
             if (isFinalInDialog) this.complete();
         }
     }

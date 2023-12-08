@@ -95,6 +95,7 @@ public abstract class ICMonEvent implements Updatable, ICMonInteractionVisitor {
     protected ICMonPlayer getPlayer() {
         return player;
     }
+
     protected ICMon.ICMonEventManager getEventManager() { return eventManager; }
 
 }
