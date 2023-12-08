@@ -166,11 +166,19 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
             System.out.println("Something bad is happening. WHAT HAVE YOU CREATED?");
             return;
         }
-        ICMonFight ourFight = new ICMonFight(this.pokemons.get(0), (Pokemon) actor);
-        PokemonFightEvent pokemonFightEvent = new PokemonFightEvent(eventManager, this, ourFight);
-        this.gameState.createSuspendWithEventMessage(pokemonFightEvent);
 
-        pokemonFightEvent.onComplete(new LeaveAreaAction((ICMonActor) actor));
+        if (this.pokemons.isEmpty()) {
+            this.orientate(Orientation.DOWN);
+            this.move(1);
+            this.openDialog(new Dialog("no_pokemon"));
+        } else {
+            ICMonFight ourFight = new ICMonFight(this.pokemons.get(0), (Pokemon) actor);
+            PokemonFightEvent pokemonFightEvent = new PokemonFightEvent(eventManager, this, ourFight);
+            this.gameState.createSuspendWithEventMessage(pokemonFightEvent);
+
+            pokemonFightEvent.onComplete(new LeaveAreaAction((ICMonActor) actor));
+        }
+
     }
 
     private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor {
