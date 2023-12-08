@@ -1,6 +1,7 @@
 package ch.epfl.cs107.icmon.actor.pokemon;
 
 import ch.epfl.cs107.icmon.area.ICMonArea;
+import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightAction;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
@@ -13,7 +14,7 @@ public class Latios extends Pokemon {
     private final static int DAMAGE = 1;
 
     public Latios(ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition) {
-        super(area, orientation, spawnPosition, POKEMON_NAME, MAX_HP, DAMAGE, new ArrayList<>());
+        super(area, orientation, spawnPosition, POKEMON_NAME, MAX_HP, DAMAGE, new ICMonFightAction[]{});
     }
 
 }
