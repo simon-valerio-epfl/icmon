@@ -53,9 +53,6 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         this.gameState = gameState;
 
         // test
-        this.pokemons.add(new Bulbizarre(area, Orientation.DOWN, spawnPosition));
-        this.pokemons.add(new Latios(area, Orientation.DOWN, spawnPosition));
-        this.pokemons.add(new Nidoqueen(area, Orientation.DOWN, spawnPosition));
     }
 
     public OrientedAnimation getCurrentOrientedAnimation () {
