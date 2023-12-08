@@ -3,6 +3,8 @@ package ch.epfl.cs107.icmon.area.maps;
 import ch.epfl.cs107.icmon.actor.area_entities.Door;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
+import ch.epfl.cs107.icmon.actor.npc.ProfOak;
+import ch.epfl.cs107.icmon.actor.pokemon.Bulbizarre;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
 import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
@@ -36,6 +38,9 @@ public final class Lab extends ICMonArea {
 
         Door doorToTown = new Door("town", new DiscreteCoordinates(15, 23), this, new DiscreteCoordinates(6, 1), new DiscreteCoordinates(7, 1));
         registerActor(doorToTown);
+
+        ProfOak profOak = new ProfOak(this, Orientation.DOWN, new DiscreteCoordinates(11,7));
+        registerActor(profOak);
     }
 
     @Override

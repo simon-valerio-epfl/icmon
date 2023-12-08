@@ -42,6 +42,9 @@ public final class Town extends ICMonArea {
         registerActor(doorToLab);
         Door doorToArena = new Door("arena", new DiscreteCoordinates(4, 2), this, new DiscreteCoordinates(20, 16));
         registerActor(doorToArena);
+        Door doorToHouse = new Door("house", new DiscreteCoordinates(2,2), this, new DiscreteCoordinates(7,27));registerActor(doorToArena);
+        registerActor(doorToHouse);
+
     }
 
     @Override
