@@ -21,7 +21,7 @@ public class ICMonChainedEvent extends ICMonEvent{
         this.currentEvent.start();
         this.currentEvent.onComplete(new StartEventAction(eventList.get(0)));
 
-        for (int i = 1; i < eventList.size() - 1; i++) {
+        for (int i = 0; i < eventList.size() - 1; i++) {
             eventList.get(i).onComplete(new StartEventAction(eventList.get(i+1)));
         }
 

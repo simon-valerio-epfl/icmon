@@ -135,7 +135,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         if (b.isDown()) {
             if (!isDisplacementOccurs()) {
                 orientate(orientation);
-                move(MOVE_DURATION);
+                move(MOVE_DURATION-3);
             }
         }
     }

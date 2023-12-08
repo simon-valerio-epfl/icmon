@@ -11,6 +11,7 @@ import ch.epfl.cs107.icmon.gamelogic.actions.*;
 import ch.epfl.cs107.icmon.gamelogic.events.*;
 import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
+import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.engine.PauseMenu;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -20,6 +21,8 @@ import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * ???
@@ -29,7 +32,9 @@ public final class ICMon extends AreaGame {
     /** ??? */
     public final static float CAMERA_SCALE_FACTOR = 13.f;
     /** ??? */
-    private final static String STARTING_MAP = "town";
+    private final static String STARTING_MAP = "lab";
+    private final static String BALL_STARTING_MAP = "town";
+    private final Map<String, Area> eventAreas = new HashMap<>();
     /** ??? */
     private ICMonPlayer player;
     /** ??? */
@@ -43,12 +48,20 @@ public final class ICMon extends AreaGame {
      * ???
      */
     private void createAreas() {
+        eventAreas.clear();
         Town town = new Town();
         addArea(town);
+        eventAreas.put("town", town);
         Lab lab = new Lab();
         addArea(lab);
+        eventAreas.put("lab", lab);
         Arena arena = new Arena();
         addArea(arena);
+        eventAreas.put("arena", arena);
+
+        for (Area area : eventAreas.values()) {
+            area.begin(getWindow(), getFileSystem());
+        }
     }
 
     /**
@@ -67,7 +80,7 @@ public final class ICMon extends AreaGame {
             createAreas();
             initArea(STARTING_MAP);
 
-            ICMonArea townArea = (ICMonArea) getCurrentArea();
+            ICMonArea townArea = (ICMonArea) eventAreas.get("town");
             ICBall ball = new ICBall(townArea, new DiscreteCoordinates(6, 6));
             ICMonEvent collectBallEvent = new CollectItemEvent(eventManager, player, ball);
             RegisterInAreaAction registerBall = new RegisterInAreaAction(townArea, ball);
@@ -78,7 +91,7 @@ public final class ICMon extends AreaGame {
             FirstInteractionWithProfOakEvent firstInteractionWithProfOakEvent = new FirstInteractionWithProfOakEvent(eventManager, player);
             EndOfTheGameEvent endOfTheGameEvent = new EndOfTheGameEvent(eventManager, player);
 
-            events(collectBallEvent, endOfTheGameEvent);
+            events(firstInteractionWithProfOakEvent, collectBallEvent, endOfTheGameEvent);
 
             return true;
         }
@@ -113,7 +126,6 @@ public final class ICMon extends AreaGame {
         //System.out.println("Analyzing " + events.size() + " events");
         events.forEach((ICMonEvent event) -> {
             if (!event.isSuspended()) {
-                System.out.println("Updating 1 event");
                 event.update(deltaTime);
             }
         });
