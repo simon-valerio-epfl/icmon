@@ -8,9 +8,7 @@ import ch.epfl.cs107.icmon.area.maps.Arena;
 import ch.epfl.cs107.icmon.area.maps.Lab;
 import ch.epfl.cs107.icmon.area.maps.Town;
 import ch.epfl.cs107.icmon.gamelogic.actions.*;
-import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
-import ch.epfl.cs107.icmon.gamelogic.events.EndOfTheGameEvent;
-import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
+import ch.epfl.cs107.icmon.gamelogic.events.*;
 import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.engine.PauseMenu;
@@ -77,15 +75,19 @@ public final class ICMon extends AreaGame {
             collectBallEvent.onStart(registerBall);
             collectBallEvent.onComplete(new LogAction("player is interacting with ball!"));
 
+            FirstInteractionWithProfOakEvent firstInteractionWithProfOakEvent = new FirstInteractionWithProfOakEvent(eventManager, player);
             EndOfTheGameEvent endOfTheGameEvent = new EndOfTheGameEvent(eventManager, player);
 
-            collectBallEvent.onComplete(new StartEventAction(endOfTheGameEvent));
-
-            collectBallEvent.start();
+            events(collectBallEvent, endOfTheGameEvent);
 
             return true;
         }
         return false;
+    }
+
+    public void events (ICMonEvent initialEvent, ICMonEvent ...events) {
+        ICMonChainedEvent icMonChainedEvent = new ICMonChainedEvent(eventManager, player, initialEvent, events);
+        icMonChainedEvent.start();
     }
 
     /**
@@ -102,7 +104,6 @@ public final class ICMon extends AreaGame {
             reset();
         }
 
-        System.out.println(startingEvents.size());
         events.addAll(startingEvents);
         events.removeAll(completedEvents);
 

@@ -3,6 +3,7 @@ package ch.epfl.cs107.icmon.gamelogic.events;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.gamelogic.actions.CompleteEventAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.RegisterEventAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.StartEventAction;
 
 import java.util.Arrays;
@@ -17,6 +18,7 @@ public class ICMonChainedEvent extends ICMonEvent{
         LinkedList<ICMonEvent> eventList = new LinkedList<>(Arrays.asList(chain));
 
         this.currentEvent = initialEvent;
+        this.currentEvent.start();
         this.currentEvent.onComplete(new StartEventAction(eventList.get(0)));
 
         for (int i = 1; i < eventList.size() - 1; i++) {

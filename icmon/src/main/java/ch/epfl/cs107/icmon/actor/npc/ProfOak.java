@@ -7,7 +7,7 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
 public class ProfOak extends NPCActor {
-    final private static String SPRITE_NAME = "actors/oak";
+    final private static String SPRITE_NAME = "actors/prof-oak";
 
     public ProfOak (ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition) {
         super(area, orientation, spawnPosition, SPRITE_NAME);
@@ -17,6 +17,5 @@ public class ProfOak extends NPCActor {
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
         ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
     }
-
 
 }
