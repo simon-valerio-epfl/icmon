@@ -33,7 +33,6 @@ public final class ICMon extends AreaGame {
     public final static float CAMERA_SCALE_FACTOR = 13.f;
     /** ??? */
     private final static String STARTING_MAP = "lab";
-    private final static String BALL_STARTING_MAP = "town";
     private final Map<String, Area> eventAreas = new HashMap<>();
     /** ??? */
     private ICMonPlayer player;
@@ -80,7 +79,7 @@ public final class ICMon extends AreaGame {
             createAreas();
             initArea(STARTING_MAP);
 
-            ICMonArea townArea = (ICMonArea) eventAreas.get("town");
+            ICMonArea townArea = (ICMonArea) eventAreas.get(ICBall.getSpawningArea());
             ICBall ball = new ICBall(townArea, new DiscreteCoordinates(6, 6));
             ICMonEvent collectBallEvent = new CollectItemEvent(eventManager, player, ball);
             RegisterInAreaAction registerBall = new RegisterInAreaAction(townArea, ball);

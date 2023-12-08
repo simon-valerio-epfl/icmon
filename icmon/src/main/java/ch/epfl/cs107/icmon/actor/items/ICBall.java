@@ -9,9 +9,14 @@ import ch.epfl.cs107.play.window.Canvas;
 import java.util.List;
 
 public class ICBall extends ICMonItem {
-    private static String SPRITE_NAME = "items/icball";
+    final private static String SPRITE_NAME = "items/icball";
+    final private static String SPAWNING_AREA = "town";
     public ICBall(ICMonArea area, DiscreteCoordinates spawnPosition) {
         super(area, spawnPosition, SPRITE_NAME);
+    }
+
+    static public String getSpawningArea() {
+        return SPAWNING_AREA;
     }
 
     @Override
