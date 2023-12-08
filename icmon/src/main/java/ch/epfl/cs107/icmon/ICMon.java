@@ -31,20 +31,14 @@ public final class ICMon extends AreaGame {
     /** ??? */
     public final static float CAMERA_SCALE_FACTOR = 13.f;
     /** ??? */
-    // todo fabrice ce truc est implémenté dans la classe AreaGame, on peut pas
-    // récupérer l'aire directement depuis la classe d'en haut au lieu de faire
-    // notre propre map ?
-    //private final Map<String, Area> areas = new HashMap<>();
     private final static String STARTING_MAP = "town";
     /** ??? */
     private ICMonPlayer player;
     /** ??? */
-    private ArrayList<ICMonEvent> events = new ArrayList<>();
-    private ArrayList<ICMonEvent> startingEvents = new ArrayList<>();
-    private ArrayList<ICMonEvent> completedEvents = new ArrayList<>();
-    private ArrayList<ICMonEvent> suspendingEvents = new ArrayList<>();
-    private ArrayList<ICMonEvent> resumingEvents = new ArrayList<>();
-    private ICMonGameState gameState = new ICMonGameState();
+    private final ArrayList<ICMonEvent> events = new ArrayList<>();
+    private final ArrayList<ICMonEvent> startingEvents = new ArrayList<>();
+    private final ArrayList<ICMonEvent> completedEvents = new ArrayList<>();
+    private final ICMonGameState gameState = new ICMonGameState();
 
     /**
      * ???
@@ -68,9 +62,6 @@ public final class ICMon extends AreaGame {
      */
     @Override
     public boolean begin(Window window, FileSystem fileSystem) {
-
-        // todo should we remove the actors and the areas?
-
         startingEvents.clear();
         completedEvents.clear();
         events.clear();
@@ -79,7 +70,6 @@ public final class ICMon extends AreaGame {
             createAreas();
             initArea(STARTING_MAP);
 
-            // todo: créer une fonction getAreaFromName()
             ICMonArea townArea = (ICMonArea) getCurrentArea();
             ICBall ball = new ICBall(townArea, new DiscreteCoordinates(6, 6));
             ICMonEvent collectBallEvent = new CollectItemEvent(ball, player);
@@ -200,14 +190,14 @@ public final class ICMon extends AreaGame {
         return new ICMonPauseControlImpl();
     }
 
-    public class GamePlayMessage {
+    public static class GamePlayMessage {
         public void process() {
 
         }
     }
 
-    public class PassDoorMessage extends GamePlayMessage {
-        private Door door;
+    private class PassDoorMessage extends GamePlayMessage {
+        private final Door door;
         public PassDoorMessage (Door door) {
             this.door = door;
         }
@@ -221,8 +211,8 @@ public final class ICMon extends AreaGame {
         }
     }
 
-    public class SuspendWithEventMessage extends GamePlayMessage {
-        private ICMonEvent event;
+    private class SuspendWithEventMessage extends GamePlayMessage {
+        private final ICMonEvent event;
 
         public SuspendWithEventMessage (ICMonEvent event) { this.event = event; }
 
@@ -232,7 +222,7 @@ public final class ICMon extends AreaGame {
                 event.onStart(new PauseGameAction(getPauseControl(), event.getPauseMenu()));
                 event.onComplete(new ResumeGameAction(getPauseControl()));
 
-                for (ICMonEvent eventToSuspend : events) {
+                for (ICMonEvent eventToSuspend: events) {
                     event.onStart(new SuspendEventAction(eventToSuspend));
                     event.onComplete(new ResumeEventAction(eventToSuspend));
                 }
@@ -258,16 +248,13 @@ public final class ICMon extends AreaGame {
             }
         }
 
-        public void send (GamePlayMessage message) {
-            this.message = message;
+        public void createPassDoorMessage (Door door) {
+            this.message = new PassDoorMessage(door);
         }
 
-        // todo comment faire mieux ?
-        public PassDoorMessage createPassDoorMessage (Door door) {
-            return new PassDoorMessage(door);
+        public void createSuspendWithEventMessage (ICMonEvent event) {
+            this.message = new SuspendWithEventMessage(event);
         }
-
-        public SuspendWithEventMessage createSuspendWithEventMessage (ICMonEvent event) { return new SuspendWithEventMessage(event); }
 
         public void readMessage () {
             if (this.message != null) {

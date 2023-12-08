@@ -11,8 +11,7 @@ import java.util.List;
 
 public abstract class ICMonActor extends MovableAreaEntity {
 
-    // todo demander à fabrice. créer constructeur classe abstraite ??
-    public ICMonActor(ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition) {
+    public ICMonActor(Area area, Orientation orientation, DiscreteCoordinates spawnPosition) {
         super(area, orientation, spawnPosition);
         resetMotion();
     }

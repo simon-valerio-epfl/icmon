@@ -16,7 +16,7 @@ public class EndOfTheGameEvent extends ICMonEvent {
             System.out.println("I heard that you collected the ball");
 
             Dialog dialog = new Dialog("end_of_game_event_interaction_with_icshopassistant");
-            this.player.openDialog(dialog);
+            getPlayer().openDialog(dialog);
 
             this.complete();
         }

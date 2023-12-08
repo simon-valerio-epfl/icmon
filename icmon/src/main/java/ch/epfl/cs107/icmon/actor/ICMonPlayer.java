@@ -166,8 +166,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         }
         ICMonFight ourFight = new ICMonFight(this.pokemons.get(0), (Pokemon) actor);
         PokemonFightEvent pokemonFightEvent = new PokemonFightEvent(this, ourFight);
-        ICMon.SuspendWithEventMessage message = this.gameState.createSuspendWithEventMessage(pokemonFightEvent);
-        this.gameState.send(message);
+        this.gameState.createSuspendWithEventMessage(pokemonFightEvent);
 
         pokemonFightEvent.onComplete(new LeaveAreaAction((ICMonActor) actor));
     }
@@ -200,7 +199,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor {
         @Override
         public void interactWith(Door door, boolean isCellInteraction) {
             if (isCellInteraction) {
-                gameState.send(gameState.createPassDoorMessage(door));
+                gameState.createPassDoorMessage(door);
             }
         }
 

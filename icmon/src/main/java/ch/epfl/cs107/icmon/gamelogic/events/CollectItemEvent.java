@@ -7,11 +7,9 @@ import ch.epfl.cs107.play.engine.actor.Dialog;
 
 public class CollectItemEvent extends ICMonEvent {
     final private ICMonItem item;
-    final private ICMonPlayer player;
     public CollectItemEvent(ICMonItem item, ICMonPlayer player) {
         super(player);
         this.item = item;
-        this.player = player;
     }
 
     @Override
@@ -26,6 +24,6 @@ public class CollectItemEvent extends ICMonEvent {
         System.out.println("This is an interaction between the player and ICShopAssistant based on events !");
 
         Dialog dialog = new Dialog("collect_item_event_interaction_with_icshopassistant");
-        player.openDialog(dialog);
+        getPlayer().openDialog(dialog);
     }
 }
