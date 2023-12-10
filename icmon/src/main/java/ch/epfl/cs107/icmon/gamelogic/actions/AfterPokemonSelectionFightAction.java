@@ -25,11 +25,8 @@ public class AfterPokemonSelectionFightAction implements Action {
     }
 
     public AfterPokemonSelectionFightAction(ICMonPlayer player, ICMon.ICMonEventManager eventManager, Pokemon pokemon, Pokemon opponentPokemon, ICMonActor actor) {
-        this.player = player;
-        this.eventManager = eventManager;
-        this.pokemon = pokemon;
-        this.opponentPokemon = opponentPokemon;
-        hasRealOpponent = true;
+        this(player, eventManager, pokemon, opponentPokemon);
+        this.actor = actor;
     }
 
     public void perform() {

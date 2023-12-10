@@ -27,7 +27,7 @@ import java.util.List;
 public abstract class Pokemon extends ICMonActor implements ICMonFightableActor {
     private final PokemonProperties properties;
     private final RPGSprite sprite;
-    private ArrayList<ICMonFightAction> actions;
+    private final List<ICMonFightAction> actions;
     private final static ICMonFightAction ATTACK_ACTION = new AttackFightAction();
     private final static ICMonFightAction RUN_AWAY_ACTION = new RunAwayFightAction();
     private final static ICMonFightAction[] DEFAULT_ACTIONS = {ATTACK_ACTION, RUN_AWAY_ACTION};
