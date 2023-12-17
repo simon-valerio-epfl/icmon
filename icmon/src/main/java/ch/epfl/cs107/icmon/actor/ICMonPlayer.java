@@ -171,8 +171,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         this.gameState.createSuspendWithEventMessage(pokemonFightEvent);
     }
 
-    public void fight(ICMonFightableActor actor) {
-        if (!(actor instanceof Pokemon)) {
+    public void fight(ICMonFightableActor fightable, ICMonActor fightableOwner) {
+        if (!(fightable instanceof Pokemon)) {
             System.out.println("Something bad is happening. WHAT HAVE YOU CREATED?");
             return;
         }
@@ -187,7 +187,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
             PokemonSelectionEvent pokemonSelectionEvent = new PokemonSelectionEvent(eventManager, this, pokemonSelectionMenu);
             this.gameState.createSuspendWithEventMessage(pokemonSelectionEvent);
 
-            pokemonSelectionEvent.onComplete(new AfterPokemonSelectionFightAction(this, this.eventManager, pokemonSelectionMenu, (Pokemon) actor));
+            pokemonSelectionEvent.onComplete(new AfterPokemonSelectionFightAction(this, this.eventManager, pokemonSelectionMenu, (Pokemon) fightable, fightableOwner));
         }
 
     }
@@ -227,7 +227,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         @Override
         public void interactWith(ICMonFightableActor actor, boolean isCellInteraction) {
             if (isCellInteraction) {
-                fight(actor);
+                fight(actor, null);
             }
         }
     }

@@ -23,10 +23,7 @@ public class FirstInteractionWithGarryEvent extends ICMonEvent {
     public void interactWith(Garry garry, boolean isCellInteraction) {
         if (this.isStarted() && !this.isCompleted()) {
             Pokemon garryPokemon = garry.getPokemons().get(0);
-            ICMonFight ourFight = new ICMonFight(getPlayer().getPokemons().get(0), garry.getPokemons().get(0));
-            PokemonFightEvent pokemonFightEvent = new PokemonFightEvent(getEventManager(), getPlayer(), ourFight);
-            this.gameState.createSuspendWithEventMessage(pokemonFightEvent);
-            pokemonFightEvent.onComplete(new LeaveAreaPokemonDeadAction(garry, garryPokemon));
+            getPlayer().fight(garryPokemon, garry);
         }
     }
 

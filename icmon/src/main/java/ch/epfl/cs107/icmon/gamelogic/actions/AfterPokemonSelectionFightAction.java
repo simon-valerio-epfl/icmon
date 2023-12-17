@@ -35,9 +35,12 @@ public class AfterPokemonSelectionFightAction implements Action {
         PokemonFightEvent pokemonFightEvent = new PokemonFightEvent(eventManager, player, ourFight);
         player.suspendGameWithFightEvent(pokemonFightEvent);
 
-        pokemonFightEvent.onComplete(new LeaveAreaAction(opponentPokemon));
         if (actor != null) {
             pokemonFightEvent.onComplete(new LeaveAreaAction(actor));
+            // note: no need to make the pokemon leave if we fight a pokemon owner
+            // it's stored in the pocket :)
+        } else {
+            pokemonFightEvent.onComplete(new LeaveAreaAction(opponentPokemon));
         }
     }
 }
