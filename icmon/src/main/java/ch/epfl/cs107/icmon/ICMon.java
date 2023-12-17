@@ -244,6 +244,7 @@ public final class ICMon extends AreaGame {
         @Override
         public void process() {
             if (event.hasPauseMenu()) {
+                System.out.println("changing pause menu!");
                 event.onStart(new PauseGameAction(getPauseControl(), event.getPauseMenu()));
                 event.onComplete(new ResumeGameAction(getPauseControl()));
 

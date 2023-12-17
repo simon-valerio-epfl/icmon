@@ -5,6 +5,7 @@ import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightAction;
 import ch.epfl.cs107.play.engine.Updatable;
 import ch.epfl.cs107.play.engine.actor.Graphics;
 import ch.epfl.cs107.play.engine.actor.GraphicsEntity;
+import ch.epfl.cs107.play.engine.actor.ImageGraphics;
 import ch.epfl.cs107.play.engine.actor.TextGraphics;
 import ch.epfl.cs107.play.math.TextAlign;
 import ch.epfl.cs107.play.math.Vector;
@@ -14,6 +15,7 @@ import ch.epfl.cs107.play.window.Keyboard;
 import java.awt.*;
 import java.util.List;
 
+import static ch.epfl.cs107.play.io.ResourcePath.getBackground;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static java.util.Objects.nonNull;
@@ -36,6 +38,7 @@ public final class ICMonFightPokemonSelectionGraphics extends ICMonFightInteract
     private final Graphics header;
 
     private Pokemon choice;
+    private ImageGraphics background;
 
     private int currentChoice;
 
@@ -48,6 +51,7 @@ public final class ICMonFightPokemonSelectionGraphics extends ICMonFightInteract
         selectors = new GraphicsEntity[3];
         header = new GraphicsEntity(new Vector(scaleFactor / 2f, scaleFactor / 3 - 1f), new TextGraphics("Please, select an action", FONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE,  1f, 1003));
         currentChoice = 0;
+        background = new ImageGraphics(getBackground("fight"), scaleFactor, scaleFactor * 2 / 3);
     }
 
     @Override
@@ -81,9 +85,11 @@ public final class ICMonFightPokemonSelectionGraphics extends ICMonFightInteract
 
     @Override
     public void draw(Canvas canvas) {
+        System.out.println("pokemon selection is drawn");
         super.draw(canvas);
         // HR : Draw the header
         header.draw(canvas);
+        background.draw(canvas);
         // HR : Draw the selectors that are visible (not null)
         for (var selector : selectors)
             if(nonNull(selector))

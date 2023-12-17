@@ -22,6 +22,7 @@ public class PokemonSelectionMenu extends PauseMenu {
 
     @Override
     protected void drawMenu(Canvas c) {
+        System.out.println("draw menu of pokemon selection");
         this.arena.draw(c);
     }
 

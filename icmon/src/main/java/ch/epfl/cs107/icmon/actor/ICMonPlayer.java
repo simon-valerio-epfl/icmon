@@ -123,7 +123,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         if (b.isDown()) {
             if (!isDisplacementOccurs()) {
                 orientate(orientation);
-                move(MOVE_DURATION-3);
+                move(MOVE_DURATION-5);
             }
         }
     }
