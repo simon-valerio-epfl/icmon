@@ -22,7 +22,6 @@ public class PokemonSelectionEvent extends ICMonEvent {
 
     @Override
     public boolean hasPauseMenu() {
-        System.out.println("pokemon selection has pause menu? yes!");
         return true;
     }
 
