@@ -13,6 +13,7 @@ import ch.epfl.cs107.play.window.Keyboard;
 public class PokemonSelectionMenu extends PauseMenu {
     private ICMonPlayer player;
     private ICMonFightPokemonSelectionGraphics arena;
+    private boolean arenaCreated = false;
     private boolean isSelected = false;
 
     public PokemonSelectionMenu(ICMonPlayer player) {
@@ -25,7 +26,12 @@ public class PokemonSelectionMenu extends PauseMenu {
     }
 
     public void update(float deltaTime) {
+        if (!arenaCreated) {
+            this.arena = new ICMonFightPokemonSelectionGraphics(CAMERA_SCALE_FACTOR, getKeyboard(), this.player.getPokemons());
+            arenaCreated = true;
+        }
         this.arena.update(deltaTime);
+        System.out.println(this.arena.choice());
         if (this.arena.choice() != null) {
             isSelected = true;
         }

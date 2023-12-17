@@ -185,7 +185,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
             PokemonSelectionEvent pokemonSelectionEvent = new PokemonSelectionEvent(eventManager, this, pokemonSelectionMenu);
             this.gameState.createSuspendWithEventMessage(pokemonSelectionEvent);
 
-            pokemonSelectionEvent.onComplete(new AfterPokemonSelectionFightAction(this, this.eventManager, pokemonSelectionMenu.getPokemon(), (Pokemon) actor));
+            pokemonSelectionEvent.onComplete(new AfterPokemonSelectionFightAction(this, this.eventManager, pokemonSelectionMenu, (Pokemon) actor));
         }
 
     }

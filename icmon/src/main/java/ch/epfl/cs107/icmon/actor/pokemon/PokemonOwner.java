@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 public interface PokemonOwner {
 
+    // Note : tous les owners de pokémons auront la même poker
+    // C'est le comportement prévu.
     MyPocket pocket = new MyPocket();
 
     default void addPokemon(String pokemonName) {

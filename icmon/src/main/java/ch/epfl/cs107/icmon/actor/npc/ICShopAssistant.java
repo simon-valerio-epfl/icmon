@@ -18,6 +18,7 @@ public class ICShopAssistant extends NPCActor {
 
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
+        System.out.println("test");
         ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
     }
 
