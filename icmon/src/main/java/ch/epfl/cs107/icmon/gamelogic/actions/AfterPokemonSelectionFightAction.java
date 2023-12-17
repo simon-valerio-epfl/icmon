@@ -35,6 +35,9 @@ public class AfterPokemonSelectionFightAction implements Action {
         PokemonFightEvent pokemonFightEvent = new PokemonFightEvent(eventManager, player, ourFight);
         player.suspendGameWithFightEvent(pokemonFightEvent);
 
-        pokemonFightEvent.onComplete(new LeaveAreaAction((ICMonActor) actor));
+        pokemonFightEvent.onComplete(new LeaveAreaAction(opponentPokemon));
+        if (actor != null) {
+            pokemonFightEvent.onComplete(new LeaveAreaAction(actor));
+        }
     }
 }

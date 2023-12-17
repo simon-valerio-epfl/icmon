@@ -30,7 +30,7 @@ public final class ICMon extends AreaGame {
     /** ??? */
     public final static float CAMERA_SCALE_FACTOR = 13.f;
     /** ??? */
-    private final static String STARTING_MAP = "house";
+    private final static String STARTING_MAP = "town";
     private final Map<String, Area> eventAreas = new HashMap<>();
     /** ??? */
     private ICMonPlayer player;

@@ -57,6 +57,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
 
         // todo remove this
         addPokemon("bulbizarre");
+        addPokemon("latios");
+        addPokemon("nidoqueen");
     }
 
     @Override

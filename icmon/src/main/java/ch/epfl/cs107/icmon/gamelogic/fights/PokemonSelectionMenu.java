@@ -22,17 +22,18 @@ public class PokemonSelectionMenu extends PauseMenu {
 
     @Override
     protected void drawMenu(Canvas c) {
-        System.out.println("draw menu of pokemon selection");
-        this.arena.draw(c);
+        if (this.arenaCreated) {
+            this.arena.draw(c);
+        }
     }
 
     public void update(float deltaTime) {
+        super.update(deltaTime);
         if (!arenaCreated) {
             this.arena = new ICMonFightPokemonSelectionGraphics(CAMERA_SCALE_FACTOR, getKeyboard(), this.player.getPokemons());
             arenaCreated = true;
         }
         this.arena.update(deltaTime);
-        System.out.println(this.arena.choice());
         if (this.arena.choice() != null) {
             isSelected = true;
         }
