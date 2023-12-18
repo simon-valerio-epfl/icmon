@@ -217,28 +217,24 @@ public final class ICMon extends AreaGame {
         player.enterArea(currentArea, currentArea.getPlayerSpawnPosition());*/
     }
 
-    public class ICMonPauseControlImpl implements ICMonPauseControl {
-        public void requestPause() {
-            ICMon.this.requestPause();
-        }
+    /**
+     * This action changes the game pause menu.
+     * It is triggered when an event is started.
+     */
+    public class SetPauseMenuAction implements Action {
+        final private PauseMenu pauseMenu;
 
-        public PauseMenu setPauseMenu(PauseMenu menu) {
-            return ICMon.this.setPauseMenu(menu);
+        public SetPauseMenuAction(PauseMenu pauseMenu) {
+            this.pauseMenu = pauseMenu;
         }
-
-        public void requestResume() {
-            ICMon.this.requestResume();
+        @Override
+        public void perform() {
+            setPauseMenu(this.pauseMenu);
         }
-    }
-
-    public ICMonPauseControl getPauseControl() {
-        return new ICMonPauseControlImpl();
     }
 
     public static class GamePlayMessage {
-        public void process() {
-
-        }
+        public void process() {}
     }
 
     private class PassDoorMessage extends GamePlayMessage {
@@ -256,47 +252,41 @@ public final class ICMon extends AreaGame {
         }
     }
 
+    /**
+     * Adds or removes events from the game.
+     */
     public class ICMonEventManager {
-
         public void registerEvent(ICMonEvent event) {
             startingEvents.add(event);
         }
-
         public void unRegisterEvent(ICMonEvent event) {
             completedEvents.add(event);
         }
-
     }
 
     private class SuspendWithEventMessage extends GamePlayMessage {
         private final ICMonEvent event;
-
         public SuspendWithEventMessage (ICMonEvent event) { this.event = event; }
-
         @Override
         public void process() {
             if (event.hasPauseMenu()) {
-                event.onStart(new PauseGameAction(getPauseControl(), event.getPauseMenu()));
-                event.onComplete(new ResumeGameAction(getPauseControl()));
+                event.onStart(new PauseGameAction((PauseMenu.Pausable) this, event.getPauseMenu()));
+                event.onStart(new SetPauseMenuAction(event.getPauseMenu()));
+                event.onComplete(new ResumeGameAction((PauseMenu.Pausable) this));
 
                 for (ICMonEvent eventToSuspend: events) {
                     event.onStart(new SuspendEventAction(eventToSuspend));
                     event.onComplete(new ResumeEventAction(eventToSuspend));
                 }
             }
-
             event.start();
         }
     }
 
     public class ICMonGameState {
-
         private GamePlayMessage message;
-        private Door door;
 
-        private ICMonGameState() {
-
-        }
+        private ICMonGameState() {}
 
         public void acceptInteraction (Interactable interactable, boolean isCellInteraction) {
             for (var event : ICMon.this.events) {
@@ -304,19 +294,33 @@ public final class ICMon extends AreaGame {
             }
         }
 
+        /**
+         * Move the player to the Atlantis arena (only if it's a diver)
+         */
         public void transferToAtlantis() {
             Door door = new Door("atlantis", new DiscreteCoordinates(9, 8), eventAreas.get("atlantis"), new DiscreteCoordinates(7, 11));
             createPassDoorMessage(door);
         }
 
+        /**
+         * Creates a message that will be processed in the read message method.
+         * @param door the door to pass
+         */
         public void createPassDoorMessage (Door door) {
             this.message = new PassDoorMessage(door);
         }
 
+        /**
+         * Creates a message that will be processed in the read message method.
+         * @param event the event to suspend
+         */
         public void createSuspendWithEventMessage (ICMonEvent event) {
             this.message = new SuspendWithEventMessage(event);
         }
 
+        /**
+         * Reads the mailbox in a polymorphic way
+         */
         public void readMessage () {
             if (this.message != null) {
                 this.message.process();

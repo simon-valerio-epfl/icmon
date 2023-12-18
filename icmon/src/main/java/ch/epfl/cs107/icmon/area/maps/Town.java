@@ -47,7 +47,7 @@ public final class Town extends ICMonArea {
         Door doorToShop = new Door("shop", new DiscreteCoordinates(3,2), this, new DiscreteCoordinates(25,20));
         registerActor(doorToShop);
 
-        Balloon balloon = new Balloon(this, Orientation.UP, new DiscreteCoordinates(10, 11));
+        Balloon balloon = new Balloon(this, Orientation.UP, Balloon.getSpawnPosition());
         registerActor(balloon);
 
         ICMagicBall magicBall = new ICMagicBall(this, new DiscreteCoordinates(4, 12));
