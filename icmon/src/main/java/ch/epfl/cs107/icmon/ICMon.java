@@ -108,8 +108,8 @@ public final class ICMon extends AreaGame {
                 System.out.println("oh non wsh il est où le fichier");
             }
 
-            // Official Quest
-            ICMonArea townArea = (ICMonArea) eventAreas.get(ICBall.getSpawningArea());
+            // Setup Official Quest
+            ICMonArea townArea = (ICMonArea) eventAreas.get("town");
             ICBall ball = new ICBall(townArea, new DiscreteCoordinates(6, 6));
             ICMonEvent collectBallEvent = new CollectBallEvent(eventManager, player, ball);
             RegisterInAreaAction registerBall = new RegisterInAreaAction(townArea, ball);
