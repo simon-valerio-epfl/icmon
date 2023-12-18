@@ -14,9 +14,13 @@ import java.util.List;
 
 abstract class NPCActor extends ICMonActor {
     final private Sprite sprite;
-    public NPCActor (ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, String spriteName) {
+    public NPCActor (ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, String spriteName, int scaleFactor) {
         super(area, orientation, spawnPosition);
-        this.sprite = new RPGSprite(spriteName, 1, 1.3215f, this, new RegionOfInterest(0, 0, 16, 21));
+        this.sprite = new RPGSprite(spriteName, scaleFactor, 1.3215f * scaleFactor, this, new RegionOfInterest(0, 0, 16, 21));
+    }
+
+    public NPCActor (ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, String spriteName) {
+        this(area, orientation, spawnPosition, spriteName, 1);
     }
 
     @Override

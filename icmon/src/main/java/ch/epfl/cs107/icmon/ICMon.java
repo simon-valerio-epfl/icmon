@@ -20,6 +20,7 @@ import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
 import ch.epfl.cs107.play.window.swing.SwingSound;
 
+import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.Clip;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -90,7 +91,7 @@ public final class ICMon extends AreaGame {
             initArea(STARTING_MAP);
 
             try {
-                InputStream inputStream = new BufferedInputStream(new FileInputStream("/home/poca/Documents/GitHub/icmon/icmon/src/main/resources/sounds/tf_nemesis.wav"));
+                InputStream inputStream = fileSystem.read(ResourcePath.getSound("tf_nemesis"));
                 SwingSound sound = new SwingSound(inputStream);
 
                 // Obtenir un Clip et le jouer

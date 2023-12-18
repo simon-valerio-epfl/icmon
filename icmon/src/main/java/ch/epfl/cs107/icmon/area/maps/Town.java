@@ -1,7 +1,10 @@
 package ch.epfl.cs107.icmon.area.maps;
 
 import ch.epfl.cs107.icmon.actor.area_entities.Door;
+import ch.epfl.cs107.icmon.actor.items.Gift;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
+import ch.epfl.cs107.icmon.actor.items.ICMagicBall;
+import ch.epfl.cs107.icmon.actor.npc.Balloon;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
@@ -36,7 +39,7 @@ public final class Town extends ICMonArea {
         registerActor(new Foreground(this));
 
         ICShopAssistant assistant = new ICShopAssistant(this, Orientation.DOWN, new DiscreteCoordinates(8, 8));
-        assistant.enterArea(this, new DiscreteCoordinates(8, 8));
+        assistant.enterArea(this, new DiscreteCoordinates(6, 8));
 
         Door doorToLab = new Door("lab", new DiscreteCoordinates(6, 2), this, new DiscreteCoordinates(15, 24));
         registerActor(doorToLab);
@@ -46,6 +49,15 @@ public final class Town extends ICMonArea {
         registerActor(doorToHouse);
         Door doorToShop = new Door("shop", new DiscreteCoordinates(3,2), this, new DiscreteCoordinates(25,20));
         registerActor(doorToShop);
+
+        Balloon balloon = new Balloon(this, Orientation.UP, new DiscreteCoordinates(10, 11));
+        registerActor(balloon);
+
+        ICMagicBall magicBall = new ICMagicBall(this, new DiscreteCoordinates(4, 12));
+        registerActor(magicBall);
+
+        Gift gift = new Gift(this, new DiscreteCoordinates(25, 14));
+        registerActor(gift);
     }
 
     @Override

@@ -14,10 +14,15 @@ import java.util.List;
 
 public abstract class ICMonItem extends CollectableAreaEntity {
     private RPGSprite sprite;
-    public ICMonItem(ICMonArea area, DiscreteCoordinates spawnPosition, String spriteName) {
+    public ICMonItem(ICMonArea area, DiscreteCoordinates spawnPosition, String spriteName, double scaleFactor) {
         super(area, Orientation.DOWN, spawnPosition);
-        this.sprite = new RPGSprite(spriteName, 1f, 1f, this);
+        this.sprite = new RPGSprite(spriteName, (float) (1f * scaleFactor), (float) (1f * scaleFactor), this);
     }
+
+    public ICMonItem(ICMonArea area, DiscreteCoordinates spawnPosition, String spriteName) {
+        this(area, spawnPosition, spriteName, 1);
+    }
+
     @Override
     public boolean takeCellSpace() {
         return true;
