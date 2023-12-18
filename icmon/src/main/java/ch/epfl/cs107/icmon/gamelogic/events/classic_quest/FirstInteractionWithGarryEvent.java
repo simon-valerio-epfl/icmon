@@ -1,14 +1,10 @@
-package ch.epfl.cs107.icmon.gamelogic.events;
+package ch.epfl.cs107.icmon.gamelogic.events.classic_quest;
 
 import ch.epfl.cs107.icmon.ICMon;
-import ch.epfl.cs107.icmon.actor.ICMonActor;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.npc.Garry;
-import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
-import ch.epfl.cs107.icmon.gamelogic.actions.LeaveAreaAction;
-import ch.epfl.cs107.icmon.gamelogic.actions.LeaveAreaPokemonDeadAction;
-import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFight;
+import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 
 public class FirstInteractionWithGarryEvent extends ICMonEvent {
 
@@ -21,7 +17,7 @@ public class FirstInteractionWithGarryEvent extends ICMonEvent {
 
     @Override
     public void interactWith(Garry garry, boolean isCellInteraction) {
-        if (this.isStarted() && !this.isCompleted() && getPlayer().wantsRealViewInteraction()) {
+        if (this.isStarted() && !this.isCompleted()) {
             Pokemon garryPokemon = garry.getPokemons().get(0);
             getPlayer().fight(garryPokemon, garry);
         }

@@ -2,11 +2,14 @@ package ch.epfl.cs107.icmon;
 
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.area_entities.Door;
+import ch.epfl.cs107.icmon.actor.items.ICGift;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.*;
 import ch.epfl.cs107.icmon.gamelogic.actions.*;
-import ch.epfl.cs107.icmon.gamelogic.events.*;
+import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
+import ch.epfl.cs107.icmon.gamelogic.events.choco_quest.CollectGiftEvent;
+import ch.epfl.cs107.icmon.gamelogic.events.classic_quest.*;
 import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.area.Area;
@@ -20,10 +23,7 @@ import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
 import ch.epfl.cs107.play.window.swing.SwingSound;
 
-import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.Clip;
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,6 +68,9 @@ public final class ICMon extends AreaGame {
         Shop shop = new Shop();
         addArea(shop);
         eventAreas.put("shop", shop);
+        Atlantis atlantis = new Atlantis();
+        addArea(atlantis);
+        eventAreas.put("atlantis", atlantis);
 
         for (Area area : eventAreas.values()) {
             area.begin(getWindow(), getFileSystem());
@@ -105,13 +108,12 @@ public final class ICMon extends AreaGame {
                 System.out.println("oh non wsh il est où le fichier");
             }
 
+            // Official Quest
             ICMonArea townArea = (ICMonArea) eventAreas.get(ICBall.getSpawningArea());
             ICBall ball = new ICBall(townArea, new DiscreteCoordinates(6, 6));
-            ICMonEvent collectBallEvent = new CollectItemEvent(eventManager, player, ball);
+            ICMonEvent collectBallEvent = new CollectBallEvent(eventManager, player, ball);
             RegisterInAreaAction registerBall = new RegisterInAreaAction(townArea, ball);
-            collectBallEvent.onStart(new LogAction("the event started !"));
             collectBallEvent.onStart(registerBall);
-            collectBallEvent.onComplete(new LogAction("player is interacting with ball!"));
 
             IntroductionEvent introductionEvent = new IntroductionEvent(eventManager, player);
             FirstInteractionWithProfOakEvent firstInteractionWithProfOakEvent = new FirstInteractionWithProfOakEvent(eventManager, player);
@@ -119,6 +121,14 @@ public final class ICMon extends AreaGame {
             EndOfTheGameEvent endOfTheGameEvent = new EndOfTheGameEvent(eventManager, player);
 
             events(introductionEvent, firstInteractionWithProfOakEvent, collectBallEvent, firstInteractionWithGarryEvent, endOfTheGameEvent);
+
+            // Side choco quest
+            ICGift gift = new ICGift(townArea, new DiscreteCoordinates(25, 14));
+            ICMonEvent collectGiftItem = new CollectGiftEvent(eventManager, player, gift);
+            RegisterInAreaAction registerGift = new RegisterInAreaAction(townArea, gift);
+            collectGiftItem.onStart(registerGift);
+
+            events(collectGiftItem);
 
             return true;
         }

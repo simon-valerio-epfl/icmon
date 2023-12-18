@@ -1,8 +1,9 @@
-package ch.epfl.cs107.icmon.gamelogic.events;
+package ch.epfl.cs107.icmon.gamelogic.events.classic_quest;
 
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
+import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
 public class EndOfTheGameEvent extends ICMonEvent {
@@ -13,7 +14,7 @@ public class EndOfTheGameEvent extends ICMonEvent {
 
     @Override
     public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
-        if (this.isStarted() && !this.isCompleted() && getPlayer().wantsRealViewInteraction()) {
+        if (this.isStarted() && !this.isCompleted()) {
             System.out.println("I heard that you collected the ball");
 
             Dialog dialog = new Dialog("end_of_game_event_interaction_with_icshopassistant");

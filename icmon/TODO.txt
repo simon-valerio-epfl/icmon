@@ -1,0 +1,1 @@
+* gérer les combats en prévoyant quand on perd

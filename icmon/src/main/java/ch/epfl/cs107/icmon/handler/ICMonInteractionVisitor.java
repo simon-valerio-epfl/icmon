@@ -2,14 +2,13 @@ package ch.epfl.cs107.icmon.handler;
 
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.area_entities.Door;
-import ch.epfl.cs107.icmon.actor.items.Gift;
+import ch.epfl.cs107.icmon.actor.items.ICGift;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.items.ICMagicBall;
 import ch.epfl.cs107.icmon.actor.npc.Balloon;
 import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.actor.npc.ProfOak;
-import ch.epfl.cs107.icmon.actor.pokemon.Bulbizarre;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightableActor;
 import ch.epfl.cs107.play.areagame.area.AreaBehavior;
@@ -66,7 +65,7 @@ public interface ICMonInteractionVisitor extends AreaInteractionVisitor {
 
     }
 
-    default void interactWith(Gift gift, boolean isCellInteraction) {
+    default void interactWith(ICGift gift, boolean isCellInteraction) {
 
     }
 

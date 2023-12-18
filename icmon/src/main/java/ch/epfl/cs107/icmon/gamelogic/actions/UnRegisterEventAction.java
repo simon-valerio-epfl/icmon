@@ -3,8 +3,6 @@ package ch.epfl.cs107.icmon.gamelogic.actions;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 
-import java.util.ArrayList;
-
 public class UnRegisterEventAction implements Action {
 
     final private ICMonEvent event;

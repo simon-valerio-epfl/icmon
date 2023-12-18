@@ -1,10 +1,10 @@
-package ch.epfl.cs107.icmon.gamelogic.events;
+package ch.epfl.cs107.icmon.gamelogic.events.classic_quest;
 
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
-import ch.epfl.cs107.icmon.actor.items.ICMonItem;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.gamelogic.actions.OpenDialogAction;
+import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
 public class IntroductionEvent extends ICMonEvent {

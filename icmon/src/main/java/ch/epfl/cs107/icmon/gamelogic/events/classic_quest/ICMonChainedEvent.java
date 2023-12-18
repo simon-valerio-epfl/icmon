@@ -1,15 +1,15 @@
-package ch.epfl.cs107.icmon.gamelogic.events;
+package ch.epfl.cs107.icmon.gamelogic.events.classic_quest;
 
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.gamelogic.actions.CompleteEventAction;
-import ch.epfl.cs107.icmon.gamelogic.actions.RegisterEventAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.StartEventAction;
+import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 
-public class ICMonChainedEvent extends ICMonEvent{
+public class ICMonChainedEvent extends ICMonEvent {
 
     final private ICMonEvent currentEvent;
 
@@ -19,13 +19,17 @@ public class ICMonChainedEvent extends ICMonEvent{
 
         this.currentEvent = initialEvent;
         this.currentEvent.start();
-        this.currentEvent.onComplete(new StartEventAction(eventList.get(0)));
+        if (eventList.isEmpty()) {
+            this.currentEvent.onComplete(new CompleteEventAction(this));
+        } else {
+            this.currentEvent.onComplete(new StartEventAction(eventList.get(0)));
 
-        for (int i = 0; i < eventList.size() - 1; i++) {
-            eventList.get(i).onComplete(new StartEventAction(eventList.get(i+1)));
+            for (int i = 0; i < eventList.size() - 1; i++) {
+                eventList.get(i).onComplete(new StartEventAction(eventList.get(i+1)));
+            }
+
+            eventList.getLast().onComplete(new CompleteEventAction(this));
         }
-
-        eventList.getLast().onComplete(new CompleteEventAction(this));
     }
 
     @Override

@@ -3,25 +3,23 @@ package ch.epfl.cs107.icmon.actor;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.area_entities.Door;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
-import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
+import ch.epfl.cs107.icmon.actor.items.ICGift;
 import ch.epfl.cs107.icmon.actor.pokemon.*;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.gamelogic.actions.AfterPokemonSelectionFightAction;
-import ch.epfl.cs107.icmon.gamelogic.events.PokemonFightEvent;
-import ch.epfl.cs107.icmon.gamelogic.events.PokemonSelectionEvent;
+import ch.epfl.cs107.icmon.gamelogic.events.classic_quest.PokemonFightEvent;
+import ch.epfl.cs107.icmon.gamelogic.events.classic_quest.PokemonSelectionEvent;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightableActor;
 import ch.epfl.cs107.icmon.gamelogic.fights.PokemonSelectionMenu;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.actor.Interactor;
 import ch.epfl.cs107.play.areagame.area.Area;
-import ch.epfl.cs107.play.areagame.area.AreaBehavior;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 import ch.epfl.cs107.play.engine.actor.OrientedAnimation;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
-import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
@@ -47,8 +45,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
     private Dialog dialog;
     private boolean inDialog = false;
     final private ArrayList<Pokemon> pokemons = new ArrayList<>();
-    //private HashMap<Orientation, Boolean> blockedCoordinates = new HashMap();
     private boolean blockNextMove = false;
+    private boolean isDiver = false;
 
     public ICMonPlayer(Area area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMon.ICMonGameState gameState, ICMon.ICMonEventManager eventManager) {
         super(area, orientation, spawnPosition);
@@ -163,13 +161,9 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
 
     @Override
     public boolean wantsViewInteraction() {
-        return true;
-    }
-
-    public boolean wantsUnderWater() {
         Keyboard keyboard = getOwnerArea().getKeyboard();
-        Button wKey = keyboard.get(Keyboard.W);
-        return wKey.isDown() && !this.inDialog;
+        Button lKey = keyboard.get(Keyboard.L);
+        return lKey.isDown() && !this.inDialog;
     }
 
     @Override
@@ -178,10 +172,10 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         this.gameState.acceptInteraction(other, isCellInteraction);
     }
 
-    public boolean wantsRealViewInteraction() {
+    public boolean wantsUnderWater() {
         Keyboard keyboard = getOwnerArea().getKeyboard();
-        Button lKey = keyboard.get(Keyboard.L);
-        return lKey.isDown() && !this.inDialog;
+        Button wKey = keyboard.get(Keyboard.W);
+        return wKey.isDown() && !this.inDialog;
     }
 
     public void openDialog (Dialog dialog) {
@@ -220,14 +214,21 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
             if (isCellInteraction) {
                 switch (cell.getWalkingType()) {
                     case FEET_OR_UNDERWATER -> {
-                        // if the previous sprite was swimming
-                        // and the rights key is pressed
-                        // go underwater!
-                        if (currentSprite.equals(SpriteType.SWIMMING_SPRITE)) {
-                            if (wantsUnderWater()) {
-                                currentSprite = SpriteType.UNDERWATER_SPRITE;
-                            } else {
-                                currentSprite = SpriteType.RUNNING_SPRITE;
+                        if (isDiver) {
+                            // once the player is a diver
+                            // they never get the underwater sprite again
+                            // they are always teleported to the underwater area
+                            currentSprite = SpriteType.RUNNING_SPRITE;
+                        } else {
+                            // if the previous sprite was swimming
+                            // and the rights key is pressed
+                            // go underwater!
+                            if (currentSprite.equals(SpriteType.SWIMMING_SPRITE)) {
+                                if (wantsUnderWater()) {
+                                    currentSprite = SpriteType.UNDERWATER_SPRITE;
+                                } else {
+                                    currentSprite = SpriteType.RUNNING_SPRITE;
+                                }
                             }
                         }
                     }
@@ -242,7 +243,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
                     }
                 }
             } else {
-                blockNextMove = !cell.getWalkingType().equals(ICMonBehavior.AllowedWalkingType.FEET_OR_UNDERWATER) && currentSprite.equals(SpriteType.UNDERWATER_SPRITE);
+                // if the player is swimming
+                // todo check
             }
         }
 
@@ -269,8 +271,18 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
 
         @Override
         public void interactWith(ICBall ball, boolean isCellInteraction) {
-            if (!isCellInteraction && wantsRealViewInteraction()) {
+            if (!isCellInteraction) {
                 ball.collect();
+            }
+        }
+
+        @Override
+        public void interactWith(ICGift gift, boolean isCellInteraction) {
+            if (!isCellInteraction) {
+                gift.collect();
+                openDialog(new Dialog("collect_gift"));
+                // todo change skin of the player
+                isDiver = true;
             }
         }
 

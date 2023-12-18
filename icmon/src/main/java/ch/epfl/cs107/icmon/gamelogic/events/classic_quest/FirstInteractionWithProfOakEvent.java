@@ -1,11 +1,10 @@
-package ch.epfl.cs107.icmon.gamelogic.events;
+package ch.epfl.cs107.icmon.gamelogic.events.classic_quest;
 
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
-import ch.epfl.cs107.icmon.actor.area_entities.Door;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.actor.npc.ProfOak;
-import ch.epfl.cs107.icmon.actor.pokemon.Latios;
+import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
 public class FirstInteractionWithProfOakEvent extends ICMonEvent {
@@ -37,16 +36,15 @@ public class FirstInteractionWithProfOakEvent extends ICMonEvent {
 
     @Override
     public void interactWith(ProfOak profOak, boolean isCellInteraction) {
-        if (this.isStarted() && !this.isCompleted() && getPlayer().wantsRealViewInteraction()) {
+        if (this.isStarted() && !this.isCompleted()) {
             openDialog("first_interaction_with_prof_oak", true);
         }
     }
     @Override
     public void interactWith(ICShopAssistant shopAssistant, boolean isCellInteraction) {
-        if (this.isStarted() && !this.isCompleted() && getPlayer().wantsRealViewInteraction()) {
+        if (this.isStarted() && !this.isCompleted()) {
             openDialog("first_interaction_with_oak_event_icshopassistant", false);
         }
     }
-
 
 }

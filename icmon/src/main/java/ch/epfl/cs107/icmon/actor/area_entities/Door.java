@@ -20,6 +20,7 @@ public class Door extends AreaEntity {
     DiscreteCoordinates mainCoordinates;
     DiscreteCoordinates[] coordinates;
 
+
     public Door (String landingArea, DiscreteCoordinates landingPosition, ICMonArea area, DiscreteCoordinates ...coordinates) {
         super(area, Orientation.UP, coordinates[0]);
         this.landingArea = landingArea;

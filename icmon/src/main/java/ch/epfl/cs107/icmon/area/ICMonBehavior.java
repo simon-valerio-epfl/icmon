@@ -6,7 +6,11 @@ import ch.epfl.cs107.play.areagame.area.AreaBehavior;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.Entity;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
+import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.window.Window;
+
+import java.util.HashMap;
+import java.util.Vector;
 
 public final class ICMonBehavior extends AreaBehavior {
     /**
@@ -25,6 +29,17 @@ public final class ICMonBehavior extends AreaBehavior {
                 setCell(x, y, new ICMonCell(x, y, color));
             }
         }
+    }
+
+    public HashMap<Orientation, ICMonCell> getNeighbouringCells(ICMonCell cell) {
+        HashMap<Orientation, ICMonCell> neighbours = new HashMap<>();
+        for (Orientation orientation : Orientation.values()) {
+            DiscreteCoordinates neighbourCoordinates = cell.getCoordinates().jump(orientation.toVector());
+            if (neighbourCoordinates.x >= 0 && neighbourCoordinates.x < getWidth() && neighbourCoordinates.y >= 0 && neighbourCoordinates.y < getHeight()) {
+                neighbours.put(orientation, (ICMonCell) getCell(neighbourCoordinates.x, neighbourCoordinates.y));
+            }
+        }
+        return neighbours;
     }
 
     public enum AllowedWalkingType {
@@ -84,10 +99,17 @@ public final class ICMonBehavior extends AreaBehavior {
         public ICMonCell(int x, int y, ICMonCellType type) {
             super(x, y);
             this.type = type;
+            if (this.type.type == ICMonCellType.NULL.type) {
+                System.out.println("NULL CELL");
+                System.out.println("x: " + x + " y: " + y);
+            }
         }
 
         public AllowedWalkingType getWalkingType () {
             return this.type.walkingType;
+        }
+        public DiscreteCoordinates getCoordinates () {
+            return new DiscreteCoordinates(this.getCurrentCells().get(0).x, this.getCurrentCells().get(0).y);
         }
 
         @Override

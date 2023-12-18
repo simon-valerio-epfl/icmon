@@ -17,3 +17,11 @@ ajouter les actions
 ### Pokémons
 
 * création d'une aire vide `MyPocket` dédiée aux pokémons qui ne sont jamais affichés, permet d'éviter de faire un choix arbitraire et sans sens
+
+### Actors
+
+* nouveau scaleFactor
+
+### Events
+
+* Meilleure abstraction de `CollectItemEvent` (nouvelles classes `CollectBallEvent`, `CollectGiftEvent`).
