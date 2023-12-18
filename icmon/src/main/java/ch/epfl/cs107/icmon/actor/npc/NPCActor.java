@@ -14,11 +14,27 @@ import java.util.List;
 
 abstract class NPCActor extends ICMonActor {
     final private Sprite sprite;
+
+    /**
+     * @param area
+     * @param orientation
+     * @param spawnPosition
+     * @param spriteName it will be used to draw the actor
+     * @param scaleFactor the dimension he will have when drawn
+     */
     public NPCActor (ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, String spriteName, int scaleFactor) {
         super(area, orientation, spawnPosition);
         this.sprite = new RPGSprite(spriteName, scaleFactor, 1.3215f * scaleFactor, this, new RegionOfInterest(0, 0, 16, 21));
     }
 
+    /**
+     * The scaleFactor is initialised at 1 by default
+     * if not differently specified
+     * @param area
+     * @param orientation
+     * @param spawnPosition
+     * @param spriteName it will be used to draw the actor
+     */
     public NPCActor (ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, String spriteName) {
         this(area, orientation, spawnPosition, spriteName, 1);
     }

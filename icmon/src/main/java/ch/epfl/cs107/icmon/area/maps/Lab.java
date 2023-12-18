@@ -19,17 +19,21 @@ import ch.epfl.cs107.play.math.Orientation;
  */
 public final class Lab extends ICMonArea {
 
+    final static DiscreteCoordinates SPAWNING_POSITION = new DiscreteCoordinates(6, 2);
+
     /**
-     * ???
-     * @return ???
+     *
+     * @return some default spawning coordinates on this area, namely (6,2)
      */
     @Override
     public DiscreteCoordinates getPlayerSpawnPosition() {
-        return new DiscreteCoordinates(6, 2);
+        return SPAWNING_POSITION;
     }
 
     /**
-     * ???
+     * it adds a door taking back to the main Area, town
+     * this area is created with a character, ProfOak,
+     * at some default conditions namely (11, 7)
      */
     @Override
     protected void createArea() {
@@ -49,8 +53,8 @@ public final class Lab extends ICMonArea {
     }
 
     /**
-     * ???
-     * @return ???
+     *
+     * @return the name of this area
      */
     @Override
     public String getTitle() {

@@ -20,6 +20,10 @@ public class PokemonSelectionMenu extends PauseMenu {
         this.player = player;
     }
 
+    /**
+     * draws the menu interface once the fight has started
+     * @param c (Canvas): the context canvas : here the Window
+     */
     @Override
     protected void drawMenu(Canvas c) {
         if (this.arenaCreated) {
@@ -27,6 +31,11 @@ public class PokemonSelectionMenu extends PauseMenu {
         }
     }
 
+    /**
+     * creates the arena
+     * and then waits for the pokemon to be chosen
+     * @param deltaTime elapsed time since last update, in seconds, non-negative
+     */
     public void update(float deltaTime) {
         super.update(deltaTime);
         if (!arenaCreated) {
@@ -39,10 +48,18 @@ public class PokemonSelectionMenu extends PauseMenu {
         }
     }
 
+    /**
+     *
+     * @return the chosen pokemon
+     */
     public Pokemon getPokemon () {
         return this.arena.choice();
     }
 
+    /**
+     *
+     * @return whether the player is still choosing or not
+     */
     public boolean isRunning() {
         return !isSelected;
     }

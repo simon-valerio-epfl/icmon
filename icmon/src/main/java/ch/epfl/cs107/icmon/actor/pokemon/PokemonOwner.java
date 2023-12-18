@@ -11,11 +11,19 @@ import ch.epfl.cs107.play.math.Orientation;
 import java.util.ArrayList;
 
 public interface PokemonOwner {
+    //TODO
+    // Note : every pokemon owner has the same pocket
+    // We chose so because ..hmmmmmm
 
-    // Note : tous les owners de pokémons auront la même poker
-    // C'est le comportement prévu.
     MyPocket pocket = new MyPocket();
 
+    /**
+     * Initialises a new Pokemon according to the given name and adds it to the pocket
+     * Currently, there are three available Pokemon types, namely:
+     * latios, bulbizarre and nidoqueen
+     *
+     * @param pokemonName the type of pokemon you want to add to the pocket
+     */
     default void addPokemon(String pokemonName) {
         switch (pokemonName) {
             case "latios" -> {
@@ -33,5 +41,9 @@ public interface PokemonOwner {
         }
     }
 
+    /**
+     *
+     * @return the list of pokemons belonging to the current instance
+     */
     ArrayList<Pokemon> getPokemons();
 }

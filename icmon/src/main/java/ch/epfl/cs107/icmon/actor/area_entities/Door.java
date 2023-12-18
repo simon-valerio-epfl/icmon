@@ -14,12 +14,21 @@ import java.util.List;
 
 public class Door extends AreaEntity {
 
+
+
     String landingArea;
     DiscreteCoordinates landingPosition;
     ICMonArea area;
     DiscreteCoordinates mainCoordinates;
     DiscreteCoordinates[] coordinates;
 
+    /**
+     * Create a new door in the Area
+     * @param landingArea
+     * @param landingPosition
+     * @param area
+     * @param coordinates
+     */
     public Door (String landingArea, DiscreteCoordinates landingPosition, ICMonArea area, DiscreteCoordinates ...coordinates) {
         super(area, Orientation.UP, coordinates[0]);
         this.landingArea = landingArea;
@@ -29,13 +38,22 @@ public class Door extends AreaEntity {
         this.coordinates = coordinates;
     }
 
+    /**
+     *
+     * @return the name of the landing area
+     */
     public String getLandingArea() {
         return this.landingArea;
     }
 
+    /**
+     *
+     * @return the position where the player will appear on the landing area
+     */
     public DiscreteCoordinates getLandingPosition() {
         return landingPosition;
     }
+
 
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
@@ -43,9 +61,7 @@ public class Door extends AreaEntity {
     }
 
     @Override
-    public void draw(Canvas canvas) {
-
-    }
+    public void draw(Canvas canvas) {}
 
     @Override
     public boolean isViewInteractable() {

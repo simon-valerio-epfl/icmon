@@ -10,8 +10,8 @@ import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
 public class ICMonFight extends PauseMenu {
-
     private enum FightState { INTRODUCTION, SELECT_ACTION, EXECUTE_ACTION, SELECT_OPPONENT_ACTION, CONCLUSION, ENDED };
+
     private enum ConclusionReason { PLAYER_LEFT, OPPONENT_LEFT, PLAYER_DEAD, OPPONENT_DEAD };
     private float timeCounter = 5f;
 
@@ -30,6 +30,11 @@ public class ICMonFight extends PauseMenu {
     private ICMonFightAction selectedAction;
     private ConclusionReason conclusionReason;
 
+    /**
+     * Gets the competitors to the fight arena
+     * @param playerPokemon the main player's one
+     * @param opponent the evil one
+     */
     public ICMonFight(Pokemon playerPokemon, Pokemon opponent) {
         this.playerPokemon = playerPokemon;
         this.opponent = opponent;
@@ -43,6 +48,12 @@ public class ICMonFight extends PauseMenu {
         this.arena.draw(c);
     }
 
+    /**
+     * Carries out the fight,
+     * following the competitors' choices
+     * and the evolution of the battle itself
+     * @param deltaTime elapsed time since last update, in seconds, non-negative
+     */
     public void update(float deltaTime) {
         super.update(deltaTime);
 
@@ -124,6 +135,10 @@ public class ICMonFight extends PauseMenu {
         }
     }
 
+    /**
+     *
+     * @return whether the fight is still going on
+     */
     public boolean isRunning() {
         return !(this.state == FightState.ENDED);
     }

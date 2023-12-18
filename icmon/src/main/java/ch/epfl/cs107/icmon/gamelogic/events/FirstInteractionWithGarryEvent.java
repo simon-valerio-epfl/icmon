@@ -19,6 +19,14 @@ public class FirstInteractionWithGarryEvent extends ICMonEvent {
         this.gameState = gameState;
     }
 
+    /**
+     * While this event is active,
+     * there can be a fight between a pokemon belonging to the owner
+     * and the first one belonging to a garry
+     * following a proximity interaction
+     * @param garry an opponent
+     * @param isCellInteraction whether it's a proximity interaction(true) or not
+     */
     @Override
     public void interactWith(Garry garry, boolean isCellInteraction) {
         if (this.isStarted() && !this.isCompleted() && getPlayer().wantsRealViewInteraction()) {

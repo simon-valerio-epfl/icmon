@@ -11,6 +11,7 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
 public class MyPocket extends ICMonArea {
+//This is a fictional area where owned pokemons live between a fight and the next one
 
     @Override
     public String getTitle() {

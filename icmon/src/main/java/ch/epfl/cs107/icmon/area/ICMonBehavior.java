@@ -11,6 +11,8 @@ import ch.epfl.cs107.play.window.Window;
 public final class ICMonBehavior extends AreaBehavior {
     /**
      * Default ICMonBehavior Constructor
+     * It creates a 2d array representing the map
+     * and initialises its cells depending on their colour
      *
      * @param window (Window), not null
      * @param name   (String): Name of the Behavior, not null
@@ -27,6 +29,9 @@ public final class ICMonBehavior extends AreaBehavior {
         }
     }
 
+    /**
+     * the possible walking types a cell can have
+     */
     public enum AllowedWalkingType {
         NONE, // None
         SURF, // Only with surf

@@ -11,10 +11,21 @@ import java.util.List;
 public class ICBall extends ICMonItem {
     final private static String SPRITE_NAME = "items/icball";
     final private static String SPAWNING_AREA = "town";
+
+    /**
+     * An istance of the class Ball is characterized by the Area
+     * and the position where it appears
+     * @param area where the ball shall spawn
+     * @param spawnPosition
+     */
     public ICBall(ICMonArea area, DiscreteCoordinates spawnPosition) {
         super(area, spawnPosition, SPRITE_NAME);
     }
 
+    /**
+     *
+     * @return the name of the Area where this ball appeared
+     */
     static public String getSpawningArea() {
         return SPAWNING_AREA;
     }

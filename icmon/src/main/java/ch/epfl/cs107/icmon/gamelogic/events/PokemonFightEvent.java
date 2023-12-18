@@ -8,11 +8,21 @@ import ch.epfl.cs107.play.engine.PauseMenu;
 public class PokemonFightEvent extends ICMonEvent {
 
     private ICMonFight fightPauseMenu;
+
+    /**
+     * This event pauses the game to host a fight
+     * @param eventManager
+     * @param player
+     * @param fightPauseMenu
+     */
     public PokemonFightEvent(ICMon.ICMonEventManager eventManager, ICMonPlayer player, ICMonFight fightPauseMenu) {
         super(eventManager, player);
         this.fightPauseMenu = fightPauseMenu;
     }
 
+    /**
+     * This event completes when the fight ends
+     */
     @Override
     public void update(float deltaTime) {
         if (!this.fightPauseMenu.isRunning()) {
@@ -20,6 +30,10 @@ public class PokemonFightEvent extends ICMonEvent {
         }
     }
 
+    /**
+     * This event has a pause menu
+     * @return
+     */
     @Override
     public boolean hasPauseMenu() {
         return true;

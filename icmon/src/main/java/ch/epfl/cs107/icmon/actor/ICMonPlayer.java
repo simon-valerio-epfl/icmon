@@ -50,6 +50,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
     //private HashMap<Orientation, Boolean> blockedCoordinates = new HashMap();
     private boolean blockNextMove = false;
 
+    //todo document this class
     public ICMonPlayer(Area area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMon.ICMonGameState gameState, ICMon.ICMonEventManager eventManager) {
         super(area, orientation, spawnPosition);
         this.swimmingOrientedAnimation = new OrientedAnimation(SPRITE_SWIMMING_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);

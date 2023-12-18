@@ -12,6 +12,13 @@ import ch.epfl.cs107.play.math.Orientation;
 public class ICShopAssistant extends NPCActor {
     final private static String SPRITE_NAME = "actors/assistant";
 
+
+    /**
+     * This actor has his own sprite
+     * @param area
+     * @param orientation
+     * @param spawnPosition
+     */
     public ICShopAssistant (ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition) {
         super(area, orientation, spawnPosition, SPRITE_NAME);
     }
