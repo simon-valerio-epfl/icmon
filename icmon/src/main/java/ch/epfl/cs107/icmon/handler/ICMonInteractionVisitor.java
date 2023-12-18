@@ -75,4 +75,8 @@ public interface ICMonInteractionVisitor extends AreaInteractionVisitor {
 
     }
 
+    default void interactWith(Pedro pedro, boolean isCellInteraction) {
+
+    }
+
 }

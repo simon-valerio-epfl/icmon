@@ -1,5 +1,6 @@
 package ch.epfl.cs107.icmon;
 
+import ch.epfl.cs107.icmon.actor.ICMonActor;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.area_entities.Door;
 import ch.epfl.cs107.icmon.actor.items.ICGift;
@@ -38,7 +39,7 @@ public final class ICMon extends AreaGame {
     public final static float CAMERA_SCALE_FACTOR = 13.f;
     /** ??? */
     private final static String STARTING_MAP = "house";
-    private final Map<String, Area> eventAreas = new HashMap<>();
+    private final Map<String, ICMonArea> eventAreas = new HashMap<>();
     /** ??? */
     private ICMonPlayer player;
     /** ??? */
@@ -108,31 +109,37 @@ public final class ICMon extends AreaGame {
                 System.out.println("oh non wsh il est où le fichier");
             }
 
-            // Setup Official Quest
-            ICMonArea townArea = (ICMonArea) eventAreas.get("town");
-            ICBall ball = new ICBall(townArea, new DiscreteCoordinates(6, 6));
-            ICMonEvent collectBallEvent = new CollectBallEvent(eventManager, player, ball);
-            RegisterInAreaAction registerBall = new RegisterInAreaAction(townArea, ball);
-            collectBallEvent.onStart(registerBall);
-
-            IntroductionEvent introductionEvent = new IntroductionEvent(eventManager, player);
-            FirstInteractionWithProfOakEvent firstInteractionWithProfOakEvent = new FirstInteractionWithProfOakEvent(eventManager, player);
-            FirstInteractionWithGarryEvent firstInteractionWithGarryEvent = new FirstInteractionWithGarryEvent(eventManager, player, gameState);
-            EndOfTheGameEvent endOfTheGameEvent = new EndOfTheGameEvent(eventManager, player);
-
-            events(introductionEvent, firstInteractionWithProfOakEvent, collectBallEvent, firstInteractionWithGarryEvent, endOfTheGameEvent);
-
-            // Side choco quest
-            ICGift gift = new ICGift(townArea, new DiscreteCoordinates(25, 14));
-            ICMonEvent collectGiftItem = new CollectGiftEvent(eventManager, player, gift);
-            RegisterInAreaAction registerGift = new RegisterInAreaAction(townArea, gift);
-            collectGiftItem.onStart(registerGift);
-
-            events(collectGiftItem);
+            setupOfficialQuest();
+            setupChocoQuest();
 
             return true;
         }
         return false;
+    }
+
+    private void setupChocoQuest () {
+        ICMonArea townArea = eventAreas.get("town");
+        ICGift gift = new ICGift(townArea, new DiscreteCoordinates(22, 27));
+        ICMonEvent collectGiftItem = new CollectGiftEvent(eventManager, player, gift);
+        RegisterInAreaAction registerGift = new RegisterInAreaAction(townArea, gift);
+        collectGiftItem.onStart(registerGift);
+
+        events(collectGiftItem);
+    }
+
+    private void setupOfficialQuest () {
+        ICMonArea townArea = (ICMonArea) eventAreas.get("town");
+        ICBall ball = new ICBall(townArea, new DiscreteCoordinates(6, 6));
+        ICMonEvent collectBallEvent = new CollectBallEvent(eventManager, player, ball);
+        RegisterInAreaAction registerBall = new RegisterInAreaAction(townArea, ball);
+        collectBallEvent.onStart(registerBall);
+
+        IntroductionEvent introductionEvent = new IntroductionEvent(eventManager, player);
+        FirstInteractionWithProfOakEvent firstInteractionWithProfOakEvent = new FirstInteractionWithProfOakEvent(eventManager, player);
+        FirstInteractionWithGarryEvent firstInteractionWithGarryEvent = new FirstInteractionWithGarryEvent(eventManager, player, gameState);
+        EndOfTheGameEvent endOfTheGameEvent = new EndOfTheGameEvent(eventManager, player);
+
+        events(introductionEvent, firstInteractionWithProfOakEvent, collectBallEvent, firstInteractionWithGarryEvent, endOfTheGameEvent);
     }
 
     public void events (ICMonEvent initialEvent, ICMonEvent ...events) {
@@ -208,16 +215,6 @@ public final class ICMon extends AreaGame {
     }
 
     /**
-     * ???
-     */
-    private void switchArea() {
-        /*player.leaveArea();
-        areaIndex = (areaIndex == 0) ? 1 : 0;
-        ICMonArea currentArea = (ICMonArea) setCurrentArea(areas[areaIndex], false);
-        player.enterArea(currentArea, currentArea.getPlayerSpawnPosition());*/
-    }
-
-    /**
      * This action changes the game pause menu.
      * It is triggered when an event is started.
      */
@@ -270,9 +267,9 @@ public final class ICMon extends AreaGame {
         @Override
         public void process() {
             if (event.hasPauseMenu()) {
-                event.onStart(new PauseGameAction((PauseMenu.Pausable) this, event.getPauseMenu()));
+                event.onStart(new PauseGameAction(ICMon.this, event.getPauseMenu()));
                 event.onStart(new SetPauseMenuAction(event.getPauseMenu()));
-                event.onComplete(new ResumeGameAction((PauseMenu.Pausable) this));
+                event.onComplete(new ResumeGameAction(ICMon.this));
 
                 for (ICMonEvent eventToSuspend: events) {
                     event.onStart(new SuspendEventAction(eventToSuspend));

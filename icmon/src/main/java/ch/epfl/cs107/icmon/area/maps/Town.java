@@ -6,6 +6,7 @@ import ch.epfl.cs107.icmon.actor.items.ICMagicBall;
 import ch.epfl.cs107.icmon.actor.npc.Balloon;
 import ch.epfl.cs107.icmon.actor.npc.Fabrice;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
+import ch.epfl.cs107.icmon.actor.npc.Pedro;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.play.engine.actor.Background;
 import ch.epfl.cs107.play.engine.actor.Foreground;
@@ -40,8 +41,8 @@ public final class Town extends ICMonArea {
         registerActor(new Background(this));
         registerActor(new Foreground(this));
 
-        ICShopAssistant assistant = new ICShopAssistant(this, Orientation.DOWN, new DiscreteCoordinates(8, 8));
-        assistant.enterArea(this, new DiscreteCoordinates(6, 8));
+        //ICShopAssistant assistant = new ICShopAssistant(this, Orientation.DOWN, new DiscreteCoordinates(8, 8));
+        //assistant.enterArea(this, new DiscreteCoordinates(6, 8));
 
         Door doorToLab = new Door("lab", new DiscreteCoordinates(6, 2), this, new DiscreteCoordinates(15, 24));
         registerActor(doorToLab);
@@ -61,6 +62,8 @@ public final class Town extends ICMonArea {
         Fabrice fabrice = new Fabrice(this, Orientation.DOWN, new DiscreteCoordinates(20, 7));
         registerActor(fabrice);
 
+        Pedro pedro = new Pedro(this, Orientation.DOWN, new DiscreteCoordinates(8, 11));
+        registerActor(pedro);
     }
 
     @Override

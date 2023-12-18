@@ -20,9 +20,9 @@ public class Balloon extends NPCActor {
     final private static String SPRITE_NAME = "actors/balloon";
     private BalloonStep[] steps = {
             new BalloonStep(Orientation.RIGHT, 3),
-            new BalloonStep(Orientation.UP, 4),
+            new BalloonStep(Orientation.UP, 3),
             new BalloonStep(Orientation.RIGHT, 5),
-            new BalloonStep(Orientation.UP, 9),
+            new BalloonStep(Orientation.UP, 8),
             new BalloonStep(Orientation.RIGHT, 6),
             new BalloonStep(Orientation.UP, 4),
     };
@@ -35,7 +35,7 @@ public class Balloon extends NPCActor {
     }
 
     public static DiscreteCoordinates getSpawnPosition() {
-        return new DiscreteCoordinates(5, 6);
+        return new DiscreteCoordinates(5, 7);
     }
 
     @Override

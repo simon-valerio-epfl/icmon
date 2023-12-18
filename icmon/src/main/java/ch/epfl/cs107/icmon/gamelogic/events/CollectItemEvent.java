@@ -31,19 +31,4 @@ public class CollectItemEvent extends ICMonEvent {
             this.complete();
         }
     }
-
-    /**
-     * While this event is active,
-     * there can be a certain dialog between the player and the shop assistants
-     * following a proximity interaction
-     * @param assistant
-     * @param isCellInteraction whether it's a proximity interaction(true) or not
-     */
-    @Override
-    public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
-        System.out.println("This is an interaction between the player and ICShopAssistant based on events !");
-
-        Dialog dialog = new Dialog("collect_item_event_interaction_with_icshopassistant");
-        getPlayer().openDialog(dialog);
-    }
 }

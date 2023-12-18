@@ -49,6 +49,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
     private boolean inDialog = false;
     final private ArrayList<Pokemon> pokemons = new ArrayList<>();
     private boolean blockNextMove = false;
+    private boolean lastOrientationChecked = false;
     private boolean isDiver = false;
     private boolean dialogIsLocked = false;
 
@@ -141,10 +142,14 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
     private void moveIfPressed(Orientation orientation, Button b) {
         if (b.isDown()) {
             if (!isDisplacementOccurs()) {
+                if (!getOrientation().equals(orientation)) {
+                    lastOrientationChecked = false;
+                }
                 orientate(orientation);
-                if (!blockNextMove) {
+                if (!blockNextMove && lastOrientationChecked) {
                     move(MOVE_DURATION-5);
                 }
+                lastOrientationChecked = true;
             }
         }
     }
@@ -170,6 +175,10 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
 
     @Override
     public boolean wantsViewInteraction() {
+        return true;
+    }
+
+    public boolean wantsRealViewInteraction() {
         Keyboard keyboard = getOwnerArea().getKeyboard();
         Button lKey = keyboard.get(Keyboard.L);
         return lKey.isDown() && !this.inDialog;
@@ -251,47 +260,30 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
             } else {
                 // if the player is swimming
                 // todo check
+                blockNextMove = (
+                        !cell.getWalkingType().equals(ICMonBehavior.AllowedWalkingType.FEET_OR_UNDERWATER)
+                        && !cell.getWalkingType().equals(ICMonBehavior.AllowedWalkingType.ENTER_WATER)
+                ) && currentSprite.equals(SpriteType.UNDERWATER_SPRITE);
             }
-        }
-
-        private boolean isCellAt(ICMonBehavior.ICMonCell cell, Orientation orientation) {
-            int xShift = 0;
-            int yShift = 0;
-            switch (orientation) {
-                case LEFT -> {
-                    xShift = - 1;
-                }
-                case RIGHT -> {
-                    xShift = 1;
-                }
-                case DOWN -> {
-                    yShift = -1;
-                }
-                case UP -> {
-                    yShift = 1;
-                }
-            }
-            return (cell.getCurrentCells().get(0).x + xShift  == getPosition().x
-                    && cell.getCurrentCells().get(0).y + yShift == getPosition().y);
         }
 
         @Override
         public void interactWith(ICBall ball, boolean isCellInteraction) {
-            if (!isCellInteraction) {
+            if (!isCellInteraction && wantsRealViewInteraction()) {
                 ball.collect();
             }
         }
 
         @Override
         public void interactWith(ICKey key, boolean isCellInteraction) {
-            if (!isCellInteraction) {
+            if (!isCellInteraction && wantsRealViewInteraction()) {
                 key.collect();
             }
         }
 
         @Override
         public void interactWith(ICGift gift, boolean isCellInteraction) {
-            if (!isCellInteraction) {
+            if (!isCellInteraction && wantsRealViewInteraction()) {
                 gift.collect();
                 openDialog(new Dialog("collect_gift"));
                 // todo change skin of the player

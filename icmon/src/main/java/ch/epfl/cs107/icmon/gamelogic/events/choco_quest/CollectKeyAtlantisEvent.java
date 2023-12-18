@@ -23,9 +23,12 @@ public class CollectKeyAtlantisEvent extends CollectItemEvent {
         }
     }
 
+    // todo add this to chained event
     @Override
     public void interactWith(Fabrice fabrice, boolean isCellInteraction) {
-        Dialog dialog = new Dialog("collect_key_fabrice.xml");
-        getPlayer().openDialog(dialog);
+        if (getPlayer().wantsRealViewInteraction()) {
+            Dialog dialog = new Dialog("collect_key_fabrice.xml");
+            getPlayer().openDialog(dialog);
+        }
     }
 }
