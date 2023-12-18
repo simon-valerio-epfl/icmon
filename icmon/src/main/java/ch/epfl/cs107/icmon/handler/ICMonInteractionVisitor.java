@@ -9,6 +9,7 @@ import ch.epfl.cs107.icmon.actor.npc.ProfOak;
 import ch.epfl.cs107.icmon.actor.pokemon.Bulbizarre;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightableActor;
+import ch.epfl.cs107.play.areagame.area.AreaBehavior;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 
 public interface ICMonInteractionVisitor extends AreaInteractionVisitor {
@@ -47,6 +48,10 @@ public interface ICMonInteractionVisitor extends AreaInteractionVisitor {
     }
 
     default void interactWith(Garry garry, boolean isCellInteraction) {
+
+    }
+
+    default void interactWith(AreaBehavior.Cell cell, boolean isCellInteraction) {
 
     }
 

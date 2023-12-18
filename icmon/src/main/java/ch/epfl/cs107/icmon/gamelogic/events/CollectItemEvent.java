@@ -22,9 +22,11 @@ public class CollectItemEvent extends ICMonEvent {
 
     @Override
     public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
-        System.out.println("This is an interaction between the player and ICShopAssistant based on events !");
+        if (getPlayer().wantsRealViewInteraction()) {
+            System.out.println("This is an interaction between the player and ICShopAssistant based on events !");
 
-        Dialog dialog = new Dialog("collect_item_event_interaction_with_icshopassistant");
-        getPlayer().openDialog(dialog);
+            Dialog dialog = new Dialog("collect_item_event_interaction_with_icshopassistant");
+            getPlayer().openDialog(dialog);
+        }
     }
 }

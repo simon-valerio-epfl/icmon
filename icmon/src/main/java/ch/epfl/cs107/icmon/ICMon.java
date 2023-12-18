@@ -12,12 +12,18 @@ import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.engine.PauseMenu;
 import ch.epfl.cs107.play.io.FileSystem;
+import ch.epfl.cs107.play.io.ResourcePath;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Keyboard;
 import ch.epfl.cs107.play.window.Window;
+import ch.epfl.cs107.play.window.swing.SwingSound;
 
+import javax.sound.sampled.Clip;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -82,6 +88,21 @@ public final class ICMon extends AreaGame {
         if (super.begin(window, fileSystem)) {
             createAreas();
             initArea(STARTING_MAP);
+
+            try {
+                InputStream inputStream = new BufferedInputStream(new FileInputStream("/home/poca/Documents/GitHub/icmon/icmon/src/main/resources/sounds/tf_nemesis.wav"));
+                SwingSound sound = new SwingSound(inputStream);
+
+                // Obtenir un Clip et le jouer
+                Clip clip = sound.openedClip(0);
+                if (clip != null) {
+                    clip.start();
+                    // Vous pouvez ajouter d'autres logiques pour gérer la lecture du sonx
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("oh non wsh il est où le fichier");
+            }
 
             ICMonArea townArea = (ICMonArea) eventAreas.get(ICBall.getSpawningArea());
             ICBall ball = new ICBall(townArea, new DiscreteCoordinates(6, 6));

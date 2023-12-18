@@ -31,6 +31,8 @@ public final class ICMonBehavior extends AreaBehavior {
         NONE, // None
         SURF, // Only with surf
         FEET, // Only with feet
+        FEET_OR_UNDERWATER,
+        ENTER_WATER,
         ALL // All previous
     }
 
@@ -42,8 +44,9 @@ public final class ICMonBehavior extends AreaBehavior {
         DOOR (-195580, AllowedWalkingType.ALL),
         INDOOR_WALKABLE (-1, AllowedWalkingType.FEET),
         OUTDOOR_WALKABLE (-14112955, AllowedWalkingType.FEET),
-        WATER (-16776961, AllowedWalkingType.SURF),
-        GRASS (-16743680, AllowedWalkingType.FEET);
+        ICE (-16776961, AllowedWalkingType.FEET_OR_UNDERWATER),
+        GRASS (-16743680, AllowedWalkingType.FEET),
+        ENTER_WATER( -65296, AllowedWalkingType.ENTER_WATER);
 
         final int type;
         final AllowedWalkingType walkingType;
@@ -113,7 +116,7 @@ public final class ICMonBehavior extends AreaBehavior {
 
         @Override
         public boolean isViewInteractable() {
-            return false;
+            return true;
         }
 
         @Override

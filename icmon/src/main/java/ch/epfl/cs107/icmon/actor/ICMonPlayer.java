@@ -3,6 +3,7 @@ package ch.epfl.cs107.icmon.actor;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.area_entities.Door;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
+import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.actor.pokemon.*;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.gamelogic.actions.AfterPokemonSelectionFightAction;
@@ -14,51 +15,58 @@ import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.actor.Interactor;
 import ch.epfl.cs107.play.areagame.area.Area;
+import ch.epfl.cs107.play.areagame.area.AreaBehavior;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 import ch.epfl.cs107.play.engine.actor.OrientedAnimation;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
+import ch.epfl.cs107.play.math.Vector;
 import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner {
 
-    private enum SpriteType { SWIMMING_SPRITE, RUNNING_SPRITE };
+    private enum SpriteType { SWIMMING_SPRITE, RUNNING_SPRITE, UNDERWATER_SPRITE };
 
     final private static String SPRITE_NAME = "actors/player";
     final private static String SPRITE_SWIMMING_NAME = "actors/player_water";
+    final private static String SPRITE_UNDERWATER_NAME = "actors/player_underwater";
     final private static int ANIMATION_DURATION = 8;
     final private static int MOVE_DURATION = 8;
     private OrientedAnimation swimmingOrientedAnimation;
     private OrientedAnimation runningOrientedAnimation;
+    private OrientedAnimation underWaterOrientedAnimation;
     private SpriteType currentSprite = SpriteType.RUNNING_SPRITE;
     final private ICMonPlayerInteractionHandler handler = new ICMonPlayerInteractionHandler();
     final private ICMon.ICMonGameState gameState;
     final private ICMon.ICMonEventManager eventManager;
     private Dialog dialog;
     private boolean inDialog = false;
-    final private Area spawningArea;
     final private ArrayList<Pokemon> pokemons = new ArrayList<>();
+    //private HashMap<Orientation, Boolean> blockedCoordinates = new HashMap();
+    private boolean blockNextMove = false;
 
     public ICMonPlayer(Area area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMon.ICMonGameState gameState, ICMon.ICMonEventManager eventManager) {
         super(area, orientation, spawnPosition);
         this.swimmingOrientedAnimation = new OrientedAnimation(SPRITE_SWIMMING_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
         this.runningOrientedAnimation = new OrientedAnimation(SPRITE_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
+        this.underWaterOrientedAnimation = new OrientedAnimation(SPRITE_UNDERWATER_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
         this.gameState = gameState;
         this.eventManager = eventManager;
-
-        this.spawningArea = area;
 
         // todo remove this
         addPokemon("bulbizarre");
         addPokemon("latios");
         addPokemon("nidoqueen");
+
+        /*blockedCoordinates.put(Orientation.LEFT, false);
+        blockedCoordinates.put(Orientation.RIGHT, false);
+        blockedCoordinates.put(Orientation.UP, false);
+        blockedCoordinates.put(Orientation.DOWN, false);*/
     }
 
     @Override
@@ -70,6 +78,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         switch (this.currentSprite) {
             case SWIMMING_SPRITE:
                 return swimmingOrientedAnimation;
+            case UNDERWATER_SPRITE:
+                return underWaterOrientedAnimation;
             case RUNNING_SPRITE:
             default:
                 return runningOrientedAnimation;
@@ -125,7 +135,9 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         if (b.isDown()) {
             if (!isDisplacementOccurs()) {
                 orientate(orientation);
-                move(MOVE_DURATION-5);
+                if (!blockNextMove) {
+                    move(MOVE_DURATION-5);
+                }
             }
         }
     }
@@ -151,15 +163,25 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
 
     @Override
     public boolean wantsViewInteraction() {
+        return true;
+    }
+
+    public boolean wantsUnderWater() {
         Keyboard keyboard = getOwnerArea().getKeyboard();
-        Button lKey = keyboard.get(Keyboard.L);
-        return lKey.isDown() && !this.inDialog;
+        Button wKey = keyboard.get(Keyboard.W);
+        return wKey.isDown() && !this.inDialog;
     }
 
     @Override
     public void interactWith(Interactable other, boolean isCellInteraction) {
         other.acceptInteraction(handler, isCellInteraction);
         this.gameState.acceptInteraction(other, isCellInteraction);
+    }
+
+    public boolean wantsRealViewInteraction() {
+        Keyboard keyboard = getOwnerArea().getKeyboard();
+        Button lKey = keyboard.get(Keyboard.L);
+        return lKey.isDown() && !this.inDialog;
     }
 
     public void openDialog (Dialog dialog) {
@@ -197,22 +219,57 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         public void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {
             if (isCellInteraction) {
                 switch (cell.getWalkingType()) {
+                    case FEET_OR_UNDERWATER -> {
+                        // if the previous sprite was swimming
+                        // and the rights key is pressed
+                        // go underwater!
+                        if (currentSprite.equals(SpriteType.SWIMMING_SPRITE)) {
+                            if (wantsUnderWater()) {
+                                currentSprite = SpriteType.UNDERWATER_SPRITE;
+                            } else {
+                                currentSprite = SpriteType.RUNNING_SPRITE;
+                            }
+                        }
+                    }
                     case FEET -> {
                         currentSprite = SpriteType.RUNNING_SPRITE;
                     }
-                    case SURF -> {
+                    case SURF, ENTER_WATER -> {
                         currentSprite = SpriteType.SWIMMING_SPRITE;
                     }
                     default -> {
                         // do nothing
                     }
                 }
+            } else {
+                blockNextMove = !cell.getWalkingType().equals(ICMonBehavior.AllowedWalkingType.FEET_OR_UNDERWATER) && currentSprite.equals(SpriteType.UNDERWATER_SPRITE);
             }
+        }
+
+        private boolean isCellAt(ICMonBehavior.ICMonCell cell, Orientation orientation) {
+            int xShift = 0;
+            int yShift = 0;
+            switch (orientation) {
+                case LEFT -> {
+                    xShift = - 1;
+                }
+                case RIGHT -> {
+                    xShift = 1;
+                }
+                case DOWN -> {
+                    yShift = -1;
+                }
+                case UP -> {
+                    yShift = 1;
+                }
+            }
+            return (cell.getCurrentCells().get(0).x + xShift  == getPosition().x
+                    && cell.getCurrentCells().get(0).y + yShift == getPosition().y);
         }
 
         @Override
         public void interactWith(ICBall ball, boolean isCellInteraction) {
-            if (!isCellInteraction && wantsViewInteraction()) {
+            if (!isCellInteraction && wantsRealViewInteraction()) {
                 ball.collect();
             }
         }
@@ -230,5 +287,6 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
                 fight(actor, null);
             }
         }
+
     }
 }

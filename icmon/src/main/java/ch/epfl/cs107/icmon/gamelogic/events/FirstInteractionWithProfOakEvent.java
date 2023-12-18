@@ -37,13 +37,13 @@ public class FirstInteractionWithProfOakEvent extends ICMonEvent {
 
     @Override
     public void interactWith(ProfOak profOak, boolean isCellInteraction) {
-        if (this.isStarted() && !this.isCompleted()) {
+        if (this.isStarted() && !this.isCompleted() && getPlayer().wantsRealViewInteraction()) {
             openDialog("first_interaction_with_prof_oak", true);
         }
     }
     @Override
     public void interactWith(ICShopAssistant shopAssistant, boolean isCellInteraction) {
-        if (this.isStarted() && !this.isCompleted()) {
+        if (this.isStarted() && !this.isCompleted() && getPlayer().wantsRealViewInteraction()) {
             openDialog("first_interaction_with_oak_event_icshopassistant", false);
         }
     }
