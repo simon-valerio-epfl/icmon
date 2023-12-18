@@ -13,7 +13,7 @@ public class Fabrice extends NPCActor {
     final private static String SPRITE_NAME = "actors/fabrice";
 
     public Fabrice (ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition) {
-        super(area, orientation, spawnPosition, SPRITE_NAME, 1.7f, 32, 32);
+        super(area, orientation, spawnPosition, SPRITE_NAME, 1.7f, 1.7f, 32, 32);
     }
 
     @Override

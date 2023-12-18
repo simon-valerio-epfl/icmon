@@ -31,7 +31,7 @@ public class Balloon extends NPCActor {
     private boolean hasBeenReset = false;
 
     public Balloon (ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition) {
-        super(area, orientation, spawnPosition, SPRITE_NAME, 3, 64, 64);
+        super(area, orientation, spawnPosition, SPRITE_NAME, 3, 3, 64, 64);
     }
 
     public static DiscreteCoordinates getSpawnPosition() {
