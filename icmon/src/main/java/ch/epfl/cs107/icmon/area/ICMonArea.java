@@ -12,21 +12,24 @@ import ch.epfl.cs107.play.window.Window;
 public abstract class ICMonArea extends Area {
 
     /**
-     * ???
+     * Should give a way to go back to the main area
+     * and register the actors and the items spawning
+     * on the area
      */
     protected abstract void createArea();
 
     /**
-     * ???
-     * @return ???
+     *
+     * @return some constant position where the player spawns when he arrives
+     * on this area
      */
     public abstract DiscreteCoordinates getPlayerSpawnPosition();
 
     /**
-     * ???
+     * (re)starts the game
      * @param window (Window): display context. Not null
      * @param fileSystem (FileSystem): given file system. Not null
-     * @return ???
+     * @return super.begin()
      */
     @Override
     public boolean begin(Window window, FileSystem fileSystem) {
@@ -39,8 +42,8 @@ public abstract class ICMonArea extends Area {
     }
 
     /**
-     * ???
-     * @return ???
+     *
+     * @return a constant about the drawing dimensions
      */
     @Override
     public final float getCameraScaleFactor() {

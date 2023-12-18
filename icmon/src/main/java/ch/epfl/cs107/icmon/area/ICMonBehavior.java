@@ -15,6 +15,8 @@ import java.util.Vector;
 public final class ICMonBehavior extends AreaBehavior {
     /**
      * Default ICMonBehavior Constructor
+     * It creates a 2d array representing the map
+     * and initialises its cells depending on their colour
      *
      * @param window (Window), not null
      * @param name   (String): Name of the Behavior, not null
@@ -31,17 +33,9 @@ public final class ICMonBehavior extends AreaBehavior {
         }
     }
 
-    public HashMap<Orientation, ICMonCell> getNeighbouringCells(ICMonCell cell) {
-        HashMap<Orientation, ICMonCell> neighbours = new HashMap<>();
-        for (Orientation orientation : Orientation.values()) {
-            DiscreteCoordinates neighbourCoordinates = cell.getCoordinates().jump(orientation.toVector());
-            if (neighbourCoordinates.x >= 0 && neighbourCoordinates.x < getWidth() && neighbourCoordinates.y >= 0 && neighbourCoordinates.y < getHeight()) {
-                neighbours.put(orientation, (ICMonCell) getCell(neighbourCoordinates.x, neighbourCoordinates.y));
-            }
-        }
-        return neighbours;
-    }
-
+    /**
+     * the possible walking types a cell can have
+     */
     public enum AllowedWalkingType {
         NONE, // None
         SURF, // Only with surf

@@ -12,18 +12,21 @@ import ch.epfl.cs107.play.math.Orientation;
  * ???
  */
 public final class Arena extends ICMonArea {
+    final static DiscreteCoordinates SPAWNING_POSITION = new DiscreteCoordinates(6, 2);
 
     /**
-     * ???
-     * @return ???
+     *
+     * @return some default spawning coordinates on this area, namely (6,2)
      */
     @Override
     public DiscreteCoordinates getPlayerSpawnPosition() {
-        return new DiscreteCoordinates(6, 2);
+        return SPAWNING_POSITION;
     }
 
     /**
-     * ???
+     * it adds a door taking back to the main Area, town
+     * this area is created with a pokemon, a bulbizarre,
+     * at some default conditions namely (6,6)
      */
     @Override
     protected void createArea() {
@@ -37,14 +40,10 @@ public final class Arena extends ICMonArea {
         registerActor(bulbizarre);
     }
 
-    @Override
-    public void update(float deltaTime) {
-        super.update(deltaTime);
-    }
 
     /**
-     * ???
-     * @return ???
+     *
+     * @return the name of this map
      */
     @Override
     public String getTitle() {

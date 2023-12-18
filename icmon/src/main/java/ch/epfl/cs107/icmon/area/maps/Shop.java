@@ -11,16 +11,31 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
 public class Shop extends ICMonArea {
+    final static DiscreteCoordinates SPAWNING_POSITION = new DiscreteCoordinates(3,1);
 
+
+    /**
+     * @return the name of this map
+     */
     @Override
     public String getTitle() {
         return "shop";
     }
+
+    /**
+     *
+     * @return some default spawning coordinates on this area, namely (3,1)
+     */
     @Override
     public DiscreteCoordinates getPlayerSpawnPosition() {
-        return new DiscreteCoordinates(3, 1);
+        return SPAWNING_POSITION;
     }
 
+    /**
+     * it adds a door taking back to the main Area, town
+     * this area is created with a character, a shop assistant,
+     * at some default conditions namely (4,6)
+     */
     @Override
     protected void createArea() {
         registerActor(new Background(this));

@@ -32,8 +32,22 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     private final static ICMonFightAction RUN_AWAY_ACTION = new RunAwayFightAction();
     private final static ICMonFightAction[] DEFAULT_ACTIONS = {ATTACK_ACTION, RUN_AWAY_ACTION};
 
+
+    /**
+     *
+     * @param area
+     * @param orientation
+     * @param spawnPosition
+     * @param pokemonName the pokemon type, e.g. pikachu
+     * @param maxHp the spawning Hp as well, has to be a positive value
+     * @param damage how hard it will hit his opponents in a fight, has to be a positive value
+     * @param extraActions
+     */
     public Pokemon(Area area, Orientation orientation, DiscreteCoordinates spawnPosition, String pokemonName, float maxHp, int damage, ICMonFightAction ...extraActions) {
         super(area, orientation, spawnPosition);
+        assert (maxHp >0);
+        assert (damage>0);
+
 
         this.properties = new PokemonProperties(pokemonName);
         this.properties.setHp(maxHp);
@@ -46,21 +60,30 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
         Collections.addAll(this.actions, extraActions);
     }
 
-    @Override
-    public List<DiscreteCoordinates> getCurrentCells() {
-        return super.getCurrentCells();
-    }
 
+    /**
+     * another actor can be in the same cell as a pokemon, possibly
+     * interacting with it
+     * @return
+     */
     @Override
     public boolean takeCellSpace() {
         return false;
     }
 
+    /**
+     * It does not accept distance interactions
+     * @return
+     */
     @Override
     public boolean isViewInteractable() {
         return false;
     }
 
+    /**
+     * It accepts proximity interactions
+     * @return
+     */
     @Override
     public boolean isCellInteractable() {
         return true;
@@ -71,6 +94,12 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
         this.sprite.draw(canvas);
     }
 
+    /**
+     * The current instance gets hit, dying if it has
+     * no more hp
+     *
+     * @param damage how many hp the pokemon will lose... if it's still alive
+     */
     public void damage (int damage) {
         if (this.properties.hp() - damage <= 0) {
             this.properties.setHp(0);
@@ -79,11 +108,20 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
         }
     }
 
+    /**
+     *
+     * @return whether it is able to continue the fight
+     */
     public boolean isAlive () {
         return this.properties.hp() > 0;
     }
 
     // todo list ou Array
+
+    /**
+     *
+     * @return the actions this pokemon can perform
+     */
     public List<ICMonFightAction> getActions() {
         return actions;
     }
@@ -93,6 +131,11 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
         ((ICMonInteractionVisitor) v).interactWith((ICMonFightableActor) this, isCellInteraction);
     }
 
+    /**
+     *
+     * @return a nested class that manages
+     * some sensible methods
+     */
     public PokemonProperties properties() {
         return this.properties;
     }

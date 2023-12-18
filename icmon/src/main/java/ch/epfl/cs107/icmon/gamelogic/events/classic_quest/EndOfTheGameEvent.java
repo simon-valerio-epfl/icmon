@@ -8,10 +8,18 @@ import ch.epfl.cs107.play.engine.actor.Dialog;
 
 public class EndOfTheGameEvent extends ICMonEvent {
 
+
     public EndOfTheGameEvent(ICMon.ICMonEventManager eventManager, ICMonPlayer player) {
         super(eventManager, player);
     }
 
+    /**
+     * While this event is active,
+     * there can be a final dialog between the player and the shop assistants
+     * following a proximity interaction
+     * @param assistant
+     * @param isCellInteraction whether it's a proximity interaction(true) or not
+     */
     @Override
     public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
         if (this.isStarted() && !this.isCompleted()) {

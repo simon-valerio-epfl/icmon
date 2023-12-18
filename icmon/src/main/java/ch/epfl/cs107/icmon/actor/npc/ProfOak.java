@@ -9,6 +9,13 @@ import ch.epfl.cs107.play.math.Orientation;
 public class ProfOak extends NPCActor {
     final private static String SPRITE_NAME = "actors/prof-oak";
 
+
+    /**
+     * This actor has his own sprite
+     * @param area
+     * @param orientation
+     * @param spawnPosition
+     */
     public ProfOak (ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition) {
         super(area, orientation, spawnPosition, SPRITE_NAME);
     }

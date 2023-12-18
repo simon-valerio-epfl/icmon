@@ -9,6 +9,11 @@ public class RunAwayFightAction implements ICMonFightAction {
         return "Run away";
     }
 
+    /**
+     * basic action that ends the fight
+     * @param target your opponent
+     * @return
+     */
     @Override
     public boolean doAction(Pokemon target) {
         return false;

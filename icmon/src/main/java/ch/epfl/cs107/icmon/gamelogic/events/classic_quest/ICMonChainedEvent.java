@@ -13,6 +13,15 @@ public class ICMonChainedEvent extends ICMonEvent {
 
     final private ICMonEvent currentEvent;
 
+
+    /**
+     * It creates an ordered list of events that will autonomously start
+     * the one following them on completion
+     * @param eventManager
+     * @param player
+     * @param initialEvent the first event, it will start automatically
+     * @param chain the other events, in the wanted order
+     */
     public ICMonChainedEvent(ICMon.ICMonEventManager eventManager, ICMonPlayer player, ICMonEvent initialEvent, ICMonEvent ... chain){
         super(eventManager, player);
         LinkedList<ICMonEvent> eventList = new LinkedList<>(Arrays.asList(chain));
@@ -32,6 +41,11 @@ public class ICMonChainedEvent extends ICMonEvent {
         }
     }
 
+    /**
+     * updates the current event, it will manage
+     * the happening interactions
+     * @param deltaTime elapsed time since last update, in seconds, non-negative
+     */
     @Override
     public void update(float deltaTime) {
         this.currentEvent.update(deltaTime);

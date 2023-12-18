@@ -11,5 +11,11 @@
         <module name="game-engine" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="game-engine" target="17" />
+      <module name="icmon" target="17" />
+      <module name="mp2" target="17" />
+      <module name="tutos" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>

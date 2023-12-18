@@ -52,6 +52,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
     private boolean isDiver = false;
     private boolean dialogIsLocked = false;
 
+    //todo document this class
     public ICMonPlayer(Area area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMon.ICMonGameState gameState, ICMon.ICMonEventManager eventManager) {
         super(area, orientation, spawnPosition);
         this.swimmingOrientedAnimation = new OrientedAnimation(SPRITE_SWIMMING_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);

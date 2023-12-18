@@ -13,8 +13,18 @@ import java.util.ArrayList;
 public class Latios extends Pokemon {
 
     private final static String POKEMON_NAME = "latios";
-    private final static int MAX_HP = 10;
+    private final static int MAX_HP = 12;
     private final static int DAMAGE = 1;
+
+    /**
+     * Every istance of this class has a default name, latios,
+     * a default number of max health points, 12
+     * and a default attack power, 1
+     *
+     * @param area
+     * @param orientation
+     * @param spawnPosition
+     */
     public Latios(Area area, Orientation orientation, DiscreteCoordinates spawnPosition) {
         super(area, orientation, spawnPosition, POKEMON_NAME, MAX_HP, DAMAGE);
     }
