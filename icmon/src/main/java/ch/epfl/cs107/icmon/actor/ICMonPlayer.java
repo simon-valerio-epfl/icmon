@@ -25,6 +25,8 @@ import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner {
 
@@ -47,6 +49,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
     final private ArrayList<Pokemon> pokemons = new ArrayList<>();
     private boolean blockNextMove = false;
     private boolean isDiver = false;
+    private boolean dialogIsLocked = false;
 
     public ICMonPlayer(Area area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMon.ICMonGameState gameState, ICMon.ICMonEventManager eventManager) {
         super(area, orientation, spawnPosition);
@@ -108,8 +111,12 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
 
         if (this.inDialog) {
             Keyboard keyboard = getOwnerArea().getKeyboard();
-            if (keyboard.get(Keyboard.SPACE).isDown()){
+            if (keyboard.get(Keyboard.SPACE).isDown() && !dialogIsLocked){
                 this.dialog.update(deltaTime);
+                dialogIsLocked = true;
+                CompletableFuture.delayedExecutor(200, TimeUnit.MILLISECONDS).execute(() -> {
+                    dialogIsLocked = false;
+                });
             }
             if (this.dialog.isCompleted()) {
                this.dialog = null;

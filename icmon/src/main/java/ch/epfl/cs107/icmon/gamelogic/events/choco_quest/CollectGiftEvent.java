@@ -3,6 +3,7 @@ package ch.epfl.cs107.icmon.gamelogic.events.choco_quest;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.ICMonItem;
+import ch.epfl.cs107.icmon.actor.npc.Fabrice;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
@@ -23,10 +24,8 @@ public class CollectGiftEvent extends CollectItemEvent {
     }
 
     @Override
-    public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
-        System.out.println("This is an interaction between the player and ICShopAssistant based on events !");
-
-        Dialog dialog = new Dialog("collect_item_event_interaction_with_icshopassistant");
+    public void interactWith(Fabrice fabrice, boolean isCellInteraction) {
+        Dialog dialog = new Dialog("collect_gift_fabrice");
         getPlayer().openDialog(dialog);
     }
 }

@@ -4,6 +4,7 @@ import ch.epfl.cs107.icmon.actor.area_entities.Door;
 import ch.epfl.cs107.icmon.actor.items.ICGift;
 import ch.epfl.cs107.icmon.actor.items.ICMagicBall;
 import ch.epfl.cs107.icmon.actor.npc.Balloon;
+import ch.epfl.cs107.icmon.actor.npc.Fabrice;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.play.engine.actor.Background;
@@ -51,6 +52,9 @@ public final class Town extends ICMonArea {
 
         ICMagicBall magicBall = new ICMagicBall(this, new DiscreteCoordinates(4, 12));
         registerActor(magicBall);
+
+        Fabrice fabrice = new Fabrice(this, Orientation.DOWN, new DiscreteCoordinates(20, 7));
+        registerActor(fabrice);
 
     }
 
