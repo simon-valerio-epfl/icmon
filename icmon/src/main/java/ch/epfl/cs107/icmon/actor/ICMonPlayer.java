@@ -4,6 +4,7 @@ import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.area_entities.Door;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.items.ICGift;
+import ch.epfl.cs107.icmon.actor.items.ICKey;
 import ch.epfl.cs107.icmon.actor.pokemon.*;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.gamelogic.actions.AfterPokemonSelectionFightAction;
@@ -277,6 +278,13 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         public void interactWith(ICBall ball, boolean isCellInteraction) {
             if (!isCellInteraction) {
                 ball.collect();
+            }
+        }
+
+        @Override
+        public void interactWith(ICKey key, boolean isCellInteraction) {
+            if (!isCellInteraction) {
+                key.collect();
             }
         }
 

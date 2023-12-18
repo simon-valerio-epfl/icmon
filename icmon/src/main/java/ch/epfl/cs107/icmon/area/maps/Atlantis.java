@@ -1,6 +1,7 @@
 package ch.epfl.cs107.icmon.area.maps;
 
 import ch.epfl.cs107.icmon.actor.area_entities.Door;
+import ch.epfl.cs107.icmon.actor.items.ICKey;
 import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.actor.pokemon.Bulbizarre;
@@ -26,8 +27,11 @@ public class Atlantis extends ICMonArea {
         registerActor(new Background(this));
         //registerActor(new Foreground(this));
 
-        Door doorToTown = new Door("town", new DiscreteCoordinates(3,1), this, new DiscreteCoordinates(12,0));
+        Door doorToTown = new Door("town", new DiscreteCoordinates(9,7), this, new DiscreteCoordinates(12,0));
         registerActor(doorToTown);
+
+        ICKey key = new ICKey(this, new DiscreteCoordinates(18, 8));
+        registerActor(key);
     }
 
 }
