@@ -3,6 +3,7 @@ package ch.epfl.cs107.icmon.actor.area_entities;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.AreaEntity;
+import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
@@ -16,12 +17,12 @@ public class Door extends AreaEntity {
 
     String landingArea;
     DiscreteCoordinates landingPosition;
-    ICMonArea area;
+    Area area;
     DiscreteCoordinates mainCoordinates;
     DiscreteCoordinates[] coordinates;
 
 
-    public Door (String landingArea, DiscreteCoordinates landingPosition, ICMonArea area, DiscreteCoordinates ...coordinates) {
+    public Door (String landingArea, DiscreteCoordinates landingPosition, Area area, DiscreteCoordinates ...coordinates) {
         super(area, Orientation.UP, coordinates[0]);
         this.landingArea = landingArea;
         this.landingPosition = landingPosition;

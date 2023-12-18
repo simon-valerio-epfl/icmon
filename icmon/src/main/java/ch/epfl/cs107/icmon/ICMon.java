@@ -292,6 +292,7 @@ public final class ICMon extends AreaGame {
     public class ICMonGameState {
 
         private GamePlayMessage message;
+        private Door door;
 
         private ICMonGameState() {
 
@@ -301,6 +302,11 @@ public final class ICMon extends AreaGame {
             for (var event : ICMon.this.events) {
                 interactable.acceptInteraction(event, isCellInteraction);
             }
+        }
+
+        public void transferToAtlantis() {
+            Door door = new Door("atlantis", new DiscreteCoordinates(9, 8), eventAreas.get("atlantis"), new DiscreteCoordinates(7, 11));
+            createPassDoorMessage(door);
         }
 
         public void createPassDoorMessage (Door door) {

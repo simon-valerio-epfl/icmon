@@ -46,10 +46,6 @@ public final class Town extends ICMonArea {
         Door doorToShop = new Door("shop", new DiscreteCoordinates(3,2), this, new DiscreteCoordinates(25,20));
         registerActor(doorToShop);
 
-        // todo remove this
-        Door doorToAtlantis = new Door("atlantis", new DiscreteCoordinates(9, 8), this, new DiscreteCoordinates(7, 11));
-        registerActor(doorToAtlantis);
-
         Balloon balloon = new Balloon(this, Orientation.UP, new DiscreteCoordinates(10, 11));
         registerActor(balloon);
 

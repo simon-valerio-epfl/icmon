@@ -214,21 +214,18 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
             if (isCellInteraction) {
                 switch (cell.getWalkingType()) {
                     case FEET_OR_UNDERWATER -> {
-                        if (isDiver) {
-                            // once the player is a diver
-                            // they never get the underwater sprite again
-                            // they are always teleported to the underwater area
-                            currentSprite = SpriteType.RUNNING_SPRITE;
-                        } else {
-                            // if the previous sprite was swimming
-                            // and the rights key is pressed
-                            // go underwater!
-                            if (currentSprite.equals(SpriteType.SWIMMING_SPRITE)) {
-                                if (wantsUnderWater()) {
-                                    currentSprite = SpriteType.UNDERWATER_SPRITE;
+                        // if the previous sprite was swimming
+                        // and the rights key is pressed
+                        // go underwater!
+                        if (currentSprite.equals(SpriteType.SWIMMING_SPRITE)) {
+                            if (wantsUnderWater()) {
+                                if (isDiver) {
+                                    gameState.transferToAtlantis();
                                 } else {
-                                    currentSprite = SpriteType.RUNNING_SPRITE;
+                                    currentSprite = SpriteType.UNDERWATER_SPRITE;
                                 }
+                            } else {
+                                currentSprite = SpriteType.RUNNING_SPRITE;
                             }
                         }
                     }
