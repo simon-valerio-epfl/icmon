@@ -10,13 +10,8 @@ import java.util.List;
 
 public class ICMagicBall extends ICMonItem {
     final private static String SPRITE_NAME = "items/icmagicball_big";
-    final private static String SPAWNING_AREA = "town";
     public ICMagicBall(ICMonArea area, DiscreteCoordinates spawnPosition) {
         super(area, spawnPosition, SPRITE_NAME);
-    }
-
-    static public String getSpawningArea() {
-        return SPAWNING_AREA;
     }
 
     @Override
