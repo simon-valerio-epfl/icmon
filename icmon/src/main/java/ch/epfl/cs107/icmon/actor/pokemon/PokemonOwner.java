@@ -36,7 +36,7 @@ public interface PokemonOwner {
                 getPokemons().add(new Nidoqueen(pocket, Orientation.UP, new DiscreteCoordinates(0, 0)));
             }
             default -> {
-
+                System.out.println("addPokemon() : unknown pokemon name: " + pokemonName);
             }
         }
     }

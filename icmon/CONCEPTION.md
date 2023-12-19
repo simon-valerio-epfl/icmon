@@ -32,6 +32,10 @@ Welcome to the developer documentation of the ICeMon game.
 * We created a new `FightPedroEvent` classic event, similar to the `FirstInteractionWithGarry` event.
 * We created a new `GiveKeyFabriceEvent` classic event, that concludes the quest.
 
+### Actions
+
+* We created a new `DelayedAction`, that allows us to perform some actions a few seconds after the completion of an event.
+
 ### Areas
 
 * We created a new `Atlantis` area, along with a `transferToAtlantis` method in the `GameState` class.
@@ -42,6 +46,12 @@ Welcome to the developer documentation of the ICeMon game.
 * We wanted to make the `ICMonPlayer` swim underwater. To do so, we made two pink rectangles in the area behavior.
 * We also wanted to force the player to go back to the holes in the ice to get out of the lake. This was quite difficult because by default, if the cell is a valid walking type, there is no way to prevent the player from entering the cell. We thought about creating a `getNeighbouringCells` in the `ICMonAreaBehavior` (that we could use in the `moveIfPressed` method of the player) but the behavior is not exposed by the game engine to the `ICMonArea`. Therefore, we had to figure out another way to block the move. To do so, we used view interactions. We keep the view interactions enabled, so we can always interact with the cell in front of us, save its type, and decide if we have to block the move or not. This forces us to create a `wantsRealViewInteraction()` method, that "bypass" the original `wantsViewInteraction()` and has to be checked everywhere. This is the optimal solution without updating the game engine: if we were to publish the game, we would simply modify it and expose the area behavior using a protected getter.
 
+## Sounds
+
+* We created a new `ICMonSoundManager`, that is given to the player constructor.
+* It allows us to play sounds from anywhere in the game using the `playSound()` method, or the `playBackgroundSound()` one.
+* Doors were also modified (new `getSound()` getter to play a custom sound when they are used.
+
 ### Dialogs
 
 * When the player uses the `SPACE` key to jump from a `Dialog` slide to another, it now uses `CompletableFuture` Java util to add a mandatory delay between sldies. This is useful because on some computers, the minimum time the key is pressed is longer than the frame rate and you miss some slides.
@@ -49,16 +59,3 @@ Welcome to the developer documentation of the ICeMon game.
 
 ### Other changes
 
-* Instead of using `game.send()` to send a 
-
-### Pokémons
-
-* création d'une aire vide `MyPocket` dédiée aux pokémons qui ne sont jamais affichés, permet d'éviter de faire un choix arbitraire et sans sens
-
-### Actors
-
-* nouveau scaleFactor
-
-### Events
-
-* Meilleure abstraction de `CollectItemEvent` (nouvelles classes `CollectBallEvent`, `CollectGiftEvent`).

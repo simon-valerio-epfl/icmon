@@ -85,7 +85,7 @@ public class ICMonFight extends PauseMenu {
                 for (PokemonFightAction action : this.opponent.getActions()) {
                     if (action.name().equals("Attack")) {
                         boolean isFinished = action.doAction(this.playerPokemon);
-                        if (!this.playerPokemon.isAlive()) {
+                        if (this.playerPokemon.isDead()) {
                             conclusionReason = ConclusionReason.PLAYER_DEAD;
                             state = FightState.CONCLUSION;
                         } else if (!isFinished) {
@@ -99,7 +99,7 @@ public class ICMonFight extends PauseMenu {
             }
             case EXECUTE_ACTION -> {
                 boolean hasFinished = selectedAction.doAction(opponent);
-                if (!opponent.isAlive()) {
+                if (opponent.isDead()) {
                     conclusionReason = ConclusionReason.OPPONENT_DEAD;
                     state = FightState.CONCLUSION;
                 } else if (!hasFinished) {

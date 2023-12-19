@@ -20,7 +20,7 @@ public class LeaveAreaPokemonDeadAction implements Action {
     }
 
     public void perform() {
-        if (!this.pokemon.isAlive()) {
+        if (this.pokemon.isDead()) {
             this.opponent.leaveArea();
         }
     }
