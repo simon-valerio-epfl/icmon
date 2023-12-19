@@ -18,6 +18,7 @@ import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.engine.PauseMenu;
+import ch.epfl.cs107.play.engine.actor.Dialog;
 import ch.epfl.cs107.play.io.FileSystem;
 import ch.epfl.cs107.play.io.ResourcePath;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
@@ -124,6 +125,7 @@ public final class ICMon extends AreaGame {
         collectKeyItem.onStart(registerKey);
 
         FightPedroEvent fightPedroEvent = new FightPedroEvent(eventManager, soundManager, player);
+        fightPedroEvent.onComplete(new LogAction("Pedro defeated!"));
 
         events(collectGiftItem, collectKeyItem, fightPedroEvent);
     }

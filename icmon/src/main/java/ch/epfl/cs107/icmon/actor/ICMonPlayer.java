@@ -10,6 +10,7 @@ import ch.epfl.cs107.icmon.actor.npc.ProfOak;
 import ch.epfl.cs107.icmon.actor.pokemon.*;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.gamelogic.actions.AfterPokemonSelectionFightAction;
+import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.classic_quest.PokemonFightEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.classic_quest.PokemonSelectionEvent;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightableActor;
@@ -228,7 +229,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         this.gameState.createSuspendWithEventMessage(pokemonFightEvent);
     }
 
-    public void fight(ICMonFightableActor fightable, ICMonActor fightableOwner) {
+    public void fight(ICMonFightableActor fightable, ICMonActor fightableOwner, ICMonEvent toCompleteOnWin) {
         if (!(fightable instanceof Pokemon)) {
             System.out.println("Something bad is happening. WHAT HAVE YOU CREATED?");
             return;
@@ -244,7 +245,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
             PokemonSelectionEvent pokemonSelectionEvent = new PokemonSelectionEvent(eventManager, this, pokemonSelectionMenu);
             this.gameState.createSuspendWithEventMessage(pokemonSelectionEvent);
 
-            pokemonSelectionEvent.onComplete(new AfterPokemonSelectionFightAction(this, this.eventManager, pokemonSelectionMenu, (Pokemon) fightable, fightableOwner));
+            pokemonSelectionEvent.onComplete(new AfterPokemonSelectionFightAction(this, this.eventManager, pokemonSelectionMenu, (Pokemon) fightable, toCompleteOnWin, fightableOwner));
         }
 
     }
@@ -328,7 +329,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         @Override
         public void interactWith(ICMonFightableActor actor, boolean isCellInteraction) {
             if (isCellInteraction) {
-                fight(actor, null);
+                fight(actor, null, null);
             }
         }
 

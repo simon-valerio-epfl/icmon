@@ -19,15 +19,16 @@ public class FirstInteractionWithGarryEvent extends ICMonEvent {
      * While this event is active,
      * there can be a fight between a pokemon belonging to the owner
      * and the first one belonging to a garry
-     * following a proximity interaction
+     * following a view interaction
      * @param garry an opponent
-     * @param isCellInteraction whether it's a proximity interaction(true) or not
+     * @param isCellInteraction whether it's a cell interaction(true) or not
      */
     @Override
     public void interactWith(Garry garry, boolean isCellInteraction) {
-        if (this.isStarted() && !this.isCompleted() && getPlayer().wantsRealViewInteraction()) {
+        if (getPlayer().wantsRealViewInteraction()) {
             Pokemon garryPokemon = garry.getPokemons().get(0);
-            getPlayer().fight(garryPokemon, garry);
+            getPlayer().fight(garryPokemon, garry, this);
+            this.complete();
         }
     }
 

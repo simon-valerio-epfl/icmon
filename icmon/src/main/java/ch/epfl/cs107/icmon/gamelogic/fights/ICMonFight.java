@@ -142,4 +142,8 @@ public class ICMonFight extends PauseMenu {
     public boolean isRunning() {
         return !(this.state == FightState.ENDED);
     }
+
+    public boolean isWin() {
+        return this.state == FightState.ENDED && (conclusionReason == ConclusionReason.OPPONENT_DEAD || conclusionReason == ConclusionReason.OPPONENT_LEFT);
+    }
 }
