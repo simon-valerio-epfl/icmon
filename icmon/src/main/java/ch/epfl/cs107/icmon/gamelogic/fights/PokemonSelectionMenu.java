@@ -11,7 +11,7 @@ import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
 public class PokemonSelectionMenu extends PauseMenu {
-    private ICMonPlayer player;
+    private final ICMonPlayer player;
     private ICMonFightPokemonSelectionGraphics arena;
     private boolean arenaCreated = false;
     private boolean isSelected = false;

@@ -27,7 +27,7 @@ public class CollectKeyAtlantisEvent extends CollectItemEvent {
     @Override
     public void interactWith(Fabrice fabrice, boolean isCellInteraction) {
         if (getPlayer().wantsRealViewInteraction()) {
-            Dialog dialog = new Dialog("collect_key_fabrice.xml");
+            Dialog dialog = new Dialog("collect_key_fabrice");
             getPlayer().openDialog(dialog);
         }
     }

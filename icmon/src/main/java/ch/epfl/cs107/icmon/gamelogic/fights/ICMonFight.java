@@ -10,22 +10,23 @@ import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
 public class ICMonFight extends PauseMenu {
-    private enum FightState { INTRODUCTION, SELECT_ACTION, EXECUTE_ACTION, SELECT_OPPONENT_ACTION, CONCLUSION, ENDED };
+    private enum FightState { INTRODUCTION, SELECT_ACTION, EXECUTE_ACTION, SELECT_OPPONENT_ACTION, CONCLUSION, ENDED }
 
-    private enum ConclusionReason { PLAYER_LEFT, OPPONENT_LEFT, PLAYER_DEAD, OPPONENT_DEAD };
-    private float timeCounter = 5f;
+    private enum ConclusionReason { PLAYER_LEFT, OPPONENT_LEFT, PLAYER_DEAD, OPPONENT_DEAD }
 
-    private Pokemon playerPokemon;
-    private Pokemon opponent;
+    private final float timeCounter = 5f;
 
-    private ICMonFightArenaGraphics arena;
+    private final Pokemon playerPokemon;
+    private final Pokemon opponent;
+
+    private final ICMonFightArenaGraphics arena;
     private FightState state = FightState.INTRODUCTION;
-    private ICMonFightTextGraphics introductionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "Welcome to the fight");
-    private ICMonFightTextGraphics wonConclusionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "The player has won the fight");
-    private ICMonFightTextGraphics cancelledConclusionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "The player decided not to continue the fight");
-    private ICMonFightTextGraphics deadConclusionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "The opponent has won the fight");
-    private ICMonFightTextGraphics cancelledOpponentConclusionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "The opponent decided not to continue the fight");
-    private ICMonFightTextGraphics emptyTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, null);
+    private final ICMonFightTextGraphics introductionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "Welcome to the fight");
+    private final ICMonFightTextGraphics wonConclusionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "The player has won the fight");
+    private final ICMonFightTextGraphics cancelledConclusionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "The player decided not to continue the fight");
+    private final ICMonFightTextGraphics deadConclusionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "The opponent has won the fight");
+    private final ICMonFightTextGraphics cancelledOpponentConclusionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "The opponent decided not to continue the fight");
+    private final ICMonFightTextGraphics emptyTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, null);
     private ICMonFightActionSelectionGraphics selectionGraphics;
     private ICMonFightAction selectedAction;
     private ConclusionReason conclusionReason;

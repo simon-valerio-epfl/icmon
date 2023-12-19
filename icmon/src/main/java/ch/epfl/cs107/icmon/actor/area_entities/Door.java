@@ -23,7 +23,7 @@ public class Door extends AreaEntity {
     private final int soundDuration;
     private boolean muteWalkingSound = false;
     private boolean muteBackgroundSound = false;
-    private String backgroundSoundName;
+    private final String backgroundSoundName;
 
     /**
      * Create a new door in the Area

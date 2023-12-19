@@ -8,7 +8,7 @@ import ch.epfl.cs107.play.engine.PauseMenu;
 
 public class PokemonSelectionEvent extends ICMonEvent {
 
-    private PokemonSelectionMenu pauseMenu;
+    private final PokemonSelectionMenu pauseMenu;
 
     /**
      * This event pauses the game to let the player choose a pokemon

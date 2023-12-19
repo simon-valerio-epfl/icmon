@@ -7,8 +7,8 @@ import java.util.concurrent.CompletableFuture;
 
 public class DelayedAction implements Action {
 
-    private Action action;
-    private int delay;
+    private final Action action;
+    private final int delay;
 
     public DelayedAction(Action action, int delay) {
         this.action = action;

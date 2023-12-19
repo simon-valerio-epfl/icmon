@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class ICMonItem extends CollectableAreaEntity {
-    private RPGSprite sprite;
+    private final RPGSprite sprite;
 
     /**
      * An istance of the class ICMonItem is characterized by the Area

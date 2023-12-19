@@ -5,5 +5,5 @@ public interface Action {
      * an action is characterized by the possibility
      * to perform it
      */
-    abstract void perform();
+    void perform();
 }

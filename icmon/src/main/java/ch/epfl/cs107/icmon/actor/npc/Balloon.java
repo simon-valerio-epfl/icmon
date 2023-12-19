@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Balloon extends NPCActor {
     final private static String SPRITE_NAME = "actors/balloon";
-    private BalloonStep[] steps = {
+    private final BalloonStep[] steps = {
             new BalloonStep(Orientation.RIGHT, 3),
             new BalloonStep(Orientation.UP, 3),
             new BalloonStep(Orientation.RIGHT, 5),

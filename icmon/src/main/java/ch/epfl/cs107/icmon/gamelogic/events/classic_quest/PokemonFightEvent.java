@@ -8,7 +8,7 @@ import ch.epfl.cs107.play.engine.PauseMenu;
 
 public class PokemonFightEvent extends ICMonEvent {
 
-    private ICMonFight fightPauseMenu;
+    private final ICMonFight fightPauseMenu;
 
     /**
      * This event pauses the game to host a fight

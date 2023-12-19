@@ -31,7 +31,7 @@ public class Play {
 		final FileSystem fileSystem = new ResourceFileSystem(DefaultFileSystem.INSTANCE);
 
         // Create a demo game and initialize corresponding texts
-        final Game game = new ICMon();
+        final Game game = new ICMon(fileSystem);
 
 
         // Use Swing display

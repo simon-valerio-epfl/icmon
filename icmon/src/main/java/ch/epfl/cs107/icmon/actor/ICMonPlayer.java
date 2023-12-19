@@ -9,6 +9,7 @@ import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.actor.npc.ProfOak;
 import ch.epfl.cs107.icmon.actor.pokemon.*;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
+import ch.epfl.cs107.icmon.audio.ICMonSoundManager;
 import ch.epfl.cs107.icmon.gamelogic.actions.AfterPokemonSelectionFightAction;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.classic_quest.PokemonFightEvent;
@@ -34,7 +35,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner {
 
-    private enum SpriteType { SWIMMING_SPRITE, RUNNING_SPRITE, UNDERWATER_SPRITE };
+    private enum SpriteType { SWIMMING_SPRITE, RUNNING_SPRITE, UNDERWATER_SPRITE }
 
     final private static String SPRITE_NAME = "actors/player";
     final private static String SPRITE_SWIMMING_NAME = "actors/player_water";
@@ -42,15 +43,15 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
     final private static String SPRITE_SWIMMING_MASK_NAME = "actors/player_swimming_mask";
     final private static int ANIMATION_DURATION = 8;
     final private static int MOVE_DURATION = 8;
-    private OrientedAnimation swimmingOrientedAnimation;
+    private final OrientedAnimation swimmingOrientedAnimation;
     private OrientedAnimation runningOrientedAnimation;
-    private OrientedAnimation underWaterOrientedAnimation;
-    private OrientedAnimation swimmingMaskOrientedAnimation;
+    private final OrientedAnimation underWaterOrientedAnimation;
+    private final OrientedAnimation swimmingMaskOrientedAnimation;
     private SpriteType currentSprite = SpriteType.RUNNING_SPRITE;
     final private ICMonPlayerInteractionHandler handler = new ICMonPlayerInteractionHandler();
     final private ICMon.ICMonGameState gameState;
     final private ICMon.ICMonEventManager eventManager;
-    private ICMon.ICMonSoundManager soundManager;
+    private final ICMonSoundManager soundManager;
     private Dialog dialog;
     private boolean inDialog = false;
     final private ArrayList<Pokemon> pokemons = new ArrayList<>();
@@ -61,7 +62,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
     private boolean muteWalkingSound = false;
 
     //todo document this class
-    public ICMonPlayer(Area area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMon.ICMonGameState gameState, ICMon.ICMonEventManager eventManager, ICMon.ICMonSoundManager soundManager) {
+    public ICMonPlayer(Area area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMon.ICMonGameState gameState, ICMon.ICMonEventManager eventManager, ICMonSoundManager soundManager) {
         super(area, orientation, spawnPosition);
         this.swimmingOrientedAnimation = new OrientedAnimation(SPRITE_SWIMMING_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
         this.runningOrientedAnimation = new OrientedAnimation(SPRITE_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);

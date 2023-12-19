@@ -144,6 +144,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
      * @author Hamza REMMAL (hamza.remmal@epfl.ch)
      */
     public static final class PokemonProperties {
+        // todo remove constructor
 
         private float hp;
         final private String name;

@@ -8,6 +8,7 @@ import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.items.ICKey;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.*;
+import ch.epfl.cs107.icmon.audio.ICMonSoundManager;
 import ch.epfl.cs107.icmon.gamelogic.actions.*;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.choco_quest.CollectGiftEvent;
@@ -56,7 +57,12 @@ public final class ICMon extends AreaGame {
     private final ArrayList<ICMonEvent> completedEvents = new ArrayList<>();
     private final ICMonGameState gameState = new ICMonGameState();
     private final ICMonEventManager eventManager = new ICMonEventManager();
-    private final ICMonSoundManager soundManager = new ICMonSoundManager();
+    private final ICMonSoundManager soundManager;
+
+    public ICMon(FileSystem fileSystem) {
+        super();
+        this.soundManager = new ICMonSoundManager(fileSystem);
+    }
 
     /**
      * ???
@@ -133,7 +139,7 @@ public final class ICMon extends AreaGame {
     }
 
     private void setupOfficialQuest () {
-        ICMonArea townArea = (ICMonArea) eventAreas.get("town");
+        ICMonArea townArea = eventAreas.get("town");
         ICBall ball = new ICBall(townArea, new DiscreteCoordinates(6, 6));
         ICMonEvent collectBallEvent = new CollectBallEvent(eventManager, player, ball);
         RegisterInAreaAction registerBall = new RegisterInAreaAction(townArea, ball);
@@ -222,104 +228,6 @@ public final class ICMon extends AreaGame {
         player.centerCamera();
     }
 
-    public class ICMonSoundManager {
-        private Clip currentClip;
-        private Clip backgroundClip;
-        private String currentPlayingSound = "N/A";
-        private int timeLeft = 0;
-        private boolean currentSoundCanBeOvertaken = true;
-
-        public void resetSound () {
-            if (currentClip != null) {
-                currentClip.stop();
-                currentClip = null;
-            }
-            timeLeft = -1;
-            currentSoundCanBeOvertaken = true;
-            currentPlayingSound = "N/A";
-        }
-
-        public void playSound (String name, int duration) {
-            playSound(name, duration, true);
-        }
-
-        public void playSound (String name, int duration, boolean soundCanBeOvertaken) {
-            try {
-                InputStream inputStream = getFileSystem().read(ResourcePath.getSound(name));
-                SwingSound sound = new SwingSound(inputStream);
-
-                // we reset the time left if the sound is already playing
-                if (this.currentPlayingSound.equals(name)) {
-                    timeLeft = duration;
-                    return;
-                }
-
-                // if we play a different sound
-                // first check if the current sound can be overtaken
-                if (!currentSoundCanBeOvertaken && soundCanBeOvertaken) {
-                    return;
-                }
-
-                resetSound();
-
-                currentSoundCanBeOvertaken = soundCanBeOvertaken;
-
-                Clip clip = sound.openedClip(0);
-                if (clip != null) {
-                    clip.start();
-
-                    // detect when file ends
-                    clip.addLineListener(event -> {
-                        if (event.getType() == javax.sound.sampled.LineEvent.Type.STOP) {
-                            resetSound();
-                        }
-                    });
-                }
-                this.currentPlayingSound = name;
-                this.timeLeft = duration;
-                this.currentClip = clip;
-
-            } catch (Exception e) {
-                System.out.println("Can not play sound... " + name);
-            }
-        }
-
-        public void playBackgroundSound (String name) {
-            try {
-                InputStream inputStream = getFileSystem().read(ResourcePath.getSound(name));
-                SwingSound sound = new SwingSound(inputStream);
-
-                Clip clip = sound.openedClip(0);
-                if (clip != null) {
-                    clip.loop(Clip.LOOP_CONTINUOUSLY);
-                }
-                this.backgroundClip = clip;
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("Can not play background sound... " + name);
-            }
-        }
-
-        public void resetBackgroundSound () {
-            if (backgroundClip != null) {
-                backgroundClip.stop();
-            }
-        }
-
-        public void update() {
-            if (timeLeft < 0) {
-                resetSound();
-            } else {
-                timeLeft--;
-            }
-        }
-
-        public String getCurrentPlayingSound () {
-            return currentPlayingSound;
-        }
-
-    }
-
     /**
      * This action changes the game pause menu.
      * It is triggered when an event is started.
@@ -353,11 +261,7 @@ public final class ICMon extends AreaGame {
             if (door.getBackgroundSoundName() != null) {
                 soundManager.playBackgroundSound(door.getBackgroundSoundName());
             }
-            if (door.getMuteWalkingSound()) {
-                player.setMuteWalkingSound(true);
-            } else {
-                player.setMuteWalkingSound(false);
-            }
+            player.setMuteWalkingSound(door.getMuteWalkingSound());
             soundManager.playSound(door.getSoundName(), door.getSoundDuration(), false);
             player.leaveArea();
             String landingAreaName = this.door.getLandingArea();

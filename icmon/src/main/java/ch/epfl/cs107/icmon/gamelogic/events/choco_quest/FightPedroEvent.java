@@ -6,17 +6,18 @@ import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.actor.npc.Pedro;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
+import ch.epfl.cs107.icmon.audio.ICMonSoundManager;
 import ch.epfl.cs107.icmon.gamelogic.actions.LeaveAreaAction;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
 public class FightPedroEvent extends ICMonEvent {
 
-    private boolean hasMetPedro = false;
+    private final boolean hasMetPedro = false;
     private boolean keyHasBeenStolen = false;
-    private ICMon.ICMonSoundManager soundManager;
+    private final ICMonSoundManager soundManager;
 
-    public FightPedroEvent(ICMon.ICMonEventManager eventManager, ICMon.ICMonSoundManager soundManager, ICMonPlayer player) {
+    public FightPedroEvent(ICMon.ICMonEventManager eventManager, ICMonSoundManager soundManager, ICMonPlayer player) {
         super(eventManager, player);
         this.soundManager = soundManager;
     }
