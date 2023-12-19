@@ -118,7 +118,7 @@ public final class ICMon extends AreaGame {
         collectGiftItem.onStart(registerGift);
 
         ICMonArea atlantisArea = eventAreas.get("atlantis");
-        ICKey key = new ICKey(atlantisArea, new DiscreteCoordinates(18, 8));
+        ICKey key = new ICKey(atlantisArea, new DiscreteCoordinates(13, 13));
         ICMonEvent collectKeyItem = new CollectKeyAtlantisEvent(eventManager, player, key);
         RegisterInAreaAction registerKey = new RegisterInAreaAction(atlantisArea, key);
         collectKeyItem.onStart(registerKey);
@@ -252,7 +252,7 @@ public final class ICMon extends AreaGame {
 
                 // if we play a different sound
                 // first check if the current sound can be overtaken
-                if (!currentSoundCanBeOvertaken) {
+                if (!currentSoundCanBeOvertaken && soundCanBeOvertaken) {
                     return;
                 }
 
