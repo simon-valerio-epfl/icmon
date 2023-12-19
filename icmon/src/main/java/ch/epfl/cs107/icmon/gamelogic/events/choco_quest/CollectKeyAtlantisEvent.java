@@ -6,6 +6,7 @@ import ch.epfl.cs107.icmon.actor.items.ICKey;
 import ch.epfl.cs107.icmon.actor.items.ICMonItem;
 import ch.epfl.cs107.icmon.actor.npc.Fabrice;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
+import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.play.engine.actor.Dialog;
@@ -30,4 +31,5 @@ public class CollectKeyAtlantisEvent extends CollectItemEvent {
             getPlayer().openDialog(dialog);
         }
     }
+
 }

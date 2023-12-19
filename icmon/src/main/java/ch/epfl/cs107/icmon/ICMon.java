@@ -5,11 +5,14 @@ import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.area_entities.Door;
 import ch.epfl.cs107.icmon.actor.items.ICGift;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
+import ch.epfl.cs107.icmon.actor.items.ICKey;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.*;
 import ch.epfl.cs107.icmon.gamelogic.actions.*;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.choco_quest.CollectGiftEvent;
+import ch.epfl.cs107.icmon.gamelogic.events.choco_quest.CollectKeyAtlantisEvent;
+import ch.epfl.cs107.icmon.gamelogic.events.choco_quest.FightPedroEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.classic_quest.*;
 import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
@@ -114,7 +117,15 @@ public final class ICMon extends AreaGame {
         RegisterInAreaAction registerGift = new RegisterInAreaAction(townArea, gift);
         collectGiftItem.onStart(registerGift);
 
-        events(collectGiftItem);
+        ICMonArea atlantisArea = eventAreas.get("atlantis");
+        ICKey key = new ICKey(atlantisArea, new DiscreteCoordinates(18, 8));
+        ICMonEvent collectKeyItem = new CollectKeyAtlantisEvent(eventManager, player, key);
+        RegisterInAreaAction registerKey = new RegisterInAreaAction(atlantisArea, key);
+        collectKeyItem.onStart(registerKey);
+
+        FightPedroEvent fightPedroEvent = new FightPedroEvent(eventManager, soundManager, player);
+
+        events(collectGiftItem, collectKeyItem, fightPedroEvent);
     }
 
     private void setupOfficialQuest () {
