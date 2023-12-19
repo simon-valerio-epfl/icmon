@@ -37,8 +37,8 @@ La clef du local de Chocopoly (situé au sud-est de la Pokétown) a été dérob
 
 ### Combinaison de plongée
 
-* Suivez cette montgolfière jusqu'au lac au nord-est de la Pokétown.
-* Ouvrez le cadeau qui se trouve dessus.
+* Suivez cette montgolfière jusqu'au lac gelé au nord-est de la Pokétown.
+* Ouvrez le cadeau qui se trouve au centre.
 * Votre sprite a changé, vous êtes maintenant équipé pour retourner dans le lac !
 * Lorsque vous plongez de nouveau... 
 
