@@ -1,27 +1,56 @@
-todo : remettre la vitesse comme normalement
-ajouter les actions
+# 🎄 ICeMon🎄
 
-## Extensions
+Bienvenue cher joueur !
 
-### Dialogues
+Alors que l'hiver s'installe à Pokétown, nous vous invitons à résoudre deux petites quêtes, décrites ci-dessous :)
 
-* faire en sorte de pas slider trop vite
+Vous découvrirez une version glaciale de ICMon, et ferez la rencontre de **Garry**, **le professeur Oak**, **Fabrice** mais aussi **Pedro**!
 
-### Combats
+Après avoir visité la Pokétown, l'aire de ous aurez peut-être l'occasion de découvrir Atlantis, une légendaire ville sous-marin...
 
-* ajout d'un sélecteur de Pokemon
-  * ajout du graphics `ICMonFightPokemonSelectionGraphics`
-  * ajout de la méthode `createPokemonSelector`
-  * ajout de la méthode 
+### Contrôles
 
-### Pokémons
+* Se déplacer : *utiliser les flèches*
+* Interagir : *presser L*
+* Plonger sous l'eau : *avancer en pressant W*
 
-* création d'une aire vide `MyPocket` dédiée aux pokémons qui ne sont jamais affichés, permet d'éviter de faire un choix arbitraire et sans sens
+⚠️ (beaucoup) d'efforts ont été mis dans l'ambiance du jeu, que ce soit au niveau des graphismes (nouvelles maps dont nouveaux area behaviors), mais aussi **dans la gestion des sons**. Si possible, activez-le pour jouer avec une meilleure immersion !
 
-### Actors
+## Quête 1 : combattre Garry 🐉
 
-* nouveau scaleFactor
+* Rendez-vous dans le laboratoire.
+* Discutez avec le professeur Oak.
+* Allez dans la Pokétown récupérer la Pokéball IC.
+* Ensuite, rendez-vous dans la maison de Garry.
+* Combattez Garry (et gagnez !).
 
-### Events
+## Quête 2 : sauver Chocopoly ☕ 
 
-* Meilleure abstraction de `CollectItemEvent` (nouvelles classes `CollectBallEvent`, `CollectGiftEvent`).
+La clef du local de Chocopoly (situé au sud-est de la Pokétown) a été dérobée. Saurez-vous la retrouver ?
+
+### Mise en contexte
+* Discutez avec Fabrice, le personnage avec un bonnet vert devant le local de Chocopoly.
+* Essayez de plonger dans l'eau pour trouver la clef (rendez-vous dans un trou dans la glace, puis pressez W tout en avançant)...
+* Malheureusement, vous ne trouvez rien, car vous ne pouvez pas encore plonger en profondeur.
+* Tentez de discuter avec Pedro, situé sur la rive.
+* Celui-ci évoque une montgolfière, se dirigeant tous les jours vers le même point sur la carte.
+
+### Combinaison de plongée
+
+* Suivez cette montgolfière jusqu'au lac au nord-est de la Pokétown.
+* Ouvrez le cadeau qui se trouve dessus.
+* Votre sprite a changé, vous êtes maintenant équipé pour retourner dans le lac !
+* Lorsque vous plongez de nouveau... 
+
+### Arrivée dans Atlantis
+
+* Bienvenue dans Atlantis ! Cette cité désormais submergée était autrefois la capitale du PokéWorld.
+* La clef s'y cache peut-être ? Vérifiez derrière la maison.
+* Une fois la clef récupérée, retournez à la surface via le portail situé au sud d'Atlantis.
+
+### Le combat final
+
+* Lorsque vous remontez... le ricanement de Pedro vous fait sursauter.
+* Celui vient de dérober votre clef. Il vous faut maintenant le combattre.
+* Tant que ce n'est pas chose faite, Pedro restera dans la Pokétown et vous ne récupérerez pas votre clef... 
+* Lorsque vous l'aurez battu... vous pourrez enfin rapporter la clef à Fabrice et sauver Chocopoly !
