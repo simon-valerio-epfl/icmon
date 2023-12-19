@@ -8,6 +8,12 @@ public class LeaveAreaPokemonDeadAction implements Action {
 
     final private ICMonActor opponent;
     final private Pokemon pokemon;
+
+    /**
+     * associates the two pokemons to the action
+     * @param opponent
+     * @param pokemon
+     */
     public LeaveAreaPokemonDeadAction(ICMonActor opponent, Pokemon pokemon) {
         this.opponent = opponent;
         this.pokemon = pokemon;

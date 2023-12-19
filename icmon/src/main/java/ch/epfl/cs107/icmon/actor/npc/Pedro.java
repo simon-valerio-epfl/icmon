@@ -12,6 +12,13 @@ import ch.epfl.cs107.play.math.Orientation;
 public class Pedro extends NPCActor {
     final private static String SPRITE_NAME = "actors/pedro";
 
+    /**
+     * This a special character that you see when the quest starts...
+     * but will soon disappear
+     * @param area
+     * @param orientation
+     * @param spawnPosition
+     */
     public Pedro (ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition) {
         super(area, orientation, spawnPosition, SPRITE_NAME, 1.7f, 1.7f, 32, 32);
     }

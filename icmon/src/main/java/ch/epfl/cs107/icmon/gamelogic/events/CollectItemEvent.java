@@ -7,7 +7,7 @@ import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
-public class CollectItemEvent extends ICMonEvent {
+abstract public class CollectItemEvent extends ICMonEvent {
     final private ICMonItem item;
 
     /**

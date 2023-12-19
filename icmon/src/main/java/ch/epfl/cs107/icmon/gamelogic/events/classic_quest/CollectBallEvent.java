@@ -2,6 +2,7 @@ package ch.epfl.cs107.icmon.gamelogic.events.classic_quest;
 
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
+import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.items.ICMonItem;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
@@ -9,8 +10,8 @@ import ch.epfl.cs107.play.engine.actor.Dialog;
 
 public class CollectBallEvent extends CollectItemEvent {
 
-    public CollectBallEvent(ICMon.ICMonEventManager eventManager, ICMonPlayer player, ICMonItem item) {
-        super(eventManager, player, item);
+    public CollectBallEvent(ICMon.ICMonEventManager eventManager, ICMonPlayer player, ICBall ball) {
+        super(eventManager, player, ball);
     }
 
     @Override
