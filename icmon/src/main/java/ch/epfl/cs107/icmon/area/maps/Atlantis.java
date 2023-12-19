@@ -27,7 +27,7 @@ public class Atlantis extends ICMonArea {
         registerActor(new Background(this));
         registerActor(new Foreground(this));
 
-        Door doorToTown = new Door("town", new DiscreteCoordinates(9,7), this, new DiscreteCoordinates(12,0));
+        Door doorToTown = new Door("town", new DiscreteCoordinates(9,7), this, new DiscreteCoordinates(12,0), new DiscreteCoordinates(13,0));
         registerActor(doorToTown);
 
         ICKey key = new ICKey(this, new DiscreteCoordinates(18, 8));

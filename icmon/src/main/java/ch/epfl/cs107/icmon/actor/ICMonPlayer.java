@@ -311,7 +311,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         public void interactWith(ICGift gift, boolean isCellInteraction) {
             if (!isCellInteraction && wantsRealViewInteraction()) {
                 gift.collect();
-                soundManager.playSound("collect", 100);
+                soundManager.playSound("collect", 100, false);
                 openDialog(new Dialog("collect_gift"));
                 // todo change skin of the player
                 isDiver = true;
