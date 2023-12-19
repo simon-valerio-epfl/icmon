@@ -235,7 +235,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
 
     public void fight(ICMonFightableActor fightable, ICMonActor fightableOwner, ICMonEvent toCompleteOnWin) {
         if (!(fightable instanceof Pokemon)) {
-            System.out.println("Something bad is happening. WHAT HAVE YOU CREATED?");
+            System.out.println("Something went wrong, the fightable is not a pokemon");
             return;
         }
 

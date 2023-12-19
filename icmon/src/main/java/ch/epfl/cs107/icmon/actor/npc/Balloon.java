@@ -38,10 +38,9 @@ public class Balloon extends NPCActor {
         return new DiscreteCoordinates(5, 7);
     }
 
+    // do not accept interaction
     @Override
-    public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
-        ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
-    }
+    public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {}
 
     @Override
     public boolean takeCellSpace() {
