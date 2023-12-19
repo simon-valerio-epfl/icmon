@@ -280,6 +280,7 @@ public final class ICMon extends AreaGame {
                 }
                 this.backgroundClip = clip;
             } catch (Exception e) {
+                e.printStackTrace();
                 System.out.println("Can not play background sound... " + name);
             }
         }
