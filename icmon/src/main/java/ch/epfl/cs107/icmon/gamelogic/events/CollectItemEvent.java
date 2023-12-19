@@ -12,9 +12,9 @@ abstract public class CollectItemEvent extends ICMonEvent {
 
     /**
      * This event is characterized by an item to collect
-     * @param eventManager
+     * @param eventManager to add/remove events from icmon
      * @param player collecting the item
-     * @param item
+     * @param item to be collected
      */
     public CollectItemEvent(ICMon.ICMonEventManager eventManager, ICMonPlayer player, ICMonItem item) {
         super(eventManager, player);
@@ -31,4 +31,5 @@ abstract public class CollectItemEvent extends ICMonEvent {
             this.complete();
         }
     }
+
 }
