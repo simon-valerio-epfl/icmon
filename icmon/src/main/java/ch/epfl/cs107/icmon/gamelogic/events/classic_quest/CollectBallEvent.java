@@ -10,6 +10,12 @@ import ch.epfl.cs107.play.engine.actor.Dialog;
 
 public class CollectBallEvent extends CollectItemEvent {
 
+    /**
+     * Create a new event that will be completed when the player collects the given ball
+     * @param eventManager used to add/remove events from icmon
+     * @param player that will collect the ball
+     * @param ball that the player has to collect
+     */
     public CollectBallEvent(ICMon.ICMonEventManager eventManager, ICMonPlayer player, ICBall ball) {
         super(eventManager, player, ball);
     }

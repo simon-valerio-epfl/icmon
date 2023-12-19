@@ -14,10 +14,10 @@ import ch.epfl.cs107.play.engine.actor.Dialog;
 public class CollectGiftEvent extends CollectItemEvent {
 
     /**
-     * Create a new event that will be completed when the player collects the given item
+     * Create a new event that will be completed when the player collects the given gift
      * @param eventManager used to add/remove events from icmon
-     * @param player the main player of the game
-     * @param gift the item that the player has to collect
+     * @param player that will collect the gift
+     * @param gift that the player has to collect
      */
     public CollectGiftEvent(ICMon.ICMonEventManager eventManager, ICMonPlayer player, ICGift gift) {
         super(eventManager, player, gift);

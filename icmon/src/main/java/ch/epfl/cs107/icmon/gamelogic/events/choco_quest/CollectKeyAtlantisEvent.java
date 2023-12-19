@@ -11,6 +11,13 @@ import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
 public class CollectKeyAtlantisEvent extends CollectItemEvent {
+
+    /**
+     * Create a new event that will be completed when the player collects the given key
+     * @param eventManager used to add/remove events from icmon
+     * @param player that will collect the key
+     * @param key that the player has to collect
+     */
     public CollectKeyAtlantisEvent(ICMon.ICMonEventManager eventManager, ICMonPlayer player, ICKey key) {
         super(eventManager, player, key);
     }
