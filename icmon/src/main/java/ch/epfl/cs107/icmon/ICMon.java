@@ -29,6 +29,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * ???
@@ -48,6 +52,7 @@ public final class ICMon extends AreaGame {
     private final ArrayList<ICMonEvent> completedEvents = new ArrayList<>();
     private final ICMonGameState gameState = new ICMonGameState();
     private final ICMonEventManager eventManager = new ICMonEventManager();
+    private final ICMonSoundManager soundManager = new ICMonSoundManager();
 
     /**
      * ???
@@ -93,21 +98,6 @@ public final class ICMon extends AreaGame {
         if (super.begin(window, fileSystem)) {
             createAreas();
             initArea(STARTING_MAP);
-
-            try {
-                InputStream inputStream = fileSystem.read(ResourcePath.getSound("tf_nemesis"));
-                SwingSound sound = new SwingSound(inputStream);
-
-                // Obtenir un Clip et le jouer
-                Clip clip = sound.openedClip(0);
-                if (clip != null) {
-                    clip.start();
-                    // Vous pouvez ajouter d'autres logiques pour gérer la lecture du sonx
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("oh non wsh il est où le fichier");
-            }
 
             setupOfficialQuest();
             setupChocoQuest();
@@ -176,11 +166,14 @@ public final class ICMon extends AreaGame {
         });
 
         gameState.readMessage();
+        soundManager.update();
     }
 
     private void reset () {
         player.leaveArea();
         getCurrentArea().end();
+        soundManager.resetSound();
+        soundManager.resetBackgroundSound();
 
         begin(this.getWindow(), this.getFileSystem());
     }
@@ -209,9 +202,106 @@ public final class ICMon extends AreaGame {
     private void initArea(String areaKey) {
         ICMonArea area = (ICMonArea) setCurrentArea(areaKey, true);
         DiscreteCoordinates coords = area.getPlayerSpawnPosition();
-        player = new ICMonPlayer(area, Orientation.DOWN, coords, gameState, eventManager);
+        player = new ICMonPlayer(area, Orientation.DOWN, coords, gameState, eventManager, soundManager);
         player.enterArea(area, coords);
         player.centerCamera();
+    }
+
+    public class ICMonSoundManager {
+        private Clip currentClip;
+        private Clip backgroundClip;
+        private String currentPlayingSound = "N/A";
+        private int timeLeft = 0;
+        private boolean currentSoundCanBeOvertaken = true;
+
+        public void resetSound () {
+            if (currentClip != null) {
+                currentClip.stop();
+                currentClip = null;
+            }
+            timeLeft = -1;
+            currentSoundCanBeOvertaken = true;
+            currentPlayingSound = "N/A";
+        }
+
+        public void playSound (String name, int duration) {
+            playSound(name, duration, true);
+        }
+
+        public void playSound (String name, int duration, boolean soundCanBeOvertaken) {
+            try {
+                InputStream inputStream = getFileSystem().read(ResourcePath.getSound(name));
+                SwingSound sound = new SwingSound(inputStream);
+
+                // we reset the time left if the sound is already playing
+                if (this.currentPlayingSound.equals(name)) {
+                    timeLeft = duration;
+                    return;
+                }
+
+                // if we play a different sound
+                // first check if the current sound can be overtaken
+                if (!currentSoundCanBeOvertaken) {
+                    return;
+                }
+
+                resetSound();
+
+                currentSoundCanBeOvertaken = soundCanBeOvertaken;
+
+                Clip clip = sound.openedClip(0);
+                if (clip != null) {
+                    clip.start();
+
+                    // detect when file ends
+                    clip.addLineListener(event -> {
+                        if (event.getType() == javax.sound.sampled.LineEvent.Type.STOP) {
+                            resetSound();
+                        }
+                    });
+                }
+                this.currentPlayingSound = name;
+                this.timeLeft = duration;
+                this.currentClip = clip;
+
+            } catch (Exception e) {
+                System.out.println("Can not play sound... " + name);
+            }
+        }
+
+        public void playBackgroundSound (String name) {
+            try {
+                InputStream inputStream = getFileSystem().read(ResourcePath.getSound(name));
+                SwingSound sound = new SwingSound(inputStream);
+
+                Clip clip = sound.openedClip(0);
+                if (clip != null) {
+                    clip.loop(Clip.LOOP_CONTINUOUSLY);
+                }
+                this.backgroundClip = clip;
+            } catch (Exception e) {
+                System.out.println("Can not play background sound... " + name);
+            }
+        }
+
+        public void resetBackgroundSound () {
+            if (backgroundClip != null) {
+                backgroundClip.stop();
+            }
+        }
+
+        public void update() {
+            if (timeLeft < 0) {
+                resetSound();
+            } else {
+                timeLeft--;
+            }
+        }
+
+        public String getCurrentPlayingSound () {
+            return currentPlayingSound;
+        }
+
     }
 
     /**
@@ -241,6 +331,18 @@ public final class ICMon extends AreaGame {
         }
         @Override
         public void process () {
+            if (door.getMuteBackgroundSound()) {
+                soundManager.resetBackgroundSound();
+            }
+            if (door.getBackgroundSoundName() != null) {
+                soundManager.playBackgroundSound(door.getBackgroundSoundName());
+            }
+            if (door.getMuteWalkingSound()) {
+                player.setMuteWalkingSound(true);
+            } else {
+                player.setMuteWalkingSound(false);
+            }
+            soundManager.playSound(door.getSoundName(), door.getSoundDuration(), false);
             player.leaveArea();
             String landingAreaName = this.door.getLandingArea();
             ICMonArea currentArea = (ICMonArea) setCurrentArea(landingAreaName, false);
@@ -295,7 +397,16 @@ public final class ICMon extends AreaGame {
          * Move the player to the Atlantis arena (only if it's a diver)
          */
         public void transferToAtlantis() {
-            Door door = new Door("atlantis", new DiscreteCoordinates(9, 8), eventAreas.get("atlantis"), new DiscreteCoordinates(7, 11));
+            Door door = new Door(
+                    "atlantis",
+                    new DiscreteCoordinates(9, 8),
+                    eventAreas.get("atlantis"),
+                    "atlantis",
+                    50,
+                    true,
+                    false,
+                    "atlantis-ambiance",
+                    new DiscreteCoordinates(7, 11));
             createPassDoorMessage(door);
         }
 

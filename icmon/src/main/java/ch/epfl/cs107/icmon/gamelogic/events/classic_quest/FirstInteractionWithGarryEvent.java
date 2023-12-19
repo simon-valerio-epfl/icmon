@@ -32,7 +32,5 @@ public class FirstInteractionWithGarryEvent extends ICMonEvent {
     }
 
     @Override
-    public void update(float deltaTime) {
-
-    }
+    public void update(float deltaTime) {}
 }

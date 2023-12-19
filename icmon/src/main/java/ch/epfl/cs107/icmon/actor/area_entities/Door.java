@@ -15,11 +15,15 @@ import java.util.List;
 
 public class Door extends AreaEntity {
 
-    String landingArea;
-    DiscreteCoordinates landingPosition;
-    Area area;
-    DiscreteCoordinates mainCoordinates;
-    DiscreteCoordinates[] coordinates;
+    private final String landingArea;
+    private final DiscreteCoordinates landingPosition;
+    //private final DiscreteCoordinates mainCoordinates;
+    private final DiscreteCoordinates[] coordinates;
+    private final String soundName;
+    private final int soundDuration;
+    private boolean muteWalkingSound = false;
+    private boolean muteBackgroundSound = false;
+    private String backgroundSoundName;
 
     /**
      * Create a new door in the Area
@@ -29,12 +33,23 @@ public class Door extends AreaEntity {
      * @param coordinates
      */
     public Door (String landingArea, DiscreteCoordinates landingPosition, Area area, DiscreteCoordinates ...coordinates) {
+        this(landingArea, landingPosition, area, "door", 20, false, true, null, coordinates);
+    }
+
+    public Door (String landingArea, DiscreteCoordinates landingPosition, Area area, String soundName, int soundDuration, boolean muteWalkingSound, boolean muteBackgroundSound, String backgroundSoundName, DiscreteCoordinates ...coordinates) {
         super(area, Orientation.UP, coordinates[0]);
         this.landingArea = landingArea;
         this.landingPosition = landingPosition;
-        this.area = area;
-        this.mainCoordinates = coordinates[0];
+        // todo is area useless?
+        //this.area = area;
+        // todo is main coordinates useless?
+        //this.mainCoordinates = coordinates[0];
         this.coordinates = coordinates;
+        this.soundName = soundName;
+        this.soundDuration = soundDuration;
+        this.muteWalkingSound = muteWalkingSound;
+        this.muteBackgroundSound = muteBackgroundSound;
+        this.backgroundSoundName = backgroundSoundName;
     }
 
     /**
@@ -80,5 +95,25 @@ public class Door extends AreaEntity {
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
         ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
+    }
+
+    public String getSoundName() {
+        return soundName;
+    }
+
+    public int getSoundDuration() {
+        return soundDuration;
+    }
+
+    public boolean getMuteWalkingSound() {
+        return muteWalkingSound;
+    }
+
+    public boolean getMuteBackgroundSound() {
+        return muteBackgroundSound;
+    }
+
+    public String getBackgroundSoundName() {
+        return backgroundSoundName;
     }
 }

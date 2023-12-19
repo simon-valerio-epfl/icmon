@@ -33,7 +33,5 @@ public class EndOfTheGameEvent extends ICMonEvent {
     }
 
     @Override
-    public void update(float deltaTime) {
-        // do nothing
-    }
+    public void update(float deltaTime) {}
 }

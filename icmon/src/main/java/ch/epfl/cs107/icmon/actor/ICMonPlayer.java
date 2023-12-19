@@ -45,6 +45,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
     final private ICMonPlayerInteractionHandler handler = new ICMonPlayerInteractionHandler();
     final private ICMon.ICMonGameState gameState;
     final private ICMon.ICMonEventManager eventManager;
+    private ICMon.ICMonSoundManager soundManager;
     private Dialog dialog;
     private boolean inDialog = false;
     final private ArrayList<Pokemon> pokemons = new ArrayList<>();
@@ -52,15 +53,17 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
     private boolean lastOrientationChecked = false;
     private boolean isDiver = false;
     private boolean dialogIsLocked = false;
+    private boolean muteWalkingSound = false;
 
     //todo document this class
-    public ICMonPlayer(Area area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMon.ICMonGameState gameState, ICMon.ICMonEventManager eventManager) {
+    public ICMonPlayer(Area area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMon.ICMonGameState gameState, ICMon.ICMonEventManager eventManager, ICMon.ICMonSoundManager soundManager) {
         super(area, orientation, spawnPosition);
         this.swimmingOrientedAnimation = new OrientedAnimation(SPRITE_SWIMMING_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
         this.runningOrientedAnimation = new OrientedAnimation(SPRITE_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
         this.underWaterOrientedAnimation = new OrientedAnimation(SPRITE_UNDERWATER_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
         this.gameState = gameState;
         this.eventManager = eventManager;
+        this.soundManager = soundManager;
 
         // todo remove this
         addPokemon("bulbizarre");
@@ -148,10 +151,28 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
                 orientate(orientation);
                 if (!blockNextMove && lastOrientationChecked) {
                     move(MOVE_DURATION-5);
+                    if (!getMuteWalkingSound()) {
+                        if (
+                                currentSprite.equals(SpriteType.SWIMMING_SPRITE)
+                                || currentSprite.equals(SpriteType.UNDERWATER_SPRITE)
+                        ) {
+                            soundManager.playSound("swimming", 10);
+                        } else {
+                            soundManager.playSound("footsteps", 10);
+                        }
+                    }
                 }
                 lastOrientationChecked = true;
             }
         }
+    }
+
+    public void setMuteWalkingSound(boolean muteWalkingSound) {
+        this.muteWalkingSound = muteWalkingSound;
+    }
+
+    public boolean getMuteWalkingSound() {
+        return muteWalkingSound;
     }
 
     public void centerCamera() {
@@ -271,6 +292,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         public void interactWith(ICBall ball, boolean isCellInteraction) {
             if (!isCellInteraction && wantsRealViewInteraction()) {
                 ball.collect();
+                soundManager.playSound("collect", 100);
             }
         }
 
@@ -278,6 +300,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         public void interactWith(ICKey key, boolean isCellInteraction) {
             if (!isCellInteraction && wantsRealViewInteraction()) {
                 key.collect();
+                soundManager.playSound("collect", 100);
             }
         }
 
@@ -285,6 +308,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         public void interactWith(ICGift gift, boolean isCellInteraction) {
             if (!isCellInteraction && wantsRealViewInteraction()) {
                 gift.collect();
+                soundManager.playSound("collect", 100);
                 openDialog(new Dialog("collect_gift"));
                 // todo change skin of the player
                 isDiver = true;
