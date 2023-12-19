@@ -1,11 +1,8 @@
 package ch.epfl.cs107.icmon.actor.pokemon;
 
 import ch.epfl.cs107.icmon.actor.ICMonActor;
-import ch.epfl.cs107.icmon.actor.pokemon.actions.AttackFightAction;
-import ch.epfl.cs107.icmon.actor.pokemon.actions.RunAwayFightAction;
-import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightAction;
+import ch.epfl.cs107.icmon.actor.pokemon.actions.PokemonFightAction;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightableActor;
-import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
@@ -15,7 +12,6 @@ import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.window.Canvas;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,13 +21,13 @@ import java.util.List;
  * @author Hamza REMMAL (hamza.remmal@epfl.ch)
  */
 public abstract class Pokemon extends ICMonActor implements ICMonFightableActor {
-    private final PokemonProperties properties;
     private final RPGSprite sprite;
-    private final List<ICMonFightAction> actions;
-    private final static ICMonFightAction ATTACK_ACTION = new AttackFightAction();
-    private final static ICMonFightAction RUN_AWAY_ACTION = new RunAwayFightAction();
-    private final static ICMonFightAction[] DEFAULT_ACTIONS = {ATTACK_ACTION, RUN_AWAY_ACTION};
+    private List<PokemonFightAction> actions;
 
+    private String name;
+    private float hp;
+    private float maxHp;
+    private int damage;
 
     /**
      *
@@ -41,23 +37,23 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
      * @param pokemonName the pokemon type, e.g. pikachu
      * @param maxHp the spawning Hp as well, has to be a positive value
      * @param damage how hard it will hit his opponents in a fight, has to be a positive value
-     * @param extraActions
      */
-    public Pokemon(Area area, Orientation orientation, DiscreteCoordinates spawnPosition, String pokemonName, float maxHp, int damage, ICMonFightAction ...extraActions) {
+    public Pokemon(Area area, Orientation orientation, DiscreteCoordinates spawnPosition, String pokemonName, float maxHp, int damage) {
         super(area, orientation, spawnPosition);
         assert (maxHp >0);
         assert (damage>0);
 
+        this.name = pokemonName;
+        this.hp = maxHp;
+        this.maxHp = maxHp;
+        this.damage = damage;
 
-        this.properties = new PokemonProperties(pokemonName);
-        this.properties.setHp(maxHp);
-        this.properties.setMaxHp(maxHp);
-        this.properties.setDamage(damage);
+        this.sprite = new RPGSprite("pokemon/" + name, 1, 1, this);
+    }
 
-        this.sprite = new RPGSprite("pokemon/" + this.properties.name(), 1, 1, this);
-
-        this.actions = new ArrayList<>(Arrays.asList(DEFAULT_ACTIONS));
-        Collections.addAll(this.actions, extraActions);
+    protected void setActions(PokemonFightAction ...actions) {
+        this.actions = new ArrayList<>();
+        Collections.addAll(this.actions, actions);
     }
 
 
@@ -101,10 +97,10 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
      * @param damage how many hp the pokemon will lose... if it's still alive
      */
     public void damage (int damage) {
-        if (this.properties.hp() - damage <= 0) {
-            this.properties.setHp(0);
+        if (this.hp - damage <= 0) {
+            this.hp = 0;
         } else {
-            this.properties.setHp(this.properties.hp() - damage);
+            this.hp = hp - damage;
         }
     }
 
@@ -113,7 +109,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
      * @return whether it is able to continue the fight
      */
     public boolean isAlive () {
-        return this.properties.hp() > 0;
+        return this.hp > 0;
     }
 
     // todo list ou Array
@@ -122,7 +118,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
      *
      * @return the actions this pokemon can perform
      */
-    public List<ICMonFightAction> getActions() {
+    public List<PokemonFightAction> getActions() {
         return actions;
     }
 
@@ -137,23 +133,13 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
      * some sensible methods
      */
     public PokemonProperties properties() {
-        return this.properties;
+        return new PokemonProperties();
     }
 
     /**
      * @author Hamza REMMAL (hamza.remmal@epfl.ch)
      */
-    public static final class PokemonProperties {
-        // todo remove constructor
-
-        private float hp;
-        final private String name;
-        private float maxHp;
-        private int damage;
-
-        private PokemonProperties(String name) {
-            this.name = name;
-        }
+    public final class PokemonProperties {
 
         public String name(){
             return name;
@@ -169,18 +155,6 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
 
         public int damage(){
             return damage;
-        }
-
-        private void setHp(float hp) {
-            this.hp = hp;
-        }
-
-        private void setMaxHp(float maxHp) {
-            this.maxHp = maxHp;
-        }
-
-        private void setDamage(int damage) {
-            this.damage = damage;
         }
 
     }

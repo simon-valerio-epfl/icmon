@@ -2,6 +2,7 @@ package ch.epfl.cs107.icmon.gamelogic.fights;
 
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
+import ch.epfl.cs107.icmon.actor.pokemon.actions.PokemonFightAction;
 import ch.epfl.cs107.icmon.graphics.ICMonFightActionSelectionGraphics;
 import ch.epfl.cs107.icmon.graphics.ICMonFightArenaGraphics;
 import ch.epfl.cs107.icmon.graphics.ICMonFightTextGraphics;
@@ -28,7 +29,7 @@ public class ICMonFight extends PauseMenu {
     private final ICMonFightTextGraphics cancelledOpponentConclusionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "The opponent decided not to continue the fight");
     private final ICMonFightTextGraphics emptyTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, null);
     private ICMonFightActionSelectionGraphics selectionGraphics;
-    private ICMonFightAction selectedAction;
+    private PokemonFightAction selectedAction;
     private ConclusionReason conclusionReason;
 
     /**
@@ -81,9 +82,9 @@ public class ICMonFight extends PauseMenu {
                 }
             }
             case SELECT_OPPONENT_ACTION -> {
-                for (ICMonFightAction action : this.opponent.getActions()) {
+                for (PokemonFightAction action : this.opponent.getActions()) {
                     if (action.name().equals("Attack")) {
-                        boolean isFinished = action.doAction(this.opponent, this.playerPokemon);
+                        boolean isFinished = action.doAction(this.playerPokemon);
                         if (!this.playerPokemon.isAlive()) {
                             conclusionReason = ConclusionReason.PLAYER_DEAD;
                             state = FightState.CONCLUSION;
@@ -97,7 +98,7 @@ public class ICMonFight extends PauseMenu {
                 }
             }
             case EXECUTE_ACTION -> {
-                boolean hasFinished = selectedAction.doAction(this.playerPokemon, opponent);
+                boolean hasFinished = selectedAction.doAction(opponent);
                 if (!opponent.isAlive()) {
                     conclusionReason = ConclusionReason.OPPONENT_DEAD;
                     state = FightState.CONCLUSION;

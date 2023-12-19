@@ -1,9 +1,7 @@
 package ch.epfl.cs107.icmon.graphics;
 
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
-import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightAction;
 import ch.epfl.cs107.play.engine.Updatable;
-import ch.epfl.cs107.play.engine.actor.Graphics;
 import ch.epfl.cs107.play.engine.actor.GraphicsEntity;
 import ch.epfl.cs107.play.engine.actor.ImageGraphics;
 import ch.epfl.cs107.play.engine.actor.TextGraphics;
@@ -16,7 +14,6 @@ import ch.epfl.cs107.play.window.Keyboard;
 import java.awt.*;
 import java.util.List;
 
-import static ch.epfl.cs107.play.io.ResourcePath.getBackground;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static java.util.Objects.nonNull;

@@ -1,11 +1,20 @@
-todo : remettre la vitesse comme normalement
-ajouter les actions
+# Developer Documentation
 
-## Extensions
+Welcome to the developer documentation of the ICeMon game.
 
-### Dialogues
+### Export en fichier binaire
 
-* faire en sorte de pas slider trop vite
+
+## Changes from original ICeMon
+
+### Fights
+
+* We made a Pokémon selector as suggested in the project description. We try to modularize as much as we could using the `createPokemonSelector` and `getPokemonGraphics` methods. This selector appears in the fights with Garry, Pedro and in the arena.
+* We also replaced the interface `ICMonFightAction` by the class `PokemonFightAction`. We think it is a better design as it allows us to access the pokemon's details (the one that does the action). It is useful to have a more precise handling of the action depending on who applies it. (note: we could also have used an extra parameter in the doAction method, but it seemed more natural to have a fixed attribute in the constructor to store it).
+
+### Other changes
+
+* When the player uses the `SPACE` key to jump from a `Dialog` slide to another, it now uses `CompletableFuture` Java util to add a mandatory delay between sldies. This is useful because on some computers, the minimum time the key is pressed is longer than the frame rate and you miss some slides.
 
 ### Combats
 

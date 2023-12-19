@@ -1,14 +1,12 @@
 package ch.epfl.cs107.icmon.actor.pokemon.actions;
 
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
-import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightAction;
 
-public class AttackFightAction implements ICMonFightAction {
-    @Override
-    public String name() {
-        return "Attack";
+public class AttackFightAction extends PokemonFightAction {
+
+    public AttackFightAction(Pokemon pokemonDoer) {
+        super("Attack", pokemonDoer);
     }
-
 
     /**
      * a basic attack taking 2 hp from the enemy pokemon
@@ -16,8 +14,8 @@ public class AttackFightAction implements ICMonFightAction {
      * @return whether the action had success
      */
     @Override
-    public boolean doAction(Pokemon attacker, Pokemon target) {
-        target.damage(attacker.properties().damage());
+    public boolean doAction(Pokemon target) {
+        target.damage(this.getPokemonDoer().properties().damage());
         return true;
     }
 }

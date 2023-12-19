@@ -6,7 +6,7 @@ Alors que l'hiver s'installe à Pokétown, nous vous invitons à résoudre deux 
 
 Vous découvrirez une version glaciale de ICMon, et ferez la rencontre de **Garry**, **le professeur Oak**, **Fabrice** mais aussi **Pedro**!
 
-Après avoir visité la Pokétown, l'aire de ous aurez peut-être l'occasion de découvrir Atlantis, une légendaire ville sous-marin...
+Après avoir visité la Pokétown, l'arène, la maison, le laboratoire, ou le shop, vous aurez peut-être l'occasion de découvrir Atlantis, une légendaire ville sous-marin...
 
 ### Contrôles
 

@@ -1,12 +1,11 @@
 package ch.epfl.cs107.icmon.actor.pokemon.actions;
 
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
-import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightAction;
 
-public class RunAwayFightAction implements ICMonFightAction {
-    @Override
-    public String name() {
-        return "Run away";
+public class RunAwayFightAction extends PokemonFightAction {
+
+    public RunAwayFightAction (Pokemon pokemonDoer) {
+        super("Run away", pokemonDoer);
     }
 
     /**
@@ -15,7 +14,7 @@ public class RunAwayFightAction implements ICMonFightAction {
      * @return
      */
     @Override
-    public boolean doAction(Pokemon attacker, Pokemon target) {
+    public boolean doAction(Pokemon target) {
         return false;
     }
 }

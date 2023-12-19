@@ -1,6 +1,6 @@
 package ch.epfl.cs107.icmon.graphics;
 
-import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightAction;
+import ch.epfl.cs107.icmon.actor.pokemon.actions.PokemonFightAction;
 import ch.epfl.cs107.play.engine.Updatable;
 import ch.epfl.cs107.play.engine.actor.Graphics;
 import ch.epfl.cs107.play.engine.actor.GraphicsEntity;
@@ -28,22 +28,22 @@ public final class ICMonFightActionSelectionGraphics extends ICMonFightInteracti
 
     private final Keyboard keyboard;
     private final float scalefactor;
-    private final ICMonFightAction[] actions;
+    private final PokemonFightAction[] actions;
 
     private final GraphicsEntity[] selectors;
 
     private final Graphics header;
 
-    private ICMonFightAction choice;
+    private PokemonFightAction choice;
 
     private int currentChoice;
 
-    public ICMonFightActionSelectionGraphics(float scaleFactor, Keyboard keyboard, List<ICMonFightAction> actions) {
+    public ICMonFightActionSelectionGraphics(float scaleFactor, Keyboard keyboard, List<PokemonFightAction> actions) {
         super(scaleFactor);
         assert !actions.isEmpty();
         this.keyboard = keyboard;
         this.scalefactor = scaleFactor;
-        this.actions = actions.toArray(new ICMonFightAction[0]);
+        this.actions = actions.toArray(new PokemonFightAction[0]);
         selectors = new GraphicsEntity[3];
         header = new GraphicsEntity(new Vector(scaleFactor / 2f, scaleFactor / 3 - 1f), new TextGraphics("Please, select an action", FONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE,  1f, 1003));
         currentChoice = 0;
@@ -74,7 +74,7 @@ public final class ICMonFightActionSelectionGraphics extends ICMonFightInteracti
         }
     }
 
-    public ICMonFightAction choice(){
+    public PokemonFightAction choice(){
         return choice;
     }
 
