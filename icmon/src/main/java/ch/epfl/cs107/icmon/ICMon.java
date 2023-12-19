@@ -126,7 +126,7 @@ public final class ICMon extends AreaGame {
 
         FightPedroEvent fightPedroEvent = new FightPedroEvent(eventManager, soundManager, player);
         fightPedroEvent.onComplete(
-                new DelayedAction(new OpenDialogAction(player, new Dialog("pedro_fight_end_win")), 3000)
+                new DelayedAction(new OpenDialogAction(player, new Dialog("pedro_fight_end_win")), 2000)
         );
 
         events(collectGiftItem, collectKeyItem, fightPedroEvent);

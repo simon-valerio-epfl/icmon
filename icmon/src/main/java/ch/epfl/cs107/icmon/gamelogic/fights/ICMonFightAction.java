@@ -18,6 +18,6 @@ public interface ICMonFightAction {
      * @param target an opponent
      * @return whether the fight will continue
      */
-    boolean doAction(Pokemon target);
+    boolean doAction(Pokemon attacker, Pokemon target);
 
 }

@@ -39,11 +39,13 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
     final private static String SPRITE_NAME = "actors/player";
     final private static String SPRITE_SWIMMING_NAME = "actors/player_water";
     final private static String SPRITE_UNDERWATER_NAME = "actors/player_underwater";
+    final private static String SPRITE_SWIMMING_MASK_NAME = "actors/player_swimming_mask";
     final private static int ANIMATION_DURATION = 8;
     final private static int MOVE_DURATION = 8;
     private OrientedAnimation swimmingOrientedAnimation;
     private OrientedAnimation runningOrientedAnimation;
     private OrientedAnimation underWaterOrientedAnimation;
+    private OrientedAnimation swimmingMaskOrientedAnimation;
     private SpriteType currentSprite = SpriteType.RUNNING_SPRITE;
     final private ICMonPlayerInteractionHandler handler = new ICMonPlayerInteractionHandler();
     final private ICMon.ICMonGameState gameState;
@@ -64,6 +66,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         this.swimmingOrientedAnimation = new OrientedAnimation(SPRITE_SWIMMING_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
         this.runningOrientedAnimation = new OrientedAnimation(SPRITE_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
         this.underWaterOrientedAnimation = new OrientedAnimation(SPRITE_UNDERWATER_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
+        this.swimmingMaskOrientedAnimation = new OrientedAnimation(SPRITE_SWIMMING_MASK_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
         this.gameState = gameState;
         this.eventManager = eventManager;
         this.soundManager = soundManager;
@@ -316,6 +319,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
                 openDialog(new Dialog("collect_gift"));
                 // todo change skin of the player
                 isDiver = true;
+                runningOrientedAnimation = swimmingMaskOrientedAnimation ;
             }
         }
 
