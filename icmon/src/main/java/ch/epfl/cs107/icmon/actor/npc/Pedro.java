@@ -41,7 +41,7 @@ public final class Pedro extends NPCActor implements PokemonOwner {
     }
     /**
      * Gets the list containing this pedro's pokemons
-     * @return the list of pokemons owned by the current instance of Pedro
+     * @return the list of pokemons owned by Pedro
      */
     @Override
     public List<Pokemon> getPokemons() {

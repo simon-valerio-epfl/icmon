@@ -42,7 +42,7 @@ public final class Garry extends NPCActor implements PokemonOwner {
 
     /**
      * Gets the list containing this garry's pokemons
-     * @return the list of pokemons owned by the current instance of Garry
+     * @return the list of pokemons owned by Garry
      */
     @Override
     public List<Pokemon> getPokemons() {

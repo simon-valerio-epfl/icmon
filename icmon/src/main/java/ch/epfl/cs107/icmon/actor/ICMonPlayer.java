@@ -5,6 +5,7 @@ import ch.epfl.cs107.icmon.actor.area_entities.Door;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.items.ICGift;
 import ch.epfl.cs107.icmon.actor.items.ICKey;
+import ch.epfl.cs107.icmon.actor.items.ICMonItem;
 import ch.epfl.cs107.icmon.actor.npc.ProfOak;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.actor.pokemon.PokemonOwner;
@@ -16,6 +17,7 @@ import ch.epfl.cs107.icmon.gamelogic.events.classic_quest.PokemonFightEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.classic_quest.PokemonSelectionEvent;
 import ch.epfl.cs107.icmon.gamelogic.fights.PokemonSelectionMenu;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
+import ch.epfl.cs107.play.areagame.actor.CollectableAreaEntity;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.actor.Interactor;
 import ch.epfl.cs107.play.areagame.area.Area;
@@ -83,10 +85,10 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
 
 
     /**
-     * Create a new main player in the specified area.
+     * Creates a new main player in the specified area.
      *
-     * @param area the main area for this player
-     * @param orientation the spawning orientation of this player
+     * @param area the main area for the new player
+     * @param orientation the spawning orientation of the player
      * @param spawnPosition the spawning position in the main area
      * @param gameState the game state
      * @param eventManager the game event manager
@@ -104,7 +106,7 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
     }
 
     /**
-     * Get the current animation depending on the current sprite type.
+     * Gets the current animation depending on the current sprite type.
      * @return the current animation
      */
     public OrientedAnimation getCurrentOrientedAnimation () {
@@ -116,7 +118,7 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
     }
 
     /**
-     * Mute the player's walking sound (footsteps, swimming...)
+     * Mutes the player's walking sound (footsteps, swimming...)
      * @param muteWalkingSound true to mute, false to unmute
      */
     public void setMuteWalkingSound(boolean muteWalkingSound) {
@@ -125,7 +127,7 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
 
     /**
      * Whether the player wants to interact with an item or a NPC.
-     * @return true if the player wants to interact
+     * @return true if the player wants to interact with a neighbouring entity
      */
     public boolean wantsEntityViewInteraction() {
         Keyboard keyboard = getOwnerArea().getKeyboard();
@@ -134,8 +136,8 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
     }
 
     /**
-     * Whether the player wants to go underwater in the main lake.
-     * @return true if the player wants to go underwater
+     * Whether the player wants to go underwater
+     * @return true if the player wants to go underwater and he's not in dialog
      */
     public boolean wantsUnderWater() {
         Keyboard keyboard = getOwnerArea().getKeyboard();
@@ -144,9 +146,9 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
     }
 
     /**
-     * Whether the specified cell is a valid cell the player can enter when he is underwater
+     * Whether the specified cell is a valid cell the player may enter when he is underwater
      * @param cell the cell to test
-     * @return true if the cell is allowed
+     * @return true if entering the cell is allowed
      */
     public boolean isAllowedUnderwaterCell(ICMonBehavior.ICMonCell cell) {
         return cell.getWalkingType().equals(ICMonBehavior.AllowedWalkingType.FEET_OR_UNDERWATER)
@@ -154,19 +156,21 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
     }
 
     /**
-     * Displays a new dialog to the user.
-     * @param dialog the dialog to display
+     * Displays a new dialog to the user and makes the player enter the dialog's state
+     * @param dialog the dialog to display, not null
      */
     public void openDialog (Dialog dialog) {
+        assert dialog!=null;
         this.dialog = dialog;
         this.inDialog = true;
     }
 
     /**
-     * Suspend the game with an event that contains a pause menu.
-     * @param pokemonFightEvent the event that will handle the pause
+     * Suspend the game with an event that contains a pause menu
+     * @param pokemonFightEvent the event that will handle the pause, not null
      */
     public void suspendGameWithFightEvent(PokemonFightEvent pokemonFightEvent) {
+        assert pokemonFightEvent!=null;
         this.gameState.createSuspendWithEventMessage(pokemonFightEvent);
     }
 
@@ -196,7 +200,8 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
     }
 
     /**
-     * Fights a pokemon (that can be wild, or owned by a NPC).
+     * Fights a pokemon (that may be either wild or owned by a NPC)
+     * Moves the player back if he has no pokemon in his deck
      * @param pokemon the pokemon to fight
      * @param pokemonOwner the owner of the pokemon, null if the pokemon is wild
      * @param toCompleteOnWin the event to complete when the player wins the fight
@@ -207,7 +212,6 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
             this.move(1);
             this.openDialog(new Dialog("no_pokemon"));
         } else {
-
             PokemonSelectionMenu pokemonSelectionMenu = new PokemonSelectionMenu(this);
             PokemonSelectionEvent pokemonSelectionEvent = new PokemonSelectionEvent(eventManager, this, pokemonSelectionMenu);
             this.gameState.createSuspendWithEventMessage(pokemonSelectionEvent);
@@ -224,6 +228,7 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
         getOwnerArea().setViewCandidate(this);
     }
 
+    //TODO DOC THIS
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
@@ -260,11 +265,19 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
         }
     }
 
+    /**
+     * Gets the list containing this player's pokemons
+     * @return the list of pokemons owned by the player
+     */
     @Override
     public List<Pokemon> getPokemons() {
         return pokemons;
     }
 
+    /**
+     * Draws the player depending on his orientation and the current dialogs
+     * @param canvas target, not null
+     */
     @Override
     public void draw(Canvas canvas) {
         this.getCurrentOrientedAnimation().orientate(getOrientation());
@@ -279,6 +292,10 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
         ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
     }
 
+    /**
+     * A player prevents other entities from entering the cell where he is
+     * @return always false
+     */
     @Override
     public boolean takeCellSpace() {
         return true;
@@ -289,11 +306,19 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
         return super.getCurrentCells();
     }
 
+    /**
+     * Gets the coordinates of the cell in front of the player
+     * @return the cell in front of the player
+     */
     @Override
     public List<DiscreteCoordinates> getFieldOfViewCells() {
         return Collections.singletonList(getCurrentMainCellCoordinates().jump(getOrientation().toVector()));
     }
 
+    /**
+     * The player always want contact interactions
+     * @return always true
+     */
     @Override
     public boolean wantsCellInteraction() {
         return true;
@@ -301,10 +326,10 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
 
     /**
      * Whether the player wants distance interaction.
-     * It is true because the player always interacts with neighbouring cells
-     * This lets us check the walking type of the cells around the player
-     * when he is swimming under the ice
-     * to make sure he can not exit without going through the holes in the frozen lake
+     * It is true because the player always interacts with neighbouring cells.
+     * This lets us check the walking type of the cells around him
+     * when he's swimming under the ice
+     * to make sure he can not exit without passing through the holes in the frozen lake
      * To check whether the player wants a distance interaction with an NPC or an item,
      * one shall use the method wantsEntityViewInteraction()
      * @return always true
@@ -328,6 +353,11 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
      */
     private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor {
 
+        /**
+         * Updates the sprite of the player depending on where he is
+         * @param cell the cell the player shall interact with
+         * @param isCellInteraction true if it's a contact interaction, false otherwise
+         */
         @Override
         public void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {
             if (isCellInteraction) {
@@ -363,23 +393,28 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
                 blockNextMove = !isAllowedUnderwaterCell(cell) && currentSprite.equals(SpriteType.UNDERWATER_SPRITE);
             }
         }
-
+         /**
+         * Lets the player collect an item if he wants so,
+         * through a distance interaction
+         * @param item the item the player shall interact with
+         * @param isCellInteraction true if it's a contact interaction, false otherwise
+         */
         @Override
-        public void interactWith(ICBall ball, boolean isCellInteraction) {
+        public void interactWith(ICMonItem item, boolean isCellInteraction) {
             if (!isCellInteraction && wantsEntityViewInteraction()) {
-                ball.collect();
-                soundManager.playSound("collect", 100, true);
-            }
-        }
-
-        @Override
-        public void interactWith(ICKey key, boolean isCellInteraction) {
-            if (!isCellInteraction && wantsEntityViewInteraction()) {
-                key.collect();
+                item.collect();
                 soundManager.playSound("collect", 100);
             }
         }
 
+        /**
+         * Lets the player collect a gift if he wants so,
+         * through a distance interaction, also
+         * Opens a dialog to inform the player that he now has the ability to dive underwater
+         * when a gift is collected... it's not a basic item!
+         * @param gift the gift the player shall interact with
+         * @param isCellInteraction true if it's a contact interaction, false otherwise
+         */
         @Override
         public void interactWith(ICGift gift, boolean isCellInteraction) {
             if (!isCellInteraction && wantsEntityViewInteraction()) {
@@ -391,6 +426,11 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
             }
         }
 
+        /**
+         * Lets the player pass a door through a contact interaction
+         * @param door the player shall interact with
+         * @param isCellInteraction true if it's a contact interaction, false otherwise
+         */
         @Override
         public void interactWith(Door door, boolean isCellInteraction) {
             if (isCellInteraction) {
@@ -398,6 +438,11 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
             }
         }
 
+        /**
+         * Starts a fight with a pokemon if the player gets too close to it
+         * @param pokemon the player shall interact with
+         * @param isCellInteraction true if it's a contact interaction, false otherwise
+         */
         @Override
         public void interactWith(Pokemon pokemon, boolean isCellInteraction) {
             if (isCellInteraction) {
@@ -419,6 +464,12 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
             }
         }
 
+        /**
+         * Lets the player speak with prof Oaf if he wants so,
+         * through a distance interaction
+         * @param profOak
+         * @param isCellInteraction
+         */
         @Override
         public void interactWith(ProfOak profOak, boolean isCellInteraction) {
             if (!isCellInteraction && wantsEntityViewInteraction()) {

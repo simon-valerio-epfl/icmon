@@ -2,10 +2,7 @@ package ch.epfl.cs107.icmon.handler;
 
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.area_entities.Door;
-import ch.epfl.cs107.icmon.actor.items.ICGift;
-import ch.epfl.cs107.icmon.actor.items.ICBall;
-import ch.epfl.cs107.icmon.actor.items.ICKey;
-import ch.epfl.cs107.icmon.actor.items.ICMagicBall;
+import ch.epfl.cs107.icmon.actor.items.*;
 import ch.epfl.cs107.icmon.actor.npc.*;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
@@ -28,9 +25,6 @@ public interface ICMonInteractionVisitor extends AreaInteractionVisitor {
 
     }
 
-    default void interactWith(ICBall ball, boolean isCellInteraction) {
-
-    }
 
     default void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
 
@@ -72,7 +66,7 @@ public interface ICMonInteractionVisitor extends AreaInteractionVisitor {
 
     }
 
-    default void interactWith(ICKey key, boolean isCellInteraction) {
+    default void interactWith(ICMonItem item, boolean isCellInteraction) {
 
     }
 
