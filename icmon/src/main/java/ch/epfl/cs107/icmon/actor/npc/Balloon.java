@@ -1,18 +1,10 @@
 package ch.epfl.cs107.icmon.actor.npc;
 
-import ch.epfl.cs107.icmon.ICMon;
-import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
-import ch.epfl.cs107.icmon.actor.pokemon.PokemonOwner;
 import ch.epfl.cs107.icmon.area.ICMonArea;
-import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightableActor;
-import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -22,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class Balloon extends NPCActor {
     final private static String SPRITE_NAME = "actors/balloon";
     final private static int BALLOON_ANIMATION_SPEED = 12;
+    final private static int SECONDS_BEFORE_RESET = 5;
 
     // automated moves handling
     private final BalloonMove[] steps = {
@@ -77,7 +70,7 @@ public class Balloon extends NPCActor {
                 else {
                     currentStepIdx = 0;
                     justGotReset = true;
-                    CompletableFuture.delayedExecutor(5, TimeUnit.SECONDS).execute(() -> {
+                    CompletableFuture.delayedExecutor(SECONDS_BEFORE_RESET, TimeUnit.SECONDS).execute(() -> {
                         setCurrentPosition(getSpawnPosition().toVector());
                         justGotReset = false;
                     });
