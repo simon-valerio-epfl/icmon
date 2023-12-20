@@ -36,6 +36,7 @@ Welcome to the developer documentation of the ICeMon game.
 ### Actions
 
 * We created a new `DelayedAction`, that allows us to perform some actions a few seconds after the completion of an event.
+* We created a new `PerformOnFightResult` action, that allows us to execute some actions depending on the result of a fight. This allows us to make Garry disappear from the House when he is defeated, but to keep it otherwise.
 
 ### Areas
 
