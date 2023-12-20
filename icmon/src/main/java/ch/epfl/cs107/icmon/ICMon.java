@@ -299,6 +299,10 @@ public final class ICMon extends AreaGame {
 
         private ICMonGameState() {}
 
+        public float getFrameDuration() {
+            return (float) 1000 / getFrameRate();
+        }
+
         public void acceptInteraction (Interactable interactable, boolean isCellInteraction) {
             for (var event : ICMon.this.events) {
                 interactable.acceptInteraction(event, isCellInteraction);

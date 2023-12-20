@@ -15,6 +15,8 @@ public class AttackFightAction extends PokemonFightAction {
      */
     @Override
     public boolean doAction(Pokemon target) {
+        System.out.println(this.getPokemonDoer().properties().name() + " attacks " + target.properties().name() + "!");
+        System.out.println(target.properties().name() + " loses " + this.getPokemonDoer().properties().damage() + " hp!");
         target.damage(this.getPokemonDoer().properties().damage());
         return true;
     }

@@ -109,7 +109,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
      * @return whether it is able to continue the fight
      */
     public boolean isDead () {
-        return this.hp > 0;
+        return this.hp <= 0;
     }
 
     // todo list ou Array
@@ -124,7 +124,7 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
 
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
-        ((ICMonInteractionVisitor) v).interactWith((ICMonFightableActor) this, isCellInteraction);
+        ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
     }
 
     /**

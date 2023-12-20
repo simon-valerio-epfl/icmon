@@ -35,6 +35,12 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Represents the main player in the game.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
 public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner {
 
     // Sprite management
@@ -63,6 +69,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
 
     // Pokemon management
     final private List<Pokemon> pokemons = new ArrayList<>();
+    private boolean isFightStarting = false;
 
     // Dialogs management
     private Dialog dialog;
@@ -75,7 +82,17 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
     // Sound management
     private boolean muteWalkingSound = false;
 
-    //todo document this class
+
+    /**
+     * Create a new main player in the specified area.
+     *
+     * @param area the main area for this player
+     * @param orientation the spawning orientation of this player
+     * @param spawnPosition the spawning position in the main area
+     * @param gameState the game state
+     * @param eventManager the game event manager
+     * @param soundManager the game sound manager
+     */
     public ICMonPlayer(Area area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMon.ICMonGameState gameState, ICMon.ICMonEventManager eventManager, ICMonSoundManager soundManager) {
         super(area, orientation, spawnPosition);
         this.swimmingOrientedAnimation = new OrientedAnimation(SPRITE_SWIMMING_NAME, ANIMATION_DURATION/2, this.getOrientation(), this);
@@ -85,33 +102,163 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         this.gameState = gameState;
         this.eventManager = eventManager;
         this.soundManager = soundManager;
+    }
 
-        // todo remove this
-        addPokemon("bulbizarre");
-        addPokemon("latios");
-        addPokemon("nidoqueen");
+    /**
+     * Get the current animation depending on the current sprite type.
+     * @return the current animation
+     */
+    public OrientedAnimation getCurrentOrientedAnimation () {
+        return switch (this.currentSprite) {
+            case SWIMMING_SPRITE -> swimmingOrientedAnimation;
+            case UNDERWATER_SPRITE -> underWaterOrientedAnimation;
+            default -> runningOrientedAnimation;
+        };
+    }
 
-        /*blockedCoordinates.put(Orientation.LEFT, false);
-        blockedCoordinates.put(Orientation.RIGHT, false);
-        blockedCoordinates.put(Orientation.UP, false);
-        blockedCoordinates.put(Orientation.DOWN, false);*/
+    /**
+     * Mute the player's walking sound (footsteps, swimming...)
+     * @param muteWalkingSound true to mute, false to unmute
+     */
+    public void setMuteWalkingSound(boolean muteWalkingSound) {
+        this.muteWalkingSound = muteWalkingSound;
+    }
+
+    /**
+     * Whether the player wants to interact with an item or a NPC.
+     * @return true if the player wants to interact
+     */
+    public boolean wantsRealViewInteraction() {
+        Keyboard keyboard = getOwnerArea().getKeyboard();
+        Button lKey = keyboard.get(Keyboard.L);
+        return lKey.isDown() && !this.inDialog;
+    }
+
+    /**
+     * Whether the player wants to go underwater in the main lake.
+     * @return true if the player wants to go underwater
+     */
+    public boolean wantsUnderWater() {
+        Keyboard keyboard = getOwnerArea().getKeyboard();
+        Button wKey = keyboard.get(Keyboard.W);
+        return wKey.isDown() && !this.inDialog;
+    }
+
+    /**
+     * Whether the specified cell is a valid cell the player can enter when he is underwater
+     * @param cell the cell to test
+     * @return true if the cell is allowed
+     */
+    public boolean isAllowedUnderwaterCell(ICMonBehavior.ICMonCell cell) {
+        return cell.getWalkingType().equals(ICMonBehavior.AllowedWalkingType.FEET_OR_UNDERWATER)
+            || cell.getWalkingType().equals(ICMonBehavior.AllowedWalkingType.ENTER_WATER);
+    }
+
+    /**
+     * Displays a new dialog to the user.
+     * @param dialog the dialog to display
+     */
+    public void openDialog (Dialog dialog) {
+        this.dialog = dialog;
+        this.inDialog = true;
+    }
+
+    /**
+     * Suspend the game with an event that contains a pause menu.
+     * @param pokemonFightEvent the event that will handle the pause
+     */
+    public void suspendGameWithFightEvent(PokemonFightEvent pokemonFightEvent) {
+        this.gameState.createSuspendWithEventMessage(pokemonFightEvent);
+    }
+
+    /**
+     * Move the player once a specific key is pressed.
+     * @param orientation the orientation to move to
+     * @param key the key to press
+     */
+    private void moveIfPressed(Orientation orientation, Button key) {
+        if (key.isDown()) {
+            if (!isDisplacementOccurs()) {
+                if (!getOrientation().equals(orientation)) {
+                    lastOrientationChecked = false;
+                }
+                orientate(orientation);
+                if (!blockNextMove && lastOrientationChecked) {
+                    move(MOVE_DURATION-5);
+                    if (!muteWalkingSound) {
+                        boolean isSwimming = currentSprite.equals(SpriteType.SWIMMING_SPRITE) || currentSprite.equals(SpriteType.UNDERWATER_SPRITE);
+                        String soundName = isSwimming ? "swimming" : "footsteps";
+                        soundManager.playSound(soundName, 10);
+                    }
+                }
+                lastOrientationChecked = true;
+            }
+        }
+    }
+
+    /**
+     * Fights a pokemon (that can be wild, or owned by a NPC).
+     * @param pokemon the pokemon to fight
+     * @param pokemonOwner the owner of the pokemon, null if the pokemon is wild
+     * @param toCompleteOnWin the event to complete when the player wins the fight
+     */
+    public void fight(Pokemon pokemon, ICMonActor pokemonOwner, ICMonEvent toCompleteOnWin) {
+        if (this.pokemons.isEmpty()) {
+            this.orientate(Orientation.DOWN);
+            this.move(1);
+            this.openDialog(new Dialog("no_pokemon"));
+        } else {
+
+            PokemonSelectionMenu pokemonSelectionMenu = new PokemonSelectionMenu(this);
+            PokemonSelectionEvent pokemonSelectionEvent = new PokemonSelectionEvent(eventManager, this, pokemonSelectionMenu);
+            this.gameState.createSuspendWithEventMessage(pokemonSelectionEvent);
+
+            pokemonSelectionEvent.onComplete(new AfterPokemonSelectionFightAction(this, this.eventManager, pokemonSelectionMenu, pokemon, toCompleteOnWin, pokemonOwner));
+        }
+
+    }
+
+    /**
+     * Centers the camera on the player.
+     */
+    public void centerCamera() {
+        getOwnerArea().setViewCandidate(this);
+    }
+
+    @Override
+    public void update(float deltaTime) {
+        super.update(deltaTime);
+
+        if (this.inDialog) {
+            Keyboard keyboard = getOwnerArea().getKeyboard();
+            if (keyboard.get(Keyboard.SPACE).isDown() && !dialogIsLocked){
+                this.dialog.update(deltaTime);
+                dialogIsLocked = true;
+                CompletableFuture.delayedExecutor(200, TimeUnit.MILLISECONDS).execute(() -> {
+                    dialogIsLocked = false;
+                });
+            }
+            if (this.dialog.isCompleted()) {
+                this.dialog = null;
+                this.inDialog = false;
+            }
+        } else {
+            Keyboard keyboard = getOwnerArea().getKeyboard();
+            moveIfPressed(Orientation.LEFT, keyboard.get(Keyboard.LEFT));
+            moveIfPressed(Orientation.UP, keyboard.get(Keyboard.UP));
+            moveIfPressed(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
+            moveIfPressed(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
+            if (isDisplacementOccurs()) {
+                this.getCurrentOrientedAnimation().update(deltaTime);
+            } else {
+                this.getCurrentOrientedAnimation().reset();
+            }
+        }
     }
 
     @Override
     public List<Pokemon> getPokemons() {
         return pokemons;
-    }
-
-    public OrientedAnimation getCurrentOrientedAnimation () {
-        switch (this.currentSprite) {
-            case SWIMMING_SPRITE:
-                return swimmingOrientedAnimation;
-            case UNDERWATER_SPRITE:
-                return underWaterOrientedAnimation;
-            case RUNNING_SPRITE:
-            default:
-                return runningOrientedAnimation;
-        }
     }
 
     @Override
@@ -131,69 +278,6 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
     @Override
     public boolean takeCellSpace() {
         return true;
-    }
-
-    public void update(float deltaTime) {
-        super.update(deltaTime);
-
-        if (this.inDialog) {
-            Keyboard keyboard = getOwnerArea().getKeyboard();
-            if (keyboard.get(Keyboard.SPACE).isDown() && !dialogIsLocked){
-                this.dialog.update(deltaTime);
-                dialogIsLocked = true;
-                CompletableFuture.delayedExecutor(200, TimeUnit.MILLISECONDS).execute(() -> {
-                    dialogIsLocked = false;
-                });
-            }
-            if (this.dialog.isCompleted()) {
-               this.dialog = null;
-               this.inDialog = false;
-            }
-        } else {
-            Keyboard keyboard = getOwnerArea().getKeyboard();
-            moveIfPressed(Orientation.LEFT, keyboard.get(Keyboard.LEFT));
-            moveIfPressed(Orientation.UP, keyboard.get(Keyboard.UP));
-            moveIfPressed(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
-            moveIfPressed(Orientation.DOWN, keyboard.get(Keyboard.DOWN));
-            if (isDisplacementOccurs()) {
-                this.getCurrentOrientedAnimation().update(deltaTime);
-            } else {
-                this.getCurrentOrientedAnimation().reset();
-            }
-        }
-    }
-
-    private void moveIfPressed(Orientation orientation, Button b) {
-        if (b.isDown()) {
-            if (!isDisplacementOccurs()) {
-                if (!getOrientation().equals(orientation)) {
-                    lastOrientationChecked = false;
-                }
-                orientate(orientation);
-                if (!blockNextMove && lastOrientationChecked) {
-                    move(MOVE_DURATION-5);
-                    if (!muteWalkingSound) {
-                        if (
-                                currentSprite.equals(SpriteType.SWIMMING_SPRITE)
-                                || currentSprite.equals(SpriteType.UNDERWATER_SPRITE)
-                        ) {
-                            soundManager.playSound("swimming", 10);
-                        } else {
-                            soundManager.playSound("footsteps", 10);
-                        }
-                    }
-                }
-                lastOrientationChecked = true;
-            }
-        }
-    }
-
-    public void setMuteWalkingSound(boolean muteWalkingSound) {
-        this.muteWalkingSound = muteWalkingSound;
-    }
-
-    public void centerCamera() {
-        getOwnerArea().setViewCandidate(this);
     }
 
     @Override
@@ -216,54 +300,18 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         return true;
     }
 
-    public boolean wantsRealViewInteraction() {
-        Keyboard keyboard = getOwnerArea().getKeyboard();
-        Button lKey = keyboard.get(Keyboard.L);
-        return lKey.isDown() && !this.inDialog;
-    }
-
     @Override
     public void interactWith(Interactable other, boolean isCellInteraction) {
         other.acceptInteraction(handler, isCellInteraction);
         this.gameState.acceptInteraction(other, isCellInteraction);
     }
 
-    public boolean wantsUnderWater() {
-        Keyboard keyboard = getOwnerArea().getKeyboard();
-        Button wKey = keyboard.get(Keyboard.W);
-        return wKey.isDown() && !this.inDialog;
-    }
-
-    public void openDialog (Dialog dialog) {
-        this.dialog = dialog;
-        this.inDialog = true;
-    }
-
-    public void suspendGameWithFightEvent(PokemonFightEvent pokemonFightEvent) {
-        this.gameState.createSuspendWithEventMessage(pokemonFightEvent);
-    }
-
-    public void fight(ICMonFightableActor fightable, ICMonActor fightableOwner, ICMonEvent toCompleteOnWin) {
-        if (!(fightable instanceof Pokemon)) {
-            System.out.println("Something went wrong, the fightable is not a pokemon");
-            return;
-        }
-
-        if (this.pokemons.isEmpty()) {
-            this.orientate(Orientation.DOWN);
-            this.move(1);
-            this.openDialog(new Dialog("no_pokemon"));
-        } else {
-
-            PokemonSelectionMenu pokemonSelectionMenu = new PokemonSelectionMenu(this);
-            PokemonSelectionEvent pokemonSelectionEvent = new PokemonSelectionEvent(eventManager, this, pokemonSelectionMenu);
-            this.gameState.createSuspendWithEventMessage(pokemonSelectionEvent);
-
-            pokemonSelectionEvent.onComplete(new AfterPokemonSelectionFightAction(this, this.eventManager, pokemonSelectionMenu, (Pokemon) fightable, toCompleteOnWin, fightableOwner));
-        }
-
-    }
-
+    /**
+     * Handles the interactions between the player and the other actors.
+     *
+     * @author Valerio De Santis
+     * @author Simon Lefort
+     */
     private class ICMonPlayerInteractionHandler implements ICMonInteractionVisitor {
 
         @Override
@@ -297,12 +345,8 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
                     }
                 }
             } else {
-                // if the player is swimming
-                // todo check
-                blockNextMove = (
-                        !cell.getWalkingType().equals(ICMonBehavior.AllowedWalkingType.FEET_OR_UNDERWATER)
-                        && !cell.getWalkingType().equals(ICMonBehavior.AllowedWalkingType.ENTER_WATER)
-                ) && currentSprite.equals(SpriteType.UNDERWATER_SPRITE);
+                // if the player is swimming underwater
+                blockNextMove = !isAllowedUnderwaterCell(cell) && currentSprite.equals(SpriteType.UNDERWATER_SPRITE);
             }
         }
 
@@ -328,7 +372,6 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
                 gift.collect();
                 soundManager.playSound("collect", 100, true);
                 openDialog(new Dialog("collect_gift"));
-                // todo change skin of the player
                 isDiver = true;
                 runningOrientedAnimation = swimmingMaskOrientedAnimation ;
             }
@@ -342,9 +385,23 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         }
 
         @Override
-        public void interactWith(ICMonFightableActor actor, boolean isCellInteraction) {
+        public void interactWith(Pokemon pokemon, boolean isCellInteraction) {
             if (isCellInteraction) {
-                fight(actor, null, null);
+                if (isFightStarting) return;
+
+                // this prevents a double interaction with the pokemon
+                isFightStarting = true;
+
+                // to orientate the player, we have to reset motion
+                resetMotion();
+                orientate(getOrientation().opposite());
+                move(0);
+
+                // we wait for the player to move, then start the fight
+                CompletableFuture.delayedExecutor((long) (2 * gameState.getFrameDuration()), TimeUnit.MILLISECONDS).execute(() -> {
+                    fight(pokemon, null, null);
+                    isFightStarting = false;
+                });
             }
         }
 

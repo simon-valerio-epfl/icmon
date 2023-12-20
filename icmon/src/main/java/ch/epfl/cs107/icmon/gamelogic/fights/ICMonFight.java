@@ -77,7 +77,6 @@ public class ICMonFight extends PauseMenu {
                     selectedAction = this.selectionGraphics.choice();
 
                     state = FightState.EXECUTE_ACTION;
-                    // todo est-ce qu'ici on doit le recréer à chaque fois ou est-ce qu'on peut vider le choice ?
                     this.selectionGraphics = new ICMonFightActionSelectionGraphics(CAMERA_SCALE_FACTOR, getKeyboard(), this.playerPokemon.getActions());
                 }
             }
@@ -99,6 +98,8 @@ public class ICMonFight extends PauseMenu {
             }
             case EXECUTE_ACTION -> {
                 boolean hasFinished = selectedAction.doAction(opponent);
+                System.out.println(opponent.isDead());
+                System.out.println(hasFinished);
                 if (opponent.isDead()) {
                     conclusionReason = ConclusionReason.OPPONENT_DEAD;
                     state = FightState.CONCLUSION;

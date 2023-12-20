@@ -14,7 +14,7 @@ import ch.epfl.cs107.play.math.Orientation;
 
 import java.util.ArrayList;
 
-public class Pedro extends NPCActor implements ICMonFightableActor, PokemonOwner {
+public class Pedro extends NPCActor implements PokemonOwner {
     final private static String SPRITE_NAME = "actors/pedro";
     final private ArrayList<Pokemon> pokemons = new ArrayList<>();
 

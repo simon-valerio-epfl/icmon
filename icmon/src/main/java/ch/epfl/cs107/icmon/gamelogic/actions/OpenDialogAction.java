@@ -12,6 +12,6 @@ public class OpenDialogAction implements Action {
         this.dialog = dialog;
     }
     public void perform() {
-        this.player.openDialog(dialog);
+        this.player.openDialog(this.dialog);
     }
 }

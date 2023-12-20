@@ -7,6 +7,7 @@ import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.items.ICKey;
 import ch.epfl.cs107.icmon.actor.items.ICMagicBall;
 import ch.epfl.cs107.icmon.actor.npc.*;
+import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightableActor;
 import ch.epfl.cs107.play.areagame.area.AreaBehavior;
@@ -34,12 +35,7 @@ public interface ICMonInteractionVisitor extends AreaInteractionVisitor {
 
     }
 
-    /*
-    default void interactWith(Bulbizarre bulbizarre, boolean isCellInteraction) {
-
-    }*/
-
-    default void interactWith(ICMonFightableActor actor, boolean isCellInteraction) {
+    default void interactWith(Pokemon pokemon, boolean isCellInteraction) {
 
     }
 
