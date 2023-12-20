@@ -12,7 +12,7 @@ import ch.epfl.cs107.play.math.Orientation;
  * @author Valerio De Santis
  * @author Simon Lefort
  */
-public class Nidoqueen extends Pokemon {
+final public class Nidoqueen extends Pokemon {
 
     private final static String POKEMON_NAME = "nidoqueen";
     private final static int MAX_HP = 10;

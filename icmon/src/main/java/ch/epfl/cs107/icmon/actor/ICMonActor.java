@@ -9,41 +9,25 @@ import ch.epfl.cs107.play.math.Orientation;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Represents an actor in the game
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
 public abstract class ICMonActor extends MovableAreaEntity {
 
     /**
-     * Initialising an ICMonActor implies assigning him
-     * a departing position.
-     * He will spawn without moving
+     * Creates a new actor in the specified area
+     * When spawning, the actor will not be moving
      *
-     * @param area where he'll spawn
-     * @param orientation the spawning direction at which he will look at
-     * @param spawnPosition the coordinates, on the spawning area, where he will appear
+     * @param area where the actor will spawn
+     * @param orientation the spawning direction at which they will look at
+     * @param spawnPosition the coordinates, on the spawning area, where they will appear
      */
     public ICMonActor(Area area, Orientation orientation, DiscreteCoordinates spawnPosition) {
         super(area, orientation, spawnPosition);
         resetMotion();
-    }
-
-    /**
-     * Some other actor can stay on the same cell as a ICMonActor
-     * One should feel free to override this method while
-     * extending this class
-     * @return
-     */
-    @Override
-    public boolean takeCellSpace() {
-
-        return false;
-    }
-
-    /**
-     *
-     * @return the main cell where the current instance is
-     */
-    @Override
-    public List<DiscreteCoordinates> getCurrentCells() {
-        return Collections.singletonList(getCurrentMainCellCoordinates());
     }
 
     /**
@@ -54,12 +38,13 @@ public abstract class ICMonActor extends MovableAreaEntity {
     }
 
     /**
-     * One should call leaveArea() before entering a new Area
-     * The game will visually follow the travelling actor and
+     * Enters a new area.
+     * the game will visually follow the travelling actor and
      * the latter will stop moving when he arrives
+     * Note: one should call leaveArea() before entering a new Area
      *
-     * @param area the landing one
-     * @param spawnPosition belonging to the landing Area
+     * @param area the landing area
+     * @param spawnPosition the spawn position in the new area
      */
     public void enterArea (Area area, DiscreteCoordinates spawnPosition) {
         area.registerActor(this);
@@ -69,19 +54,21 @@ public abstract class ICMonActor extends MovableAreaEntity {
         resetMotion();
     }
 
-    /**
-     * by default an ICMonActor accepts proximity interactions
-     * @return
-     */
+    @Override
+    public boolean takeCellSpace() {
+        return false;
+    }
+
+    @Override
+    public List<DiscreteCoordinates> getCurrentCells() {
+        return Collections.singletonList(getCurrentMainCellCoordinates());
+    }
+
     @Override
     public boolean isCellInteractable() {
         return true;
     }
 
-    /**
-     * by default an ICMonActor does not accept distance interactions
-     * @return
-     */
     @Override
     public boolean isViewInteractable() {
         return false;

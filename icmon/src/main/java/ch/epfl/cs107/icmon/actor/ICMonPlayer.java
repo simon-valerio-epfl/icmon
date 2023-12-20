@@ -40,7 +40,7 @@ import java.util.concurrent.TimeUnit;
  * @author Valerio De Santis
  * @author Simon Lefort
  */
-public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner {
+final public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner {
 
     // Sprite management
     private enum SpriteType { SWIMMING_SPRITE, RUNNING_SPRITE, UNDERWATER_SPRITE }

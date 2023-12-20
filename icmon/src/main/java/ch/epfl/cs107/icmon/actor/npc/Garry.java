@@ -33,7 +33,7 @@ final public class Garry extends NPCActor implements PokemonOwner {
         super(area, orientation, spawnPosition, SPRITE_NAME);
 
         // by default, Garry has a Nidoqueen
-        addPokemon("nidoqueen");
+        addPokemon(PokemonName.NIDOQUEEN);
     }
 
     @Override

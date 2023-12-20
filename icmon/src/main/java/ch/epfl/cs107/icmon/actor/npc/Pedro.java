@@ -36,7 +36,7 @@ final public class Pedro extends NPCActor implements PokemonOwner {
         super(area, orientation, spawnPosition, SPRITE_NAME, 1.7f, 1.7f, 32, 32);
 
         // by default, Pedro has a Latios
-        addPokemon("latios");
+        addPokemon(PokemonName.LATIOS);
     }
 
     @Override

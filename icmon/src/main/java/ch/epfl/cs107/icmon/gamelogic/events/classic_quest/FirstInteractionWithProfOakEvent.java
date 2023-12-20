@@ -4,6 +4,7 @@ import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.actor.npc.ProfOak;
+import ch.epfl.cs107.icmon.actor.pokemon.PokemonOwner;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
@@ -26,7 +27,7 @@ public class FirstInteractionWithProfOakEvent extends ICMonEvent {
         // lazy evaluation, we can access dialog
         if (this.isInDialog && this.dialog.isCompleted()) {
             this.isInDialog = false;
-            getPlayer().addPokemon("latios");
+            getPlayer().addPokemon(PokemonOwner.PokemonName.LATIOS);
             if (isTheDialogComplete) this.complete();
         }
     }
