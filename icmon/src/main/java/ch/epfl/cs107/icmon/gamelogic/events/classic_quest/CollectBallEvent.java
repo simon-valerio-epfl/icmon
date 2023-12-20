@@ -7,10 +7,16 @@ import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
-public class CollectBallEvent extends CollectItemEvent {
+/**
+ * Represents an event that is completed when the player collects the ball in the lake.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
+public final class CollectBallEvent extends CollectItemEvent {
 
     /**
-     * Create a new event that will be completed when the player collects the given ball
+     * Creates a new event that will be completed when the player collects the given ball
      * @param eventManager used to add/remove events from icmon
      * @param player that will collect the ball
      * @param ball that the player has to collect

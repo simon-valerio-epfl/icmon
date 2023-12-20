@@ -8,12 +8,24 @@ import ch.epfl.cs107.icmon.actor.pokemon.PokemonOwner;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
-public class FirstInteractionWithProfOakEvent extends ICMonEvent {
+/**
+ * Represents an event that is completed when the player interacts with Prof Oak for the first time.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
+public final class FirstInteractionWithProfOakEvent extends ICMonEvent {
 
     private Dialog dialog;
     private boolean isTheDialogComplete = false;
     private boolean isInDialog = false;
 
+    /**
+     * Creates a new event that will be completed when the player interacts with Prof Oak for the first time.
+     *
+     * @param eventManager used to add/remove events from icmon
+     * @param player that will interact with Prof Oak
+     */
     public FirstInteractionWithProfOakEvent (ICMon.ICMonEventManager eventManager, ICMonPlayer player) {
         super(eventManager, player);
     }
@@ -47,7 +59,8 @@ public class FirstInteractionWithProfOakEvent extends ICMonEvent {
      * While this event is active,
      * there can be a certain dialog between the player and a prof Oak
      * following a proximity interaction
-     * @param profOak
+     *
+     * @param profOak the prof Oak that interacts with the player
      * @param isCellInteraction whether it's a proximity interaction(true) or not
      */
     @Override
@@ -60,7 +73,8 @@ public class FirstInteractionWithProfOakEvent extends ICMonEvent {
      * While this event is active,
      * there can be a certain dialog between the player and the shop assistants
      * following a proximity interaction
-     * @param shopAssistant
+     *
+     * @param shopAssistant the shop assistant that interacts with the player
      * @param isCellInteraction whether it's a proximity interaction(true) or not
      */
     @Override
