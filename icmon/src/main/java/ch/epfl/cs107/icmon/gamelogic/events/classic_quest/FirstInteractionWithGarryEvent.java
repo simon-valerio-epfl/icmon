@@ -4,7 +4,11 @@ import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
+import ch.epfl.cs107.icmon.gamelogic.actions.CompleteEventAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.DelayedAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.OpenDialogAction;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
+import ch.epfl.cs107.play.engine.actor.Dialog;
 
 /**
  * Represents an event that is completed when the player fights Garry (and win!)
@@ -38,7 +42,15 @@ public final class FirstInteractionWithGarryEvent extends ICMonEvent {
     public void interactWith(Garry garry, boolean isCellInteraction) {
         if (getPlayer().wantsEntityViewInteraction()) {
             Pokemon garryPokemon = garry.getPokemons().get(0);
-            getPlayer().fight(garryPokemon, garry, this);
+            getPlayer().fight(
+                    garryPokemon,
+                    garry,
+                    new CompleteEventAction(this),
+                    new DelayedAction(
+                            new OpenDialogAction(this.getPlayer(), new Dialog("pedro_fight_end_lose")),
+                            2000
+                    )
+            );
             this.complete();
         }
     }

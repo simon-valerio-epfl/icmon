@@ -53,5 +53,6 @@ La clef du local de Chocopoly (situé au sud-est de la Pokétown) a été dérob
 
 * Lorsque vous remontez... le ricanement de Pedro vous fait sursauter.
 * Celui vient de dérober votre clef. Il vous faut maintenant le combattre.
+* *note: vous aurez peut-être besoin de récupérer une Pokéball pour combattre Pedro!*
 * Tant que ce n'est pas chose faite, Pedro restera dans la Pokétown et vous ne récupérerez pas votre clef... 
 * Lorsque vous l'aurez battu... vous pourrez enfin rapporter la clef à Fabrice et sauver Chocopoly !
