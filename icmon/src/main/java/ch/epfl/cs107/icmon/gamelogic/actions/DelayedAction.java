@@ -12,7 +12,6 @@ import java.util.concurrent.CompletableFuture;
  * @author Simon Lefort
  */
 public final class DelayedAction implements Action {
-
     private final Action action;
     private final int delay;
 

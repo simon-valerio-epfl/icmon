@@ -5,6 +5,7 @@ import ch.epfl.cs107.icmon.actor.area_entities.Door;
 import ch.epfl.cs107.icmon.actor.items.ICGift;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.items.ICKey;
+import ch.epfl.cs107.icmon.actor.npc.Firework;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.area.maps.*;
 import ch.epfl.cs107.icmon.audio.ICMonSoundManager;
@@ -14,6 +15,7 @@ import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.choco_quest.CollectGiftEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.choco_quest.CollectKeyAtlantisEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.choco_quest.FightPedroEvent;
+import ch.epfl.cs107.icmon.gamelogic.events.choco_quest.GiveKeyFabriceEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.classic_quest.*;
 import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
@@ -143,7 +145,10 @@ public final class ICMon extends AreaGame {
         FightPedroEvent fightPedroEvent = new FightPedroEvent(eventManager, soundManager, player);
         fightPedroEvent.onComplete(new DelayedAction(new OpenDialogAction(player, new Dialog("pedro_fight_end_win")), 2000));
 
-        events(collectGiftItem, collectKeyItem, fightPedroEvent);
+        GiveKeyFabriceEvent giveKeyFabriceEvent = new GiveKeyFabriceEvent(eventManager, player);
+        giveKeyFabriceEvent.onComplete(new EndGameAction(gameState));
+
+        events(collectGiftItem, collectKeyItem, fightPedroEvent, giveKeyFabriceEvent);
     }
 
     /**
@@ -224,7 +229,9 @@ public final class ICMon extends AreaGame {
      */
     @Override
     public void end() {
-
+        ICMonArea town = eventAreas.get("town");
+        Firework firework = new Firework(town, Orientation.DOWN, Firework.getSpawnPosition(), soundManager);
+        town.registerActor(firework);
     }
 
     /**
@@ -434,6 +441,13 @@ public final class ICMon extends AreaGame {
          */
         public void createSuspendWithEventMessage (ICMonEvent event) {
             this.message = new SuspendWithEventMessage(event);
+        }
+
+        /**
+         * Creates a new message that leads to the end of the game.
+         */
+        public void createEndMessage () {
+            end();
         }
 
         /**

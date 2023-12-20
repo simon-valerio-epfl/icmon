@@ -161,4 +161,18 @@ public final class ICMonSoundManager {
         }
     }
 
+    /**
+     * Plays a sound that can overlap with other sounds
+     * @param name the name of the sound to play
+     */
+    public void playOverlappingSound (String name) {
+        SwingSound sound = readSwingSound(name);
+        if (sound == null) return;
+
+        Clip clip = sound.openedClip(0);
+        if (clip != null) {
+            clip.start();
+        }
+    }
+
 }

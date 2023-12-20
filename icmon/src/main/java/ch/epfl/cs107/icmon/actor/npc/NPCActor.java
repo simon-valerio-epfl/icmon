@@ -4,6 +4,7 @@ import ch.epfl.cs107.icmon.actor.ICMonActor;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.play.engine.actor.RPGSprite;
 import ch.epfl.cs107.play.engine.actor.Sprite;
+import ch.epfl.cs107.play.io.ResourcePath;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.math.RegionOfInterest;
@@ -48,6 +49,14 @@ abstract class NPCActor extends ICMonActor {
      */
     public NPCActor (ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, String spriteName) {
         this(area, orientation, spawnPosition, spriteName, 1, 1.3215f, 16, 21);
+    }
+
+    /**
+     * Updates the NPC sprite name
+     * @param name the new name of the sprite
+     */
+    protected void setSpriteName(String name) {
+        this.sprite.setName(ResourcePath.getSprite("actors/firework_explosion"));
     }
 
     @Override
