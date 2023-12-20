@@ -178,10 +178,6 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         this.muteWalkingSound = muteWalkingSound;
     }
 
-    public boolean getMuteWalkingSound() {
-        return muteWalkingSound;
-    }
-
     public void centerCamera() {
         getOwnerArea().setViewCandidate(this);
     }
