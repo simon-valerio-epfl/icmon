@@ -34,6 +34,8 @@ public final class GiveKeyFabriceEvent extends ICMonEvent {
      */
     @Override
     public void interactWith(Fabrice fabrice, boolean isCellInteraction) {
-        this.complete();
+        if (getPlayer().wantsEntityViewInteraction()) {
+            this.complete();
+        }
     }
 }

@@ -44,6 +44,16 @@ public interface PokemonOwner {
     }
 
     /**
+     * Adds a random pokemon to the pocket
+     * This can be useful when someone collects a Pokéball for instance
+     */
+    default void addRandomPokemon() {
+        PokemonName[] availablePokemons = PokemonName.values();
+        int randomIndex = (int) (Math.random() * availablePokemons.length);
+        addPokemon(availablePokemons[randomIndex]);
+    }
+
+    /**
      * Gets the list of pokemons belonging to the current instance
      * @return the list of pokemons belonging to the current instance
      */

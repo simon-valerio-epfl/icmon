@@ -12,20 +12,24 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 public final class Firework extends NPCActor {
-    final private static String SPRITE_NAME = "actors/firework";
-    private int timeBeforeExplosion = 60;
+    private final static String SPRITE_NAME = "actors/firework";
+    private int timeBeforeExplosion = 50;
+    private boolean hasBeenTriggered = false;
+    private boolean hasBeenRemoved = false;
+    private int framePerMove;
     private final ICMonSoundManager soundManager;
 
     public Firework(ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMonSoundManager soundManager) {
         super(area, orientation, spawnPosition, SPRITE_NAME, 3, 3, 64, 64);
         this.soundManager = soundManager;
 
-        soundManager.playOverlappingSound("firework");
+        // the more the firework is at the top, the slower it should be
+        // y --> speed
+        // 7 --> 0
+        // 0 --> 8
+        this.framePerMove = spawnPosition.y * 4 / 7 + 8;
     }
 
-    public static DiscreteCoordinates getSpawnPosition() {
-        return new DiscreteCoordinates(20, 7);
-    }
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {}
 
@@ -38,15 +42,21 @@ public final class Firework extends NPCActor {
     public void update(float deltaTime) {
         super.update(deltaTime);
 
-        orientate(Orientation.UP);
-        if (timeBeforeExplosion > 0) {
-            move(8);
+        if (!hasBeenTriggered) {
+            soundManager.playOverlappingSound("firework");
+            hasBeenTriggered = true;
         }
 
-        if (timeBeforeExplosion == 0) {
+        orientate(Orientation.UP);
+        if (timeBeforeExplosion > 0) {
+            move(framePerMove);
+        }
+
+        if (timeBeforeExplosion == 0 && !hasBeenRemoved) {
             this.setSpriteName("actors/firework_explosion");
             soundManager.playOverlappingSound("firework_explosion");
 
+            hasBeenRemoved = true;
             new DelayedAction(new LeaveAreaAction(this), 2000).perform();
         }
 

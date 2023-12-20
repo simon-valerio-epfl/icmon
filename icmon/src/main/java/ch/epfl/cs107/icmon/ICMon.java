@@ -230,8 +230,20 @@ public final class ICMon extends AreaGame {
     @Override
     public void end() {
         ICMonArea town = eventAreas.get("town");
-        Firework firework = new Firework(town, Orientation.DOWN, Firework.getSpawnPosition(), soundManager);
-        town.registerActor(firework);
+        DiscreteCoordinates[] spawnPositions = {
+            new DiscreteCoordinates(15, 7),
+            new DiscreteCoordinates(20, 0),
+            new DiscreteCoordinates(22, 2),
+            new DiscreteCoordinates(14, 5),
+            new DiscreteCoordinates(12, 0),
+            new DiscreteCoordinates(16, 0),
+        };
+        for(DiscreteCoordinates spawnPosition : spawnPositions) {
+            Firework firework = new Firework(town, Orientation.DOWN, spawnPosition, soundManager);
+            // random delay between 0 and 2 seconds
+            int delay = (int) (Math.random() * 1000);
+            new DelayedAction(new RegisterInAreaAction(town, firework), delay).perform();
+        }
     }
 
     /**

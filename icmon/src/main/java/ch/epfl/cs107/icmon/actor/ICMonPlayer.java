@@ -57,7 +57,7 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
     private final OrientedAnimation swimmingMaskOrientedAnimation;
     private SpriteType currentSprite = SpriteType.RUNNING_SPRITE;
     final private static int ANIMATION_DURATION = 8;
-    final private static int MOVE_DURATION = 8;
+    final private static int MOVE_DURATION = 3;
     private boolean blockNextMove = false;
     private boolean lastOrientationChecked = false;
 
@@ -147,6 +147,16 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
     }
 
     /**
+     * Whether the player wants to sprint
+     * @return true if the player wants to sprint and he's not in dialog
+     */
+    public boolean wantsSprint() {
+        Keyboard keyboard = getOwnerArea().getKeyboard();
+        Button xKey = keyboard.get(Keyboard.X);
+        return xKey.isDown() && !this.inDialog;
+    }
+
+    /**
      * Whether the specified cell is a valid cell the player may enter when he is underwater
      * @param cell the cell to test
      * @return true if entering the cell is allowed
@@ -188,7 +198,7 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
                 }
                 orientate(orientation);
                 if (!blockNextMove && lastOrientationChecked) {
-                    move(MOVE_DURATION-5);
+                    move(wantsSprint() ? 2 : MOVE_DURATION);
                     if (!muteWalkingSound) {
                         boolean isSwimming = currentSprite.equals(SpriteType.SWIMMING_SPRITE) || currentSprite.equals(SpriteType.UNDERWATER_SPRITE);
                         String soundName = isSwimming ? "swimming" : "footsteps";
@@ -405,6 +415,7 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
         public void interactWith(ICMonItem item, boolean isCellInteraction) {
             if (!isCellInteraction && wantsEntityViewInteraction()) {
                 item.collect();
+                addRandomPokemon();
                 soundManager.playSound("collect", 100);
             }
         }
