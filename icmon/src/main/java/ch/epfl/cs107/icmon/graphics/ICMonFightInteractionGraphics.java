@@ -7,7 +7,7 @@ import ch.epfl.cs107.play.window.Canvas;
 import static ch.epfl.cs107.play.io.ResourcePath.getBackground;
 
 /**
- * ???
+ * Represents the graphics of a fight interaction.
  *
  * @author Hamza REMMAL (hamza.remmal@epfl.ch)
  */

@@ -18,7 +18,7 @@ import static java.lang.Math.min;
 import static java.util.Objects.nonNull;
 
 /**
- * ???
+ * Represents the graphics of a fight action selection.
  *
  * @author Hamza REMMAL (hamza.remmal@epfl.ch)
  */

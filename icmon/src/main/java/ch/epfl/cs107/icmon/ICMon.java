@@ -32,25 +32,39 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * ???
+ * Represents the IC(e)Mon game.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
  */
 public final class ICMon extends AreaGame {
 
-    /** ??? */
     public final static float CAMERA_SCALE_FACTOR = 13.f;
-    /** ??? */
+
+    // areas management
     private final static String STARTING_MAP = "house";
     private final Map<String, ICMonArea> eventAreas = new HashMap<>();
-    /** ??? */
+
+    // main player in the game
     private ICMonPlayer player;
-    /** ??? */
+
+    // events management
     private final ArrayList<ICMonEvent> events = new ArrayList<>();
     private final ArrayList<ICMonEvent> startingEvents = new ArrayList<>();
     private final ArrayList<ICMonEvent> completedEvents = new ArrayList<>();
-    private final ICMonGameState gameState = new ICMonGameState();
     private final ICMonEventManager eventManager = new ICMonEventManager();
+
+    // sound management
     private final ICMonSoundManager soundManager;
 
+    // game state management
+    private final ICMonGameState gameState = new ICMonGameState();
+
+    /**
+     * Creates a new ICMon game.
+     *
+     * @param fileSystem File system used in the game to load resources
+     */
     public ICMon(FileSystem fileSystem) {
         super();
         this.soundManager = new ICMonSoundManager(fileSystem);

@@ -12,7 +12,7 @@ import ch.epfl.cs107.play.window.Canvas;
 import static ch.epfl.cs107.play.io.ResourcePath.getSprite;
 
 /**
- * ???
+ * Represents the graphics of a fighter.
  *
  * @author Hamza REMMAL (hamza.remmal@epfl.ch)
  */

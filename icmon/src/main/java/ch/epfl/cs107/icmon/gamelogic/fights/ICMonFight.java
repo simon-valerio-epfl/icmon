@@ -10,44 +10,62 @@ import ch.epfl.cs107.play.engine.PauseMenu;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
-public class ICMonFight extends PauseMenu {
-    private enum FightState { INTRODUCTION, SELECT_ACTION, EXECUTE_ACTION, SELECT_OPPONENT_ACTION, CONCLUSION, ENDED }
+/**
+ * Represents a fight between two pokemons.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
+public final class ICMonFight extends PauseMenu {
 
-    private enum ConclusionReason { PLAYER_LEFT, OPPONENT_LEFT, PLAYER_DEAD, OPPONENT_DEAD }
-
-    private final float timeCounter = 5f;
-
+    // pokemons involved in the fight
     private final Pokemon playerPokemon;
     private final Pokemon opponent;
 
+    // graphics
     private final ICMonFightArenaGraphics arena;
-    private FightState state = FightState.INTRODUCTION;
-    private final ICMonFightTextGraphics introductionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "Welcome to the fight");
     private final ICMonFightTextGraphics wonConclusionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "The player has won the fight");
     private final ICMonFightTextGraphics cancelledConclusionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "The player decided not to continue the fight");
     private final ICMonFightTextGraphics deadConclusionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "The opponent has won the fight");
     private final ICMonFightTextGraphics cancelledOpponentConclusionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "The opponent decided not to continue the fight");
-    private final ICMonFightTextGraphics emptyTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, null);
     private ICMonFightActionSelectionGraphics selectionGraphics;
+
+    // state management
+    private enum FightState { INTRODUCTION, SELECT_ACTION, EXECUTE_ACTION, SELECT_OPPONENT_ACTION, CONCLUSION, ENDED }
+    private enum ConclusionReason { PLAYER_LEFT, OPPONENT_LEFT, PLAYER_DEAD, OPPONENT_DEAD }
     private PokemonFightAction selectedAction;
     private ConclusionReason conclusionReason;
+    private FightState state = FightState.INTRODUCTION;
 
     /**
-     * Gets the competitors to the fight arena
+     * Creates a new fight between two pokemons
+     *
      * @param playerPokemon the main player's one
-     * @param opponent the evil one
+     * @param opponent the evil one :)
      */
     public ICMonFight(Pokemon playerPokemon, Pokemon opponent) {
         this.playerPokemon = playerPokemon;
         this.opponent = opponent;
 
         this.arena = new ICMonFightArenaGraphics(CAMERA_SCALE_FACTOR, playerPokemon.properties(), opponent.properties());
+        ICMonFightTextGraphics introductionTextGraphics = new ICMonFightTextGraphics(CAMERA_SCALE_FACTOR, "Welcome to the fight");
         this.arena.setInteractionGraphics(introductionTextGraphics);
     }
 
-    @Override
-    protected void drawMenu(Canvas c) {
-        this.arena.draw(c);
+    /**
+     * Gets the status of the fight
+     * @return true if the fight is still running
+     */
+    public boolean isRunning() {
+        return !(this.state == FightState.ENDED);
+    }
+
+    /**
+     * Gets the result of the fight
+     * @return true if the player has won
+     */
+    public boolean isWin() {
+        return this.state == FightState.ENDED && (conclusionReason == ConclusionReason.OPPONENT_DEAD || conclusionReason == ConclusionReason.OPPONENT_LEFT);
     }
 
     /**
@@ -56,6 +74,7 @@ public class ICMonFight extends PauseMenu {
      * and the evolution of the battle itself
      * @param deltaTime elapsed time since last update, in seconds, non-negative
      */
+    @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
 
@@ -138,15 +157,8 @@ public class ICMonFight extends PauseMenu {
         }
     }
 
-    /**
-     *
-     * @return whether the fight is still going on
-     */
-    public boolean isRunning() {
-        return !(this.state == FightState.ENDED);
-    }
-
-    public boolean isWin() {
-        return this.state == FightState.ENDED && (conclusionReason == ConclusionReason.OPPONENT_DEAD || conclusionReason == ConclusionReason.OPPONENT_LEFT);
+    @Override
+    protected void drawMenu(Canvas c) {
+        this.arena.draw(c);
     }
 }

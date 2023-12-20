@@ -9,7 +9,6 @@ import ch.epfl.cs107.icmon.actor.items.ICMagicBall;
 import ch.epfl.cs107.icmon.actor.npc.*;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
-import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightableActor;
 import ch.epfl.cs107.play.areagame.area.AreaBehavior;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 
