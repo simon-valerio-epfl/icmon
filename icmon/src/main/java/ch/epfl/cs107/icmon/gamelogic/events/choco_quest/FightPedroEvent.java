@@ -31,8 +31,8 @@ public class FightPedroEvent extends ICMonEvent {
     public void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {
         if (
                 isCellInteraction
-                        && cell.getWalkingType().equals(ICMonBehavior.AllowedWalkingType.ENTER_WATER)
-                        && !keyHasBeenStolen
+                && cell.getWalkingType().equals(ICMonBehavior.AllowedWalkingType.ENTER_WATER)
+                && !keyHasBeenStolen
         ) {
             keyHasBeenStolen = true;
             soundManager.playSound("pedro", 200, true);
