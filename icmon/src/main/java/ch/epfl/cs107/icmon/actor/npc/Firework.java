@@ -2,6 +2,8 @@ package ch.epfl.cs107.icmon.actor.npc;
 
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.audio.ICMonSoundManager;
+import ch.epfl.cs107.icmon.gamelogic.actions.DelayedAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.LeaveAreaAction;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
@@ -11,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 public final class Firework extends NPCActor {
     final private static String SPRITE_NAME = "actors/firework";
-    private int timeBeforeExplosion = 50;
+    private int timeBeforeExplosion = 60;
     private final ICMonSoundManager soundManager;
 
     public Firework(ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMonSoundManager soundManager) {
@@ -44,6 +46,8 @@ public final class Firework extends NPCActor {
         if (timeBeforeExplosion == 0) {
             this.setSpriteName("actors/firework_explosion");
             soundManager.playOverlappingSound("firework_explosion");
+
+            new DelayedAction(new LeaveAreaAction(this), 2000).perform();
         }
 
         timeBeforeExplosion--;
