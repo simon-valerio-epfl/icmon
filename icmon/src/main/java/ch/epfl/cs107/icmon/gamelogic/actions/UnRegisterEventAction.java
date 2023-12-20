@@ -21,6 +21,8 @@ public final class UnRegisterEventAction implements Action {
      * @param eventManager the event manager to unregister the event
      */
     public UnRegisterEventAction(ICMonEvent event, ICMon.ICMonEventManager eventManager) {
+        assert event != null;
+        assert eventManager != null;
         this.eventManager = eventManager;
         this.event = event;
     }

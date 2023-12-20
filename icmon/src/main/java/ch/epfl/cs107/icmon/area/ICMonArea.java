@@ -44,8 +44,8 @@ public abstract class ICMonArea extends Area {
     }
 
     /**
-     * Gets the camera scale factor
-     * @return a constant about the drawing dimensions
+     * Gets the camera scale factor, a constant about the drawing dimensions
+     * @return the camera scale factor
      */
     @Override
     public final float getCameraScaleFactor() {

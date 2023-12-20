@@ -17,6 +17,7 @@ public final class CompleteEventAction implements Action {
      * @param event the event to complete
      */
     public CompleteEventAction(ICMonEvent event) {
+        assert event != null;
         this.event = event;
     }
 

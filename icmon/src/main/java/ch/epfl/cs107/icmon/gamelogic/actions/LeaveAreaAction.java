@@ -21,6 +21,7 @@ public final class LeaveAreaAction implements Action {
      * @param actor the actor to make leave its area
      */
     public LeaveAreaAction(ICMonActor actor) {
+        assert actor != null;
         this.actor = actor;
     }
 

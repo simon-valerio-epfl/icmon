@@ -19,14 +19,27 @@ import ch.epfl.cs107.play.math.Orientation;
  */
 public final class Atlantis extends ICMonArea {
 
+    /**
+     * Gets the name of this area
+     * @return the name of the area
+     */
     @Override
     public String getTitle() {
         return "atlantis";
     }
+
+    /**
+     * gets the default spawning coordinates
+     * @return some default spawning coordinates on this area
+     */
     @Override
     public DiscreteCoordinates getPlayerSpawnPosition() {
         return new DiscreteCoordinates(3, 1);
     }
+
+    /**
+     * it adds a door taking back to the main Area, town
+     */
     @Override
     protected void createArea() {
         registerActor(new Background(this));

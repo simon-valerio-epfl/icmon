@@ -16,6 +16,7 @@ public final class LogAction implements Action {
      * @param message the message to log
      */
     public LogAction(String message) {
+        assert message!= null;
         this.message = message;
     }
 

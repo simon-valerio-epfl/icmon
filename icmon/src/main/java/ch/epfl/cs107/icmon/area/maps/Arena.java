@@ -43,6 +43,10 @@ public final class Arena extends ICMonArea {
         registerActor(bulbizarre);
     }
 
+    /**
+     * Gets the name of this area
+     * @return the name of the area
+     */
     @Override
     public String getTitle() {
         return "arena";

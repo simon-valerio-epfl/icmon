@@ -17,6 +17,7 @@ public final class PauseGameAction implements Action {
      * @param pauseControl the pause control to pause the game
      */
     public PauseGameAction(PauseMenu.Pausable pauseControl) {
+        assert pauseControl != null;
         this.pauseControl = pauseControl;
     }
 

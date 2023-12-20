@@ -18,6 +18,7 @@ public final class ResumeGameAction implements Action {
      * @param pauseControl the pause control to resume the game
      */
     public ResumeGameAction(PauseMenu.Pausable pauseControl) {
+        assert pauseControl != null;
         this.pauseControl = pauseControl;
     }
 

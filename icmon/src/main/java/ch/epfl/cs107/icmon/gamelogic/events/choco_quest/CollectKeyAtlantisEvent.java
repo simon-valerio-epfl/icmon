@@ -26,7 +26,11 @@ public final class CollectKeyAtlantisEvent extends CollectItemEvent {
         super(eventManager, player, key);
     }
 
-    // todo add this to chained event
+    /**
+     * Opens a dialog when the player has a distance interaction with Fabrice
+     * @param fabrice the fabrice that interacts with the player
+     * @param isCellInteraction true if the interaction is a cell interaction
+     */
     @Override
     public void interactWith(Fabrice fabrice, boolean isCellInteraction) {
         if (getPlayer().wantsEntityViewInteraction()) {

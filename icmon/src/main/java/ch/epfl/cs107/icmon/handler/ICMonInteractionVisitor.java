@@ -54,10 +54,6 @@ public interface ICMonInteractionVisitor extends AreaInteractionVisitor {
 
     }
 
-    default void interactWith(ICMagicBall magicBall, boolean isCellInteraction) {
-
-    }
-
     default void interactWith(ICGift gift, boolean isCellInteraction) {
 
     }

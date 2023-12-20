@@ -18,6 +18,7 @@ public final class StartEventAction implements Action{
      * @param event the event to start
      */
     public StartEventAction(ICMonEvent event) {
+        assert event != null;
         this.event = event;
     }
 

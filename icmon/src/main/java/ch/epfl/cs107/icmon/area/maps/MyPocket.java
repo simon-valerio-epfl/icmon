@@ -11,7 +11,8 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
 /**
- * Represents the pocket area (fictional).
+ *This is a fictional area where owned pokemons live
+ * It does nothing special
  *
  * @author Valerio De Santis
  * @author Simon Lefort

@@ -13,7 +13,7 @@ import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
 /**
- * Represents an event that is completed when the player fights Pedro (and win!).
+ * Represents an event that is completed when the player fights Pedro (and wins!).
  *
  * @author Valerio De Santis
  * @author Simon Lefort
@@ -24,7 +24,7 @@ public final class FightPedroEvent extends ICMonEvent {
     private final ICMonSoundManager soundManager;
 
     /**
-     * Creates a new event that will be completed when the player fights Pedro and win.
+     * Creates a new event that will be completed when the player fights Pedro and wins.
      *
      * @param eventManager the event manager used to add/remove events from icmon
      * @param soundManager the sound manager used to play sounds
@@ -38,6 +38,11 @@ public final class FightPedroEvent extends ICMonEvent {
     @Override
     public void update(float deltaTime) {}
 
+    /**
+     * Pedro steals the key when the player gets back to town after having taken the key
+     * @param cell the cell
+     * @param isCellInteraction
+     */
     @Override
     public void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {
         if (

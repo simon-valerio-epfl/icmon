@@ -18,14 +18,30 @@ import ch.epfl.cs107.play.math.Orientation;
  */
 public final class Shop extends ICMonArea {
     final static DiscreteCoordinates SPAWNING_POSITION = new DiscreteCoordinates(3,1);
+
+    /**
+     * Gets the name of this area
+     * @return the name of the area
+     */
     @Override
     public String getTitle() {
         return "shop";
     }
+
+    /**
+     * Gets the default spawning coordinates on this area
+     * @return some default spawning coordinates on this area
+     */
     @Override
     public DiscreteCoordinates getPlayerSpawnPosition() {
         return SPAWNING_POSITION;
     }
+
+    /**
+     * it adds a door taking back to the main Area, town
+     * this area is created with a character, a shop assistant,
+     * at some default conditions
+     */
     @Override
     protected void createArea() {
         registerActor(new Background(this));

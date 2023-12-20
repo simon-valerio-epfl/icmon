@@ -16,6 +16,7 @@ public final class ResumeEventAction implements Action {
      * @param event the event to resume
      */
     public ResumeEventAction(ICMonEvent event) {
+        assert event != null;
         this.event = event;
     }
 

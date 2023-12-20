@@ -20,6 +20,8 @@ public final class OpenDialogAction implements Action {
      * @param dialog the dialog to open
      */
     public OpenDialogAction (ICMonPlayer player, Dialog dialog) {
+        assert dialog != null;
+        assert player != null;
         this.player = player;
         this.dialog = dialog;
     }

@@ -22,6 +22,8 @@ public final class RegisterInAreaAction implements Action {
      * @param actor the actor to register
      */
     public RegisterInAreaAction(Area area, Actor actor) {
+        assert area != null;
+        assert actor != null;
         this.area = area;
         this.actor = actor;
     }

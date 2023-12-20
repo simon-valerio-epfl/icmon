@@ -27,6 +27,11 @@ public final class CollectGiftEvent extends CollectItemEvent {
         super(eventManager, player, gift);
     }
 
+    /**
+     * Opens a dialog when the player has a distance interaction with Fabrice
+     * @param fabrice the fabrice that interacts with the player
+     * @param isCellInteraction true if the interaction is a cell interaction
+     */
     @Override
     public void interactWith(Fabrice fabrice, boolean isCellInteraction) {
         if (getPlayer().wantsEntityViewInteraction()) {
@@ -34,7 +39,11 @@ public final class CollectGiftEvent extends CollectItemEvent {
             getPlayer().openDialog(dialog);
         }
     }
-
+    /**
+     * Opens a dialog when the player has a distance interaction with Pedro
+     * @param pedro the pedro that interacts with the player
+     * @param isCellInteraction true if the interaction is a cell interaction
+     */
     @Override
     public void interactWith(Pedro pedro, boolean isCellInteraction) {
         if (getPlayer().wantsEntityViewInteraction()) {

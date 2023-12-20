@@ -22,6 +22,7 @@ public final class PerformOnFightResultAction implements Action {
      * @param performOnLose the action to perform if the fight is a lose
      */
     public PerformOnFightResultAction(ICMonFight fight, Action performOnWin, Action performOnLose) {
+        assert fight != null;
         this.fight = fight;
         this.performOnWin = performOnWin;
         this.performOnLose = performOnLose;

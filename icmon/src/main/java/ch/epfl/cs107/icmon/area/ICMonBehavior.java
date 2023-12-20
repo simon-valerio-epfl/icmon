@@ -160,11 +160,21 @@ public final class ICMonBehavior extends AreaBehavior {
             return !cellIsTaken;
         }
 
+        /**
+         * Checks if the cell accepts contact interactions
+         * @return always true
+         */
         @Override
         public boolean isCellInteractable() {
             return true;
         }
 
+        /**
+         * Checks if the cell accepts view interactions
+         * We want the player to be able to interact with surrounding cells
+         * to know their walking type
+         * @return always true
+         */
         @Override
         public boolean isViewInteractable() {
             return true;

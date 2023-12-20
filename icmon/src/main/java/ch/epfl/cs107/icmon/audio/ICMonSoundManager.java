@@ -74,6 +74,7 @@ public final class ICMonSoundManager {
      * @param duration the duration of the sound in frames
      */
     public void playSound (String name, int duration) {
+        assert duration > 0;
         playSound(name, duration, false);
     }
 
@@ -85,7 +86,7 @@ public final class ICMonSoundManager {
      * @param isPrioritySound whether this sound should replace the currently playing sound if there is one
      */
     public void playSound (String name, int duration, boolean isPrioritySound) {
-
+        assert duration > 0;
         SwingSound sound = readSwingSound(name);
         if (sound == null) return;
 

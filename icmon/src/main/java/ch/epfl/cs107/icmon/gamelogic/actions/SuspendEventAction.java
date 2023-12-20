@@ -18,6 +18,7 @@ public final class SuspendEventAction implements Action {
      * @param event the event to suspend
      */
     public SuspendEventAction(ICMonEvent event) {
+        assert event != null;
         this.event = event;
     }
 

@@ -22,6 +22,8 @@ public final class DelayedAction implements Action {
      * @param delay the delay in milliseconds
      */
     public DelayedAction(Action action, int delay) {
+        assert delay > 0;
+        assert action != null;
         this.action = action;
         this.delay = delay;
     }

@@ -30,6 +30,10 @@ public class AfterPokemonSelectionFightAction implements Action {
     Action executeOnFightLose;
 
     public AfterPokemonSelectionFightAction(ICMonPlayer player, ICMon.ICMonEventManager eventManager, PokemonSelectionMenu pokemonSelectionMenu, Pokemon opponentPokemon, Action executeOnFightWin, Action executeOnFightLose) {
+        assert player != null;
+        assert eventManager != null;
+        assert pokemonSelectionMenu != null;
+        assert opponentPokemon != null;
         this.player = player;
         this.eventManager = eventManager;
         this.pokemonSelectionMenu = pokemonSelectionMenu;
@@ -49,6 +53,7 @@ public class AfterPokemonSelectionFightAction implements Action {
             ICMonActor actor
     ) {
         this(player, eventManager, pokemonSelectionMenu, opponentPokemon, executeOnFightWin, executeOnFightLose);
+        assert actor != null;
         this.actor = actor;
     }
 
