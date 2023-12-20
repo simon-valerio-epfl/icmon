@@ -99,10 +99,10 @@ public final class ICMonSoundManager {
         // if the given sound is not priority and a priority sound is already playing
         // skip it
         if (isPlayingPrioritySound && !isPrioritySound) return;
-        isPlayingPrioritySound = isPrioritySound;
 
         // reset all the currently playing sound
         resetSound();
+        isPlayingPrioritySound = isPrioritySound;
 
         resetRequired = true;
         Clip clip = sound.openedClip(0);
