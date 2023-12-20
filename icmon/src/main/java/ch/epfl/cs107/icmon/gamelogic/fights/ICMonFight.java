@@ -117,8 +117,6 @@ public final class ICMonFight extends PauseMenu {
             }
             case EXECUTE_ACTION -> {
                 boolean hasFinished = selectedAction.doAction(opponent);
-                System.out.println(opponent.isDead());
-                System.out.println(hasFinished);
                 if (opponent.isDead()) {
                     conclusionReason = ConclusionReason.OPPONENT_DEAD;
                     state = FightState.CONCLUSION;
