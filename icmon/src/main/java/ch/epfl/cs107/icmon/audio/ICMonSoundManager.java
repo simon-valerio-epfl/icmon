@@ -15,7 +15,7 @@ import java.io.InputStream;
  * @author Valerio De Santis
  * @author Simon Lefort
  */
-public class ICMonSoundManager {
+public final class ICMonSoundManager {
     private final FileSystem fileSystem;
     private Clip currentClip;
     private Clip backgroundClip;

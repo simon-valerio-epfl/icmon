@@ -45,6 +45,19 @@ public final class Door extends AreaEntity {
         this(landingArea, landingPosition, area, "door", 20, false, true, null, coordinates);
     }
 
+    /**
+     * Creates a new door in the specified landing area
+     *
+     * @param landingArea the name of the landing area
+     * @param landingPosition the position where the player will appear on the landing area
+     * @param area the area where the door is
+     * @param soundName the name of the sound that is going to be played once the door is opened
+     * @param soundDuration the duration of the sound that is going to be played once the door is opened
+     * @param muteWalkingSound whether going through the door should mute walking sounds
+     * @param muteBackgroundSound whether going through the door should mute background sounds
+     * @param backgroundSoundName the name of the background sound that is going to be played once the door is opened
+     * @param coordinates the coordinates of the door
+     */
     public Door (String landingArea, DiscreteCoordinates landingPosition, Area area, String soundName, int soundDuration, boolean muteWalkingSound, boolean muteBackgroundSound, String backgroundSoundName, DiscreteCoordinates ...coordinates) {
         super(area, Orientation.UP, coordinates[0]);
         this.landingArea = landingArea;

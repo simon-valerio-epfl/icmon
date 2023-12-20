@@ -9,6 +9,14 @@ import ch.epfl.cs107.icmon.gamelogic.events.classic_quest.PokemonFightEvent;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFight;
 import ch.epfl.cs107.icmon.gamelogic.fights.PokemonSelectionMenu;
 
+// todo complete this
+
+/**
+ * Represents an action that is performed after a pokemon selection.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
 public class AfterPokemonSelectionFightAction implements Action {
 
     PokemonSelectionMenu pokemonSelectionMenu;
