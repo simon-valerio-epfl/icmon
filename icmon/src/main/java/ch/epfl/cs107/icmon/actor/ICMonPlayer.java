@@ -205,7 +205,8 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
      * Moves the player back if he has no pokemon in his deck
      * @param pokemon the pokemon to fight
      * @param pokemonOwner the owner of the pokemon, null if the pokemon is wild
-     * @param toCompleteOnWin the event to complete when the player wins the fight
+     * @param performOnWin the action to perform if the player wins
+     * @param performOnLose the action to perform if the player loses
      */
     public void fight(Pokemon pokemon, ICMonActor pokemonOwner, Action performOnWin, Action performOnLose) {
         if (this.pokemons.isEmpty()) {
