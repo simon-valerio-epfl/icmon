@@ -24,6 +24,10 @@ public final class ICGift extends ICMonItem {
         super(area, spawnPosition, SPRITE_NAME, 1.3);
     }
 
+    /**
+     * A gift accepts distance interactions
+     * @return always true
+     */
     @Override
     public boolean isViewInteractable() {
         return true;

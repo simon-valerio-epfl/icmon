@@ -30,6 +30,11 @@ public final class ICBall extends ICMonItem {
         super(area, spawnPosition, SPRITE_NAME);
     }
 
+
+    /**
+     * A ball accepts distance interactions
+     * @return always true
+     */
     @Override
     public boolean isViewInteractable() {
         return true;

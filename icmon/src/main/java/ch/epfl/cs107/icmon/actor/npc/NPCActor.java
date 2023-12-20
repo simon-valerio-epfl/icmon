@@ -28,10 +28,10 @@ abstract class NPCActor extends ICMonActor {
      * @param orientation the orientation of the NPC
      * @param spawnPosition the position where the NPC shall spawn
      * @param spriteName the name of the sprite
-     * @param scaleFactorWidth the width scale factor of the sprite (1 by default)
-     * @param scaleFactorHeight the height scale factor of the sprite (1 by default)
-     * @param customWidth the width of the sprite (16 by default)
-     * @param customHeight the height of the sprite (21 by default)
+     * @param scaleFactorWidth the width scale factor of the sprite
+     * @param scaleFactorHeight the height scale factor of the sprite
+     * @param customWidth the width of the sprite
+     * @param customHeight the height of the sprite
      */
     public NPCActor (ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, String spriteName, float scaleFactorWidth, float scaleFactorHeight, int customWidth, int customHeight) {
         super(area, orientation, spawnPosition);
@@ -39,12 +39,12 @@ abstract class NPCActor extends ICMonActor {
     }
 
     /**
-     * Creates a new NPC in the specified area with default values for the scale factor (1) and the sprite dimensions (16x21).
+     * Creates a new NPC in the specified area with default values for the scale factor and the sprite dimensions
      *
      * @param area the area where the NPC shall spawn
      * @param orientation the orientation of the NPC
      * @param spawnPosition the position where the NPC shall spawn
-     * @param spriteName the name of the sprite
+     * @param spriteName the name of the sprite that will be used to draw the NPC
      */
     public NPCActor (ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, String spriteName) {
         this(area, orientation, spawnPosition, spriteName, 1, 1.3215f, 16, 21);
@@ -55,16 +55,28 @@ abstract class NPCActor extends ICMonActor {
         this.sprite.draw(canvas);
     }
 
+    /**
+     * An NPC prevents other entities from entering the cell where he is
+     * @return always true
+     */
     @Override
     public boolean takeCellSpace() {
         return true;
     }
 
+    /**
+     * An NPC accepts distance interactions by default
+     * @return always true
+     */
     @Override
     public boolean isViewInteractable() {
         return true;
     }
 
+    /**
+     * An NPC does not accept contact interactions
+     * @return always false
+     */
     @Override
     public boolean isCellInteractable() {
         return false;

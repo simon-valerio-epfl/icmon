@@ -49,7 +49,7 @@ public final class Balloon extends NPCActor {
     public static DiscreteCoordinates getSpawnPosition() {
         return new DiscreteCoordinates(5, 7);
     }
-
+//TODO DOCUMENT THIS METHOD
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
@@ -101,6 +101,7 @@ public final class Balloon extends NPCActor {
          * @param stepCount the number of steps to perform in the specified direction
          */
         private BalloonMove(Orientation orientation, int stepCount) {
+            assert stepCount>0;
             this.orientation = orientation;
             this.initialStepCountLeft = stepCount;
             this.currentStepCountLeft = stepCount;
@@ -121,7 +122,7 @@ public final class Balloon extends NPCActor {
         }
 
         /**
-         * Resets the move so the balloon can perform it again later
+         * Resets the movement letting the balloon perform it again later
          */
         public void reset() {
             currentStepCountLeft = initialStepCountLeft;
@@ -131,6 +132,10 @@ public final class Balloon extends NPCActor {
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {}
 
+    /**
+     * Some other entity may be able to enter the cell where the balloon is
+     * @return always false
+     */
     @Override
     public boolean takeCellSpace() {
         return false;

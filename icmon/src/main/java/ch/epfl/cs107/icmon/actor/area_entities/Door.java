@@ -135,16 +135,28 @@ public final class Door extends AreaEntity {
     @Override
     public void draw(Canvas canvas) {}
 
+    /**
+     * A door does not accept distance interactions
+     * @return always false
+     */
     @Override
     public boolean isViewInteractable() {
         return false;
     }
 
+    /**
+     * A door accepts proximity interactions
+     * @return always true
+     */
     @Override
     public boolean isCellInteractable() {
         return true;
     }
 
+    /**
+     * Another entity may enter the cell where the door is
+     * @return always false
+     */
     @Override
     public boolean takeCellSpace() {
         return false;

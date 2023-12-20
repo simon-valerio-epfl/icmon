@@ -41,6 +41,10 @@ public final class Garry extends NPCActor implements PokemonOwner {
         ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
     }
 
+    /**
+     * Gets the list containing this garry's pokemons
+     * @return the list of pokemons owned by the current instance of Garry
+     */
     @Override
     public List<Pokemon> getPokemons() {
         return pokemons;

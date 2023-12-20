@@ -24,6 +24,10 @@ public final class ICKey extends ICMonItem {
         super(area, spawnPosition, SPRITE_NAME, 1.3);
     }
 
+    /**
+     * a key accepts distance interactions
+     * @return
+     */
     @Override
     public boolean isViewInteractable() {
         return true;

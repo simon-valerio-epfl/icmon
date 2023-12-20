@@ -15,6 +15,10 @@ public final class ICMagicBall extends ICMonItem {
         super(area, spawnPosition, SPRITE_NAME);
     }
 
+    /**
+     * A magic ball accepts distance interactions
+     * @return always true
+     */
     @Override
     public boolean isViewInteractable() {
         return true;

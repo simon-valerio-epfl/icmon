@@ -42,16 +42,28 @@ public abstract class ICMonItem extends CollectableAreaEntity {
         this(area, spawnPosition, spriteName, 1);
     }
 
+    /**
+     * Other entities can not enter the cell where an item is
+     * @return always true
+     */
     @Override
     public boolean takeCellSpace() {
         return true;
     }
 
+    /**
+     * An item accepts proximity interactions by default
+     * @return always true, but this method could have been overriden by a concrete subclass of ICMonItem
+     */
     @Override
     public boolean isCellInteractable() {
         return true;
     }
 
+    /**
+     * An item does not accept distance interactions by default
+     * @return always false, but this method could have been overriden by a concrete subclass of ICMonItem
+     */
     @Override
     public boolean isViewInteractable() {
         return false;
@@ -62,6 +74,10 @@ public abstract class ICMonItem extends CollectableAreaEntity {
         this.sprite.draw(canvas);
     }
 
+    /**
+     * Gets the coordinates of the main cell where the item is
+     * @return the main coordinates of an item
+     */
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         return Collections.singletonList(getCurrentMainCellCoordinates());
