@@ -13,20 +13,29 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class Pedro extends NPCActor implements PokemonOwner {
+/**
+ * Represents Pedro, a NPC that you see when the quest starts... and that will steal you.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
+final public class Pedro extends NPCActor implements PokemonOwner {
     final private static String SPRITE_NAME = "actors/pedro";
-    final private ArrayList<Pokemon> pokemons = new ArrayList<>();
+    final private List<Pokemon> pokemons = new ArrayList<>();
 
     /**
-     * This a special character that you see when the quest starts...
-     * but will soon disappear
-     * @param area
-     * @param orientation
-     * @param spawnPosition
+     * Creates a new Pedro in the specified area
+     *
+     * @param area the area where Pedro shall spawn
+     * @param orientation the orientation of Pedro
+     * @param spawnPosition the position where Pedro shall spawn
      */
     public Pedro (ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition) {
         super(area, orientation, spawnPosition, SPRITE_NAME, 1.7f, 1.7f, 32, 32);
+
+        // by default, Pedro has a Latios
         addPokemon("latios");
     }
 
@@ -36,7 +45,7 @@ public class Pedro extends NPCActor implements PokemonOwner {
     }
 
     @Override
-    public ArrayList<Pokemon> getPokemons() {
+    public List<Pokemon> getPokemons() {
         return pokemons;
     }
 

@@ -6,15 +6,21 @@ import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
-public class ProfOak extends NPCActor {
+/**
+ * Represents ProfOak, a NPC that will guide the player.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
+final public class ProfOak extends NPCActor {
     final private static String SPRITE_NAME = "actors/prof-oak";
 
-
     /**
-     * This actor has his own sprite
-     * @param area
-     * @param orientation
-     * @param spawnPosition
+     * Creates a new ProfOak in the specified area
+     *
+     * @param area the area where ProfOak shall spawn
+     * @param orientation the orientation of ProfOak
+     * @param spawnPosition the position where ProfOak shall spawn
      */
     public ProfOak (ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition) {
         super(area, orientation, spawnPosition, SPRITE_NAME);

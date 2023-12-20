@@ -9,9 +9,22 @@ import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
-public class Fabrice extends NPCActor {
+/**
+ * Represents Fabrice, a NPC that requires the player help.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
+final public class Fabrice extends NPCActor {
     final private static String SPRITE_NAME = "actors/fabrice";
 
+    /**
+     * Creates a new Fabrice in the specified area
+     *
+     * @param area the area where Fabrice shall spawn
+     * @param orientation the orientation of Fabrice
+     * @param spawnPosition the position where Fabrice shall spawn
+     */
     public Fabrice (ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition) {
         super(area, orientation, spawnPosition, SPRITE_NAME, 1.7f, 1.7f, 32, 32);
     }

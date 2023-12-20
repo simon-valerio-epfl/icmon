@@ -9,15 +9,21 @@ import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
-public class ICShopAssistant extends NPCActor {
+/**
+ * Represents a shop assistant that helps the player.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
+final public class ICShopAssistant extends NPCActor {
     final private static String SPRITE_NAME = "actors/assistant";
 
-
     /**
-     * This actor has his own sprite
-     * @param area
-     * @param orientation
-     * @param spawnPosition
+     * Creates a new shop assistant in the specified area
+     *
+     * @param area the area where the shop assistant shall spawn
+     * @param orientation the orientation of the shop assistant
+     * @param spawnPosition the position where the shop assistant shall spawn
      */
     public ICShopAssistant (ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition) {
         super(area, orientation, spawnPosition, SPRITE_NAME);

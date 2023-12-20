@@ -10,8 +10,11 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Represents a balloon that shows the player the way to the gift.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
  */
-public class Balloon extends NPCActor {
+final public class Balloon extends NPCActor {
     final private static String SPRITE_NAME = "actors/balloon";
     final private static int BALLOON_ANIMATION_SPEED = 12;
     final private static int SECONDS_BEFORE_RESET = 5;
