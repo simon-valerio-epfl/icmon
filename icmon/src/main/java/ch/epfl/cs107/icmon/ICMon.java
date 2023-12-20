@@ -63,7 +63,7 @@ public final class ICMon extends AreaGame {
     /**
      * Creates a new ICMon game.
      *
-     * @param fileSystem File system used in the game to load resources
+     * @param fileSystem File system used in the game (to load resources)
      */
     public ICMon(FileSystem fileSystem) {
         super();
@@ -71,9 +71,10 @@ public final class ICMon extends AreaGame {
     }
 
     /**
-     * ???
+     * Creates the areas of the game.
      */
     private void createAreas() {
+
         eventAreas.clear();
         House house = new House();
         addArea(house);
@@ -100,10 +101,10 @@ public final class ICMon extends AreaGame {
     }
 
     /**
-     * ???
+     * Begin the game. Initialize areas and setup quests.
      * @param window (Window): display context. Not null
      * @param fileSystem (FileSystem): given file system. Not null
-     * @return ???
+     * @return (boolean): whether the game successfully started
      */
     @Override
     public boolean begin(Window window, FileSystem fileSystem) {
@@ -123,6 +124,9 @@ public final class ICMon extends AreaGame {
         return false;
     }
 
+    /**
+     * Set up our unofficial quest :)
+     */
     private void setupChocoQuest () {
         ICMonArea townArea = eventAreas.get("town");
         ICGift gift = new ICGift(townArea, new DiscreteCoordinates(22, 27));
@@ -137,13 +141,14 @@ public final class ICMon extends AreaGame {
         collectKeyItem.onStart(registerKey);
 
         FightPedroEvent fightPedroEvent = new FightPedroEvent(eventManager, soundManager, player);
-        fightPedroEvent.onComplete(
-                new DelayedAction(new OpenDialogAction(player, new Dialog("pedro_fight_end_win")), 2000)
-        );
+        fightPedroEvent.onComplete(new DelayedAction(new OpenDialogAction(player, new Dialog("pedro_fight_end_win")), 2000));
 
         events(collectGiftItem, collectKeyItem, fightPedroEvent);
     }
 
+    /**
+     * Set up the official quest.
+     */
     private void setupOfficialQuest () {
         ICMonArea townArea = eventAreas.get("town");
         ICBall ball = new ICBall(townArea, new DiscreteCoordinates(6, 6));
@@ -159,14 +164,19 @@ public final class ICMon extends AreaGame {
         events(introductionEvent, firstInteractionWithProfOakEvent, collectBallEvent, firstInteractionWithGarryEvent, endOfTheGameEvent);
     }
 
+    /**
+     * Creates a new chained event and start it based on an initial event and a list of events.
+     *
+     * @param initialEvent the initial event that will automatically start
+     * @param events the list of events
+     */
     public void events (ICMonEvent initialEvent, ICMonEvent ...events) {
-        // todo event doit créer la balle ?
         ICMonChainedEvent icMonChainedEvent = new ICMonChainedEvent(eventManager, player, initialEvent, events);
         icMonChainedEvent.start();
     }
 
     /**
-     * ???
+     * Updates the current events, the sound manager and reads new messages from the game state.
      * @param deltaTime elapsed time since last update, in seconds, non-negative
      */
     @Override
@@ -196,6 +206,9 @@ public final class ICMon extends AreaGame {
         soundManager.update();
     }
 
+    /**
+     * Completely reset the game.
+     */
     private void reset () {
         player.leaveArea();
         getCurrentArea().end();
@@ -206,7 +219,8 @@ public final class ICMon extends AreaGame {
     }
 
     /**
-     * ???
+     * Ends the game.
+     * todo
      */
     @Override
     public void end() {
@@ -214,17 +228,17 @@ public final class ICMon extends AreaGame {
     }
 
     /**
-     * ???
-     * @return ???
+     * Gets the title of the game.
+     * @return the title of the game
      */
     @Override
     public String getTitle() {
-        return "ICMon";
+        return "IC(e)Mon";
     }
 
     /**
-     * ???
-     * @param areaKey ???
+     * Creates a new main area, and create a new main player in it.
+     * @param areaKey the key of the area to create
      */
     private void initArea(String areaKey) {
         ICMonArea area = (ICMonArea) setCurrentArea(areaKey, true);
@@ -234,31 +248,60 @@ public final class ICMon extends AreaGame {
         player.centerCamera();
     }
 
+
     /**
      * This action changes the game pause menu.
      * It is triggered when an event is started.
+     *
+     * @author Valerio De Santis
+     * @author Simon Lefort
      */
     public class SetPauseMenuAction implements Action {
         final private PauseMenu pauseMenu;
 
+        /**
+         * Creates a new action to change the game pause menu.
+         *
+         * @param pauseMenu the new pause menu
+         */
         public SetPauseMenuAction(PauseMenu pauseMenu) {
             this.pauseMenu = pauseMenu;
         }
+
         @Override
         public void perform() {
             setPauseMenu(this.pauseMenu);
         }
     }
 
+    /**
+     * Represents a message that can be sent to the game state.
+     *
+     * @author Valerio De Santis
+     * @author Simon Lefort
+     */
     public static class GamePlayMessage {
         public void process() {}
     }
 
+    /**
+     * Creates a new door message that will transfer the user to another area.
+     *
+     * @author Valerio De Santis
+     * @author Simon Lefort
+     */
     private class PassDoorMessage extends GamePlayMessage {
         private final Door door;
+
+        /**
+         * Creates a new door message.
+         * @param door the door to pass
+         */
         public PassDoorMessage (Door door) {
             this.door = door;
         }
+
+        // handle sounds and transfer the player to the new area
         @Override
         public void process () {
             if (door.getMuteBackgroundSound()) {
@@ -278,7 +321,10 @@ public final class ICMon extends AreaGame {
     }
 
     /**
-     * Adds or removes events from the game.
+     * Represents a manager that can register and unregister events from the game.
+     *
+     * @author Valerio De Santis
+     * @author Simon Lefort
      */
     public class ICMonEventManager {
         public void registerEvent(ICMonEvent event) {
@@ -289,9 +335,24 @@ public final class ICMon extends AreaGame {
         }
     }
 
+    /**
+     * Represents a message that can suspend the game via a main event.
+     *
+     * @author Valerio De Santis
+     * @author Simon Lefort
+     */
     private class SuspendWithEventMessage extends GamePlayMessage {
         private final ICMonEvent event;
-        public SuspendWithEventMessage (ICMonEvent event) { this.event = event; }
+
+        /**
+         * Creates a new message that can suspend the game via a main event.
+         * @param event the main event
+         */
+        public SuspendWithEventMessage (ICMonEvent event) {
+            this.event = event;
+        }
+
+        // handle pause menu, suspend events and resume once the main event is completed
         @Override
         public void process() {
             if (event.hasPauseMenu()) {
@@ -308,15 +369,34 @@ public final class ICMon extends AreaGame {
         }
     }
 
+    /**
+     * Represents the game state, given to the player.
+     *
+     * @author Valerio De Santis
+     * @author Simon Lefort
+     */
     public class ICMonGameState {
         private GamePlayMessage message;
 
+        /**
+         * Creates a new game state.
+         */
         private ICMonGameState() {}
 
+        /**
+         * Gets the current frame rate of the game.
+         * @return the frame rate of the game
+         */
         public float getFrameDuration() {
             return (float) 1000 / getFrameRate();
         }
 
+        /**
+         * Makes all the events become handlers of the game's interactions.
+         *
+         * @param interactable the entity to interact with
+         * @param isCellInteraction whether the interaction is a cell interaction
+         */
         public void acceptInteraction (Interactable interactable, boolean isCellInteraction) {
             for (var event : ICMon.this.events) {
                 interactable.acceptInteraction(event, isCellInteraction);
@@ -341,7 +421,7 @@ public final class ICMon extends AreaGame {
         }
 
         /**
-         * Creates a message that will be processed in the read message method.
+         * Creates a new door message that will transfer the user to another area.
          * @param door the door to pass
          */
         public void createPassDoorMessage (Door door) {
@@ -349,8 +429,8 @@ public final class ICMon extends AreaGame {
         }
 
         /**
-         * Creates a message that will be processed in the read message method.
-         * @param event the event to suspend
+         * Creates a new message that can suspend the game via a main event.
+         * @param event the main event
          */
         public void createSuspendWithEventMessage (ICMonEvent event) {
             this.message = new SuspendWithEventMessage(event);
