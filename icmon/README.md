@@ -22,7 +22,8 @@ Après avoir visité la Pokétown, l'arène, la maison, le laboratoire, ou le sh
 * Discutez avec le professeur Oak.
 * Allez dans la Pokétown récupérer la Pokéball IC.
 * Ensuite, rendez-vous dans la maison de Garry.
-* Combattez Garry (et gagnez !).
+* Combattez Garry.
+* Attention à gagner le combat, sinon Garry ne disparaitra pas de la Pokétown !
 
 ## Quête 2 : sauver Chocopoly ☕ 
 

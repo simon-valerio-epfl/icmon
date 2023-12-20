@@ -6,7 +6,7 @@ Welcome to the developer documentation of the ICeMon game.
 
 ### Fights
 
-* We made a Pokémon selector as suggested in the project description. We try to modularize as much as we could using the `createPokemonSelector` and `getPokemonGraphics` methods. This selector appears in the fights with Garry, Pedro and in the arena.
+* We made a Pokémon selector as suggested in the project description. We modularized through to the `createPokemonSelector` and `getPokemonGraphics` methods. This selector appears in the fights with Garry, Pedro and in the arena.
 * We also replaced the interface `ICMonFightAction` by the class `PokemonFightAction`, as we have to access the pokemon that does the action. We think it is a better design than adding a `Pokemon pokemonDoer` to the `doAction()` method as its value is fixed once the instance is created.
 * We created a new interface `PokemonOwner`, that applies to `Garry`, `Pedro` and `ICMonPlayer`. It allows us to factorize the code of the `addPokemon()` method and forces the actors to define a `getPokemons()` method.
 * We also created a new area, called `MyPocket`. It is shared between all `PokemonOwner`. It does not serve any concrete feature, but helps to keep the code clean (we think it is better to have a dedicated empty area for Pokémons than selecting a random one that we could remove by mistake without thinking it held the Pokémons).
