@@ -7,13 +7,20 @@ import ch.epfl.cs107.icmon.gamelogic.actions.OpenDialogAction;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
-public class IntroductionEvent extends ICMonEvent {
+/**
+ * Represents the first event of the game, which is completed when the player closes the first dialog.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
+public final class IntroductionEvent extends ICMonEvent {
     final private Dialog dialog = new Dialog("welcome_to_icmon");
 
     /**
-     * Being the first event, it will start automatically, opening a dialog
-     * @param eventManager
-     * @param player
+     * Being the first event, it will start automatically via the chained event
+     *
+     * @param eventManager the event manager to register the event
+     * @param player the player that will give the key
      */
     public IntroductionEvent(ICMon.ICMonEventManager eventManager, ICMonPlayer player) {
         super(eventManager, player);
@@ -22,7 +29,7 @@ public class IntroductionEvent extends ICMonEvent {
     }
 
     /**
-     * completes the event on the dialog's completion
+     * Completes the event on the dialog's completion
      * @param deltaTime elapsed time since last update, in seconds, non-negative
      */
     @Override
@@ -32,13 +39,4 @@ public class IntroductionEvent extends ICMonEvent {
         }
     }
 
-    /**
-     * There is no interaction with the shop assistant,
-     * as long as this event is not completed
-     * @param assistant
-     * @param isCellInteraction
-     */
-    @Override
-    public void interactWith(ICShopAssistant assistant, boolean isCellInteraction) {
-    }
 }

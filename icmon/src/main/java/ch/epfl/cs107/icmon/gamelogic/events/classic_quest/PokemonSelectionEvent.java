@@ -6,15 +6,21 @@ import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.icmon.gamelogic.fights.PokemonSelectionMenu;
 import ch.epfl.cs107.play.engine.PauseMenu;
 
-public class PokemonSelectionEvent extends ICMonEvent {
+/**
+ * Represents an event that handles a Pokémon selection.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
+public final class PokemonSelectionEvent extends ICMonEvent {
 
     private final PokemonSelectionMenu pauseMenu;
 
     /**
      * This event pauses the game to let the player choose a pokemon
-     * @param eventManager
-     * @param player
-     * @param pauseMenu
+     * @param eventManager the event manager to register the event
+     * @param player the player that will select the pokemon
+     * @param pauseMenu the pause menu that will be used to host the selection
      */
     public PokemonSelectionEvent (ICMon.ICMonEventManager eventManager, ICMonPlayer player, PokemonSelectionMenu pauseMenu) {
         super(eventManager, player);
@@ -34,13 +40,17 @@ public class PokemonSelectionEvent extends ICMonEvent {
 
     /**
      * This event has a pause menu
-     * @return
+     * @return true
      */
     @Override
     public boolean hasPauseMenu() {
         return true;
     }
 
+    /**
+     * Returns the pause menu used to host the selection
+     * @return the pause menu used to host the selection
+     */
     @Override
     public PauseMenu getPauseMenu() {
         return this.pauseMenu;

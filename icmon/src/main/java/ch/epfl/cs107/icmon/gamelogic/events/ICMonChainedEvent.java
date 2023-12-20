@@ -8,46 +8,41 @@ import ch.epfl.cs107.icmon.gamelogic.actions.StartEventAction;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-public class ICMonChainedEvent extends ICMonEvent {
-
-    final private ICMonEvent currentEvent;
-
+/**
+ * Represents an event that includes a bus of events that will be executed in order.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
+public final class ICMonChainedEvent extends ICMonEvent {
 
     /**
      * It creates an ordered list of events that will autonomously start
      * the one following them on completion
-     * @param eventManager
-     * @param player
+     *
+     * @param eventManager the event manager to register the event
+     * @param player the player that will interact with the events
      * @param initialEvent the first event, it will start automatically
      * @param chain the other events, in the wanted order
      */
     public ICMonChainedEvent(ICMon.ICMonEventManager eventManager, ICMonPlayer player, ICMonEvent initialEvent, ICMonEvent ... chain){
         super(eventManager, player);
-        LinkedList<ICMonEvent> eventList = new LinkedList<>(Arrays.asList(chain));
 
-        this.currentEvent = initialEvent;
-        this.currentEvent.start();
-        if (eventList.isEmpty()) {
-            this.currentEvent.onComplete(new CompleteEventAction(this));
+        initialEvent.start();
+        if (chain.length == 1) {
+            initialEvent.onComplete(new CompleteEventAction(this));
         } else {
-            this.currentEvent.onComplete(new StartEventAction(eventList.get(0)));
+            initialEvent.onComplete(new StartEventAction(chain[0]));
 
-            for (int i = 0; i < eventList.size() - 1; i++) {
-                eventList.get(i).onComplete(new StartEventAction(eventList.get(i+1)));
+            for (int i = 0; i < chain.length - 1; i++) {
+                chain[i].onComplete(new StartEventAction(chain[i+1]));
             }
 
-            eventList.getLast().onComplete(new CompleteEventAction(this));
+            chain[chain.length - 1].onComplete(new CompleteEventAction(this));
         }
     }
 
-    /**
-     * updates the current event, it will manage
-     * the happening interactions
-     * @param deltaTime elapsed time since last update, in seconds, non-negative
-     */
     @Override
-    public void update(float deltaTime) {
-        this.currentEvent.update(deltaTime);
-    }
+    public void update(float deltaTime) {}
 
 }
