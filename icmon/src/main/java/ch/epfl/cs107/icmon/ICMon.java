@@ -254,7 +254,7 @@ public final class ICMon extends AreaGame {
                 soundManager.playBackgroundSound(door.getBackgroundSoundName());
             }
             player.setMuteWalkingSound(door.getMuteWalkingSound());
-            soundManager.playSound(door.getSoundName(), door.getSoundDuration(), false);
+            soundManager.playSound(door.getSoundName(), door.getSoundDuration(), true);
             player.leaveArea();
             String landingAreaName = this.door.getLandingArea();
             ICMonArea currentArea = (ICMonArea) setCurrentArea(landingAreaName, false);

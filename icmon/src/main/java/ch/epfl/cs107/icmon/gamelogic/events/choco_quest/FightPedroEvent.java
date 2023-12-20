@@ -35,7 +35,7 @@ public class FightPedroEvent extends ICMonEvent {
                         && !keyHasBeenStolen
         ) {
             keyHasBeenStolen = true;
-            soundManager.playSound("pedro", 200, false);
+            soundManager.playSound("pedro", 200, true);
             getPlayer().openDialog(new Dialog("pedro_steal_key"));
         }
     }

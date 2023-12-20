@@ -13,7 +13,7 @@ public class ICMonSoundManager {
     private Clip backgroundClip;
     private String currentPlayingSound = "N/A";
     private int timeLeft = 0;
-    private boolean currentSoundCanBeOvertaken = true;
+    private boolean isPlayingPrioritySound = false;
 
     public ICMonSoundManager (FileSystem fileSystem) {
         this.fileSystem = fileSystem;
@@ -25,15 +25,15 @@ public class ICMonSoundManager {
             currentClip = null;
         }
         timeLeft = -1;
-        currentSoundCanBeOvertaken = true;
+        isPlayingPrioritySound = false;
         currentPlayingSound = "N/A";
     }
 
     public void playSound (String name, int duration) {
-        playSound(name, duration, true);
+        playSound(name, duration, false);
     }
 
-    public void playSound (String name, int duration, boolean soundCanBeOvertaken) {
+    public void playSound (String name, int duration, boolean isPrioritySound) {
         try {
             InputStream inputStream = fileSystem.read(ResourcePath.getSound(name));
             SwingSound sound = new SwingSound(inputStream);
@@ -46,13 +46,13 @@ public class ICMonSoundManager {
 
             // if we play a different sound
             // first check if the current sound can be overtaken
-            if (!currentSoundCanBeOvertaken && soundCanBeOvertaken) {
+            if (isPlayingPrioritySound && !isPrioritySound) {
                 return;
             }
 
             resetSound();
 
-            currentSoundCanBeOvertaken = soundCanBeOvertaken;
+            isPlayingPrioritySound = isPrioritySound;
 
             Clip clip = sound.openedClip(0);
             if (clip != null) {
@@ -102,10 +102,6 @@ public class ICMonSoundManager {
         } else {
             timeLeft--;
         }
-    }
-
-    public String getCurrentPlayingSound () {
-        return currentPlayingSound;
     }
 
 }

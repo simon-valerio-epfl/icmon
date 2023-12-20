@@ -316,7 +316,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         public void interactWith(ICGift gift, boolean isCellInteraction) {
             if (!isCellInteraction && wantsRealViewInteraction()) {
                 gift.collect();
-                soundManager.playSound("collect", 100, false);
+                soundManager.playSound("collect", 100, true);
                 openDialog(new Dialog("collect_gift"));
                 // todo change skin of the player
                 isDiver = true;
@@ -341,7 +341,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         @Override
         public void interactWith(ProfOak profOak, boolean isCellInteraction) {
             if (!isCellInteraction && wantsRealViewInteraction()) {
-                soundManager.playSound("npc", 20, false);
+                soundManager.playSound("npc", 20, true);
             }
         }
     }
