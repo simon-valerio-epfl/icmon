@@ -354,7 +354,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         public void interactWith(ICBall ball, boolean isCellInteraction) {
             if (!isCellInteraction && wantsRealViewInteraction()) {
                 ball.collect();
-                soundManager.playSound("collect", 100);
+                soundManager.playSound("collect", 100, true);
             }
         }
 

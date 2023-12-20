@@ -5,6 +5,8 @@ import ch.epfl.cs107.play.io.ResourcePath;
 import ch.epfl.cs107.play.window.swing.SwingSound;
 
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineListener;
 import java.io.InputStream;
 
 public class ICMonSoundManager {
@@ -14,13 +16,17 @@ public class ICMonSoundManager {
     private String currentPlayingSound = "N/A";
     private int timeLeft = 0;
     private boolean isPlayingPrioritySound = false;
+    private boolean resetRequired = false;
+    private LineListener stopListener;
 
     public ICMonSoundManager (FileSystem fileSystem) {
         this.fileSystem = fileSystem;
     }
 
     public void resetSound () {
+        resetRequired = false;
         if (currentClip != null) {
+            currentClip.removeLineListener(stopListener);
             currentClip.stop();
             currentClip = null;
         }
@@ -44,13 +50,13 @@ public class ICMonSoundManager {
                 return;
             }
 
-            // if we play a different sound
-            // first check if the current sound can be overtaken
             if (isPlayingPrioritySound && !isPrioritySound) {
                 return;
             }
 
             resetSound();
+
+            resetRequired = true;
 
             isPlayingPrioritySound = isPrioritySound;
 
@@ -58,12 +64,15 @@ public class ICMonSoundManager {
             if (clip != null) {
                 clip.start();
 
-                // detect when file ends
-                clip.addLineListener(event -> {
-                    if (event.getType() == javax.sound.sampled.LineEvent.Type.STOP) {
+                LineListener listener = event -> {
+                    if (event.getType() == LineEvent.Type.STOP) {
                         resetSound();
                     }
-                });
+                };
+
+                // detect when file ends
+                clip.addLineListener(listener);
+                stopListener = listener;
             }
             this.currentPlayingSound = name;
             this.timeLeft = duration;
@@ -97,7 +106,7 @@ public class ICMonSoundManager {
     }
 
     public void update() {
-        if (timeLeft < 0) {
+        if (timeLeft < 0 && resetRequired) {
             resetSound();
         } else {
             timeLeft--;
