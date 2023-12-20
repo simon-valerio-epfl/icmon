@@ -8,7 +8,7 @@ import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
  * @author Valerio De Santis
  * @author Simon Lefort
  */
-final public class RunAwayFightAction extends PokemonFightAction {
+public final class RunAwayFightAction extends PokemonFightAction {
 
     /**
      * Creates a new run-away action

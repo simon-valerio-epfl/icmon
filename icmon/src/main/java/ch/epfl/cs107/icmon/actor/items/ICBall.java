@@ -17,7 +17,7 @@ import java.util.List;
  * @author Valerio De Santis
  * @author Simon Lefort
  */
-final public class ICBall extends ICMonItem {
+public final class ICBall extends ICMonItem {
     final private static String SPRITE_NAME = "items/icball";
 
     /**

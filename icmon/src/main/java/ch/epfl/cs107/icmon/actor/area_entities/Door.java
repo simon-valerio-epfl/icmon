@@ -19,7 +19,7 @@ import java.util.List;
  * @author Valerio De Santis
  * @author Simon Lefort
  */
-final public class Door extends AreaEntity {
+public final class Door extends AreaEntity {
 
     // areas configuration
     private final String landingArea;

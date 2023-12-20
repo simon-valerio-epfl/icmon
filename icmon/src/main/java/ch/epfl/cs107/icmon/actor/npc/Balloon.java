@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  * @author Valerio De Santis
  * @author Simon Lefort
  */
-final public class Balloon extends NPCActor {
+public final class Balloon extends NPCActor {
     final private static String SPRITE_NAME = "actors/balloon";
     final private static int BALLOON_ANIMATION_SPEED = 12;
     final private static int SECONDS_BEFORE_RESET = 5;

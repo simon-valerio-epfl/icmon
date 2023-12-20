@@ -8,9 +8,7 @@ import ch.epfl.cs107.play.engine.actor.Foreground;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
-/**
- * ???
- */
+
 public final class Arena extends ICMonArea {
     final static DiscreteCoordinates SPAWNING_POSITION = new DiscreteCoordinates(6, 2);
 

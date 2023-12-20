@@ -15,7 +15,7 @@ import ch.epfl.cs107.play.math.Orientation;
  * @author Valerio De Santis
  * @author Simon Lefort
  */
-final public class ICShopAssistant extends NPCActor {
+public final class ICShopAssistant extends NPCActor {
     final private static String SPRITE_NAME = "actors/assistant";
 
     /**

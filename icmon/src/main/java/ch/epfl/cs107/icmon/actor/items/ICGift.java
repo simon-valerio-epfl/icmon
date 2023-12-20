@@ -11,7 +11,7 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
  * @author Valerio De Santis
  * @author Simon Lefort
  */
-final public class ICGift extends ICMonItem {
+public final class ICGift extends ICMonItem {
     final private static String SPRITE_NAME = "items/gift";
 
     /**

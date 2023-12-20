@@ -18,7 +18,7 @@ import java.util.List;
  * @author Valerio De Santis
  * @author Simon Lefort
  */
-final public class Garry extends NPCActor implements PokemonOwner {
+public final class Garry extends NPCActor implements PokemonOwner {
     final private static String SPRITE_NAME = "actors/garry";
     final private List<Pokemon> pokemons = new ArrayList<>();
 

@@ -8,7 +8,7 @@ import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
  * @author Valerio De Santis
  * @author Simon Lefort
  */
-final public class AttackFightAction extends PokemonFightAction {
+public final class AttackFightAction extends PokemonFightAction {
 
     /**
      * Creates a new attack action

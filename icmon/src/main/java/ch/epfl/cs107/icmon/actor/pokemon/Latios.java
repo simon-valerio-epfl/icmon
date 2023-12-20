@@ -12,7 +12,7 @@ import ch.epfl.cs107.play.math.Orientation;
  * @author Valerio De Santis
  * @author Simon Lefort
  */
-final public class Latios extends Pokemon {
+public final class Latios extends Pokemon {
 
     private final static String POKEMON_NAME = "latios";
     private final static int MAX_HP = 12;

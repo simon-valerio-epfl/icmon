@@ -11,7 +11,7 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
  * @author Valerio De Santis
  * @author Simon Lefort
  */
-final public class ICKey extends ICMonItem {
+public final class ICKey extends ICMonItem {
     final private static String SPRITE_NAME = "items/ickey";
 
     /**
