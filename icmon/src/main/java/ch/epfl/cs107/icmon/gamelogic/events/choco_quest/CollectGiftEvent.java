@@ -8,13 +8,20 @@ import ch.epfl.cs107.icmon.actor.npc.Pedro;
 import ch.epfl.cs107.icmon.gamelogic.events.CollectItemEvent;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
-public class CollectGiftEvent extends CollectItemEvent {
+/**
+ * Represents an event that is completed when the player collects the gift in the lake.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
+public final class CollectGiftEvent extends CollectItemEvent {
 
     /**
-     * Create a new event that will be completed when the player collects the given gift
-     * @param eventManager used to add/remove events from icmon
-     * @param player that will collect the gift
-     * @param gift that the player has to collect
+     * Creates a new event that will be completed when the player collects the given gift
+     *
+     * @param eventManager the event manager used to add/remove events from icmon
+     * @param player the player that will collect the gift
+     * @param gift the gift that the player has to collect
      */
     public CollectGiftEvent(ICMon.ICMonEventManager eventManager, ICMonPlayer player, ICGift gift) {
         super(eventManager, player, gift);
