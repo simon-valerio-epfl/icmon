@@ -1,13 +1,25 @@
 package ch.epfl.cs107.icmon.gamelogic.actions;
 
-public class LogAction implements Action {
+/**
+ * Represents an action that logs some message in the terminal.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
+public final class LogAction implements Action {
 
     final private String message;
 
+    /**
+     * Creates a new log action.
+     *
+     * @param message the message to log
+     */
     public LogAction(String message) {
         this.message = message;
     }
 
+    @Override
     public void perform() {
         System.out.println(message);
     }
