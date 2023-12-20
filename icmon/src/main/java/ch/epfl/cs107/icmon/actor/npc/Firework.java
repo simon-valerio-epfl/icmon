@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 public final class Firework extends NPCActor {
     final private static String SPRITE_NAME = "actors/firework";
-    private int timeBeforeExplosion = 100;
+    private int timeBeforeExplosion = 50;
     private final ICMonSoundManager soundManager;
 
     public Firework(ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMonSoundManager soundManager) {
@@ -22,7 +22,7 @@ public final class Firework extends NPCActor {
     }
 
     public static DiscreteCoordinates getSpawnPosition() {
-        return new DiscreteCoordinates(5, 7);
+        return new DiscreteCoordinates(20, 7);
     }
     @Override
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {}
@@ -36,10 +36,16 @@ public final class Firework extends NPCActor {
     public void update(float deltaTime) {
         super.update(deltaTime);
 
-        timeBeforeExplosion--;
+        orientate(Orientation.UP);
+        if (timeBeforeExplosion > 0) {
+            move(8);
+        }
+
         if (timeBeforeExplosion == 0) {
             this.setSpriteName("actors/firework_explosion");
             soundManager.playOverlappingSound("firework_explosion");
         }
+
+        timeBeforeExplosion--;
     }
 }
