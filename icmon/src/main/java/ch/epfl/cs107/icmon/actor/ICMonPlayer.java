@@ -14,7 +14,6 @@ import ch.epfl.cs107.icmon.gamelogic.actions.AfterPokemonSelectionFightAction;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.classic_quest.PokemonFightEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.classic_quest.PokemonSelectionEvent;
-import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightableActor;
 import ch.epfl.cs107.icmon.gamelogic.fights.PokemonSelectionMenu;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
@@ -128,7 +127,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
      * Whether the player wants to interact with an item or a NPC.
      * @return true if the player wants to interact
      */
-    public boolean wantsRealViewInteraction() {
+    public boolean wantsEntityViewInteraction() {
         Keyboard keyboard = getOwnerArea().getKeyboard();
         Button lKey = keyboard.get(Keyboard.L);
         return lKey.isDown() && !this.inDialog;
@@ -229,11 +228,13 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
     public void update(float deltaTime) {
         super.update(deltaTime);
 
+        // update dialogs
         if (this.inDialog) {
             Keyboard keyboard = getOwnerArea().getKeyboard();
             if (keyboard.get(Keyboard.SPACE).isDown() && !dialogIsLocked){
                 this.dialog.update(deltaTime);
                 dialogIsLocked = true;
+                // wait some time before unlocking the dialog (to prevent double press)
                 CompletableFuture.delayedExecutor(200, TimeUnit.MILLISECONDS).execute(() -> {
                     dialogIsLocked = false;
                 });
@@ -242,7 +243,10 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
                 this.dialog = null;
                 this.inDialog = false;
             }
-        } else {
+        }
+
+        // if there is no dialog running, we allow the player to move
+        else {
             Keyboard keyboard = getOwnerArea().getKeyboard();
             moveIfPressed(Orientation.LEFT, keyboard.get(Keyboard.LEFT));
             moveIfPressed(Orientation.UP, keyboard.get(Keyboard.UP));
@@ -295,6 +299,16 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
         return true;
     }
 
+    /**
+     * Whether the player wants distance interaction.
+     * It is true because the player always interacts with neighbouring cells
+     * This lets us check the walking type of the cells around the player
+     * when he is swimming under the ice
+     * to make sure he can not exit without going through the holes in the frozen lake
+     * To check whether the player wants a distance interaction with an NPC or an item,
+     * one shall use the method wantsEntityViewInteraction()
+     * @return always true
+     */
     @Override
     public boolean wantsViewInteraction() {
         return true;
@@ -352,7 +366,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
 
         @Override
         public void interactWith(ICBall ball, boolean isCellInteraction) {
-            if (!isCellInteraction && wantsRealViewInteraction()) {
+            if (!isCellInteraction && wantsEntityViewInteraction()) {
                 ball.collect();
                 soundManager.playSound("collect", 100, true);
             }
@@ -360,7 +374,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
 
         @Override
         public void interactWith(ICKey key, boolean isCellInteraction) {
-            if (!isCellInteraction && wantsRealViewInteraction()) {
+            if (!isCellInteraction && wantsEntityViewInteraction()) {
                 key.collect();
                 soundManager.playSound("collect", 100);
             }
@@ -368,7 +382,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
 
         @Override
         public void interactWith(ICGift gift, boolean isCellInteraction) {
-            if (!isCellInteraction && wantsRealViewInteraction()) {
+            if (!isCellInteraction && wantsEntityViewInteraction()) {
                 gift.collect();
                 soundManager.playSound("collect", 100, true);
                 openDialog(new Dialog("collect_gift"));
@@ -407,7 +421,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
 
         @Override
         public void interactWith(ProfOak profOak, boolean isCellInteraction) {
-            if (!isCellInteraction && wantsRealViewInteraction()) {
+            if (!isCellInteraction && wantsEntityViewInteraction()) {
                 soundManager.playSound("npc", 20, true);
             }
         }

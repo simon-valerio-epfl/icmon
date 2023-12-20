@@ -12,12 +12,15 @@ import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Represents any item in the game that can be picked up by the player.
+ */
 public abstract class ICMonItem extends CollectableAreaEntity {
     private final RPGSprite sprite;
 
     /**
-     * An istance of the class ICMonItem is characterized by the Area
-     * and the position where it appears
+     * Creates a new collectable item in the specified area
+     *
      * @param area where the item shall spawn
      * @param spawnPosition
      * @param spriteName
@@ -29,11 +32,11 @@ public abstract class ICMonItem extends CollectableAreaEntity {
     }
 
     /**
-     * The scaleFactor is initialised at 1 by default
-     * if not differently specified
-     * @param area
-     * @param spawnPosition
-     * @param spriteName
+     * Creates a new collectable item in the specified area with a default value for the scale factor (1).
+     *
+     * @param area where the item shall spawn
+     * @param spawnPosition where the item shall spawn
+     * @param spriteName name of the sprite
      */
     public ICMonItem(ICMonArea area, DiscreteCoordinates spawnPosition, String spriteName) {
         this(area, spawnPosition, spriteName, 1);

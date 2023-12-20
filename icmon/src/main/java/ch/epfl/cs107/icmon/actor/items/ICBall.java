@@ -8,14 +8,23 @@ import ch.epfl.cs107.play.window.Canvas;
 
 import java.util.List;
 
-public class ICBall extends ICMonItem {
+/**
+ * Represents a ball that can be picked up by the player.
+ * It usually contains a Pokémon, but can be anything.
+ *
+ * @see ch.epfl.cs107.icmon.actor.ICMonPlayer
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
+final public class ICBall extends ICMonItem {
     final private static String SPRITE_NAME = "items/icball";
 
     /**
-     * An istance of the class Ball is characterized by the Area
-     * and the position where it appears
-     * @param area where the ball shall spawn
-     * @param spawnPosition
+     * Creates a new ICBall in the specified area
+     *
+     * @param area the area where the ball shall spawn
+     * @param spawnPosition the position where the ball shall spawn
      */
     public ICBall(ICMonArea area, DiscreteCoordinates spawnPosition) {
         super(area, spawnPosition, SPRITE_NAME);

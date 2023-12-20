@@ -5,8 +5,21 @@ import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
-public class ICKey extends ICMonItem {
+/**
+ * Represents a key that can be picked up by the player.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
+final public class ICKey extends ICMonItem {
     final private static String SPRITE_NAME = "items/ickey";
+
+    /**
+     * Creates a new key in the specified area
+     *
+     * @param area the area where the key shall spawn
+     * @param spawnPosition the position where the key shall spawn
+     */
     public ICKey(ICMonArea area, DiscreteCoordinates spawnPosition) {
         super(area, spawnPosition, SPRITE_NAME, 1.3);
     }

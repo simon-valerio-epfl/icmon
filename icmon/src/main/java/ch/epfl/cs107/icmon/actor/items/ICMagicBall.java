@@ -8,7 +8,8 @@ import ch.epfl.cs107.play.window.Canvas;
 
 import java.util.List;
 
-public class ICMagicBall extends ICMonItem {
+// todo doc
+final public class ICMagicBall extends ICMonItem {
     final private static String SPRITE_NAME = "items/icmagicball_big";
     public ICMagicBall(ICMonArea area, DiscreteCoordinates spawnPosition) {
         super(area, spawnPosition, SPRITE_NAME);

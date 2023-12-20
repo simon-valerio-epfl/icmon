@@ -2,12 +2,10 @@ package ch.epfl.cs107.icmon.gamelogic.events.choco_quest;
 
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
-import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.actor.npc.Pedro;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.audio.ICMonSoundManager;
-import ch.epfl.cs107.icmon.gamelogic.actions.LeaveAreaAction;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
@@ -42,7 +40,7 @@ public class FightPedroEvent extends ICMonEvent {
 
     @Override
     public void interactWith(Pedro pedro, boolean isCellInteraction) {
-        if (getPlayer().wantsRealViewInteraction()) {
+        if (getPlayer().wantsEntityViewInteraction()) {
             Pokemon pedroPokemon = pedro.getPokemons().get(0);
             getPlayer().fight(
                     pedroPokemon,

@@ -5,8 +5,21 @@ import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 
-public class ICGift extends ICMonItem {
+/**
+ * Represents a gift that can be picked up by the player.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
+final public class ICGift extends ICMonItem {
     final private static String SPRITE_NAME = "items/gift";
+
+    /**
+     * Creates a new gift in the specified area
+     *
+     * @param area the area where the gift shall spawn
+     * @param spawnPosition the position where the gift shall spawn
+     */
     public ICGift(ICMonArea area, DiscreteCoordinates spawnPosition) {
         super(area, spawnPosition, SPRITE_NAME, 1.3);
     }

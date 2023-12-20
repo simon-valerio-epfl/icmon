@@ -113,6 +113,10 @@ public final class ICMonBehavior extends AreaBehavior {
 
         @Override
         protected boolean canEnter(Interactable entity) {
+
+            // this is useful especially for the balloon
+            if (!entity.takeCellSpace()) return true;
+
             if (this.type.walkingType.equals(AllowedWalkingType.NONE)) {
                 return false;
             }

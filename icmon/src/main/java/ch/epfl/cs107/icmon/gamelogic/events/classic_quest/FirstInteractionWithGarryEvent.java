@@ -25,7 +25,7 @@ public class FirstInteractionWithGarryEvent extends ICMonEvent {
      */
     @Override
     public void interactWith(Garry garry, boolean isCellInteraction) {
-        if (getPlayer().wantsRealViewInteraction()) {
+        if (getPlayer().wantsEntityViewInteraction()) {
             Pokemon garryPokemon = garry.getPokemons().get(0);
             getPlayer().fight(garryPokemon, garry, this);
             this.complete();
