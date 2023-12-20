@@ -31,6 +31,7 @@ public abstract class ICMonActor extends MovableAreaEntity {
     }
 
     /**
+     * Leaves the current area
      * Should be called before entering a different area
      */
     public void leaveArea () {
@@ -38,13 +39,14 @@ public abstract class ICMonActor extends MovableAreaEntity {
     }
 
     /**
-     * Enters a new area.
-     * the game will visually follow the travelling actor and
+     * Enters a new area
+     * The game will visually follow the travelling actor and
      * the latter will stop moving when he arrives
-     * Note: one should call leaveArea() before entering a new Area
+     * Note: one should call leaveArea() to exit the old Area
+     * before entering a new one
      *
-     * @param area the landing area
-     * @param spawnPosition the spawn position in the new area
+     * @param area the new Area
+     * @param spawnPosition the spawn position in the new Area
      */
     public void enterArea (Area area, DiscreteCoordinates spawnPosition) {
         area.registerActor(this);
@@ -54,21 +56,37 @@ public abstract class ICMonActor extends MovableAreaEntity {
         resetMotion();
     }
 
+    /**
+     * An actor lets other entities enter the cell where he is
+     * @return always false, but this method may have been overridden by a concrete subclass of ICMonActor
+     */
     @Override
     public boolean takeCellSpace() {
         return false;
     }
 
+    /**
+     * Gets the coordinates of the main cell where the actor is
+     * @return the main coordinates of an actor
+     */
     @Override
     public List<DiscreteCoordinates> getCurrentCells() {
         return Collections.singletonList(getCurrentMainCellCoordinates());
     }
 
+    /**
+     * An actor accepts proximity interactions by default
+     * @return always true, but this method could have been overridden by a concrete subclass of ICMonActor
+     */
     @Override
     public boolean isCellInteractable() {
         return true;
     }
 
+    /**
+     * An actor does not accept distance interactions by default
+     * @return always false, but this method could have been overridden by a concrete subclass of ICMonActor
+     */
     @Override
     public boolean isViewInteractable() {
         return false;

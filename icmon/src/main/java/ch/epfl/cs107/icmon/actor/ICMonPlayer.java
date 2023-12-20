@@ -42,7 +42,7 @@ import java.util.concurrent.TimeUnit;
  */
 public final class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner {
 
-    // Sprite management
+    // Sprites' management
     private enum SpriteType { SWIMMING_SPRITE, RUNNING_SPRITE, UNDERWATER_SPRITE }
     final private static String SPRITE_NAME = "actors/player";
     final private static String SPRITE_SWIMMING_NAME = "actors/player_water";
@@ -66,16 +66,16 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
     final private ICMon.ICMonEventManager eventManager;
     private final ICMonSoundManager soundManager;
 
-    // Pokemon management
+    // Pokemons' management
     final private List<Pokemon> pokemons = new ArrayList<>();
     private boolean isFightStarting = false;
 
-    // Dialogs management
+    // Dialogs' management
     private Dialog dialog;
     private boolean inDialog = false;
     private boolean dialogIsLocked = false;
 
-    // Current player's state
+    // Current player's aquatic state (whether he is in the water or not)
     private boolean isDiver = false;
 
     // Sound management

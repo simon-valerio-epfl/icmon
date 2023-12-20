@@ -32,7 +32,7 @@ public abstract class ICMonItem extends CollectableAreaEntity {
     }
 
     /**
-     * Creates a new collectable item in the specified area with a default value for the scale factor (1).
+     * Creates a new collectable item in the specified area with a default value for the scale factor
      *
      * @param area where the item shall spawn
      * @param spawnPosition where the item shall spawn
@@ -53,7 +53,7 @@ public abstract class ICMonItem extends CollectableAreaEntity {
 
     /**
      * An item accepts proximity interactions by default
-     * @return always true, but this method could have been overriden by a concrete subclass of ICMonItem
+     * @return always true, but this method could have been overridden by a concrete subclass of ICMonItem
      */
     @Override
     public boolean isCellInteractable() {
@@ -62,7 +62,7 @@ public abstract class ICMonItem extends CollectableAreaEntity {
 
     /**
      * An item does not accept distance interactions by default
-     * @return always false, but this method could have been overriden by a concrete subclass of ICMonItem
+     * @return always false, but this method could have been overridden by a concrete subclass of ICMonItem
      */
     @Override
     public boolean isViewInteractable() {

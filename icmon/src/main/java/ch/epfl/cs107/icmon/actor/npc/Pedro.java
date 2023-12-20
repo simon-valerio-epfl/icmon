@@ -43,7 +43,10 @@ public final class Pedro extends NPCActor implements PokemonOwner {
     public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
         ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
     }
-
+    /**
+     * Gets the list containing this pedro's pokemons
+     * @return the list of pokemons owned by the current instance of Pedro
+     */
     @Override
     public List<Pokemon> getPokemons() {
         return pokemons;
