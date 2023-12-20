@@ -23,6 +23,7 @@ abstract public class CollectItemEvent extends ICMonEvent {
      */
     public CollectItemEvent(ICMon.ICMonEventManager eventManager, ICMonPlayer player, ICMonItem item) {
         super(eventManager, player);
+        assert item != null;
         this.item = item;
     }
 

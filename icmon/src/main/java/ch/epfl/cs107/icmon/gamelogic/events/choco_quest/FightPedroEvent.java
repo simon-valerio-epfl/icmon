@@ -39,9 +39,11 @@ public final class FightPedroEvent extends ICMonEvent {
     public void update(float deltaTime) {}
 
     /**
-     * Pedro steals the key when the player gets back to town after having taken the key
-     * @param cell the cell
-     * @param isCellInteraction
+     * Pedro steals the key when the player gets back to town from Atlantis
+     * after having taken the key
+     *
+     * @param cell the cell we test to know if he's back to town (he has to pass through water to get back to town)
+     * @param isCellInteraction true if the interaction is a cell interaction
      */
     @Override
     public void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {
@@ -56,6 +58,15 @@ public final class FightPedroEvent extends ICMonEvent {
         }
     }
 
+    /**
+     * While this event is active,
+     * there can be a fight between a pokemon belonging to the owner (if it exists)
+     * and the first one belonging to Pedro
+     * following a view interaction
+     * Also opens a dialog one second after the fight is over if the player loses
+     * @param pedro the pedro that interacts with the player
+     * @param isCellInteraction true if the interaction is a cell interaction
+     */
     @Override
     public void interactWith(Pedro pedro, boolean isCellInteraction) {
         if (getPlayer().wantsEntityViewInteraction()) {
@@ -66,7 +77,7 @@ public final class FightPedroEvent extends ICMonEvent {
                     new CompleteEventAction(this), // the event that will be completed if the fight is a win
                     new DelayedAction(
                             new OpenDialogAction(this.getPlayer(), new Dialog("pedro_fight_end_lose")),
-                            2000
+                            1000
                     )
             );
         }

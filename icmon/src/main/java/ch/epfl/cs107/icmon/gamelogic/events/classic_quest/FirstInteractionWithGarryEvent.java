@@ -31,10 +31,10 @@ public final class FirstInteractionWithGarryEvent extends ICMonEvent {
 
     /**
      * While this event is active,
-     * there can be a fight between a pokemon belonging to the owner
-     * and the first one belonging to a garry
+     * there can be a fight between a pokemon belonging to the owner (if it exists)
+     * and the first one belonging to Garry
      * following a view interaction
-     *
+     * Also opens a dialog one second after the fight is over if the player loses
      * @param garry an opponent
      * @param isCellInteraction whether it's a cell interaction(true) or not
      */
@@ -47,8 +47,8 @@ public final class FirstInteractionWithGarryEvent extends ICMonEvent {
                     garry,
                     new CompleteEventAction(this),
                     new DelayedAction(
-                            new OpenDialogAction(this.getPlayer(), new Dialog("pedro_fight_end_lose")),
-                            2000
+                            new OpenDialogAction(this.getPlayer(), new Dialog("garry_fight_end_lose")),
+                            1000
                     )
             );
             this.complete();

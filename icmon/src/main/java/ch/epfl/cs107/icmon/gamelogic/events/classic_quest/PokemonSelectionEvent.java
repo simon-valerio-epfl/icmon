@@ -24,6 +24,7 @@ public final class PokemonSelectionEvent extends ICMonEvent {
      */
     public PokemonSelectionEvent (ICMon.ICMonEventManager eventManager, ICMonPlayer player, PokemonSelectionMenu pauseMenu) {
         super(eventManager, player);
+        assert pauseMenu != null;
         this.pauseMenu = pauseMenu;
     }
 

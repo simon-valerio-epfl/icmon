@@ -32,6 +32,8 @@ public abstract class ICMonEvent implements Updatable, ICMonInteractionVisitor {
      * @param player the main player of the game
      */
     public ICMonEvent (ICMon.ICMonEventManager eventManager, ICMonPlayer player) {
+        assert eventManager != null;
+        assert player != null;
         this.player = player;
         this.eventManager = eventManager;
 

@@ -27,6 +27,11 @@ public final class GiveKeyFabriceEvent extends ICMonEvent {
     @Override
     public void update(float deltaTime) {}
 
+    /**
+     * Completes the event when the player interacts with Fabrice
+     * @param fabrice the fabrice that interacts with the player
+     * @param isCellInteraction true if the interaction is a cell interaction
+     */
     @Override
     public void interactWith(Fabrice fabrice, boolean isCellInteraction) {
         this.complete();

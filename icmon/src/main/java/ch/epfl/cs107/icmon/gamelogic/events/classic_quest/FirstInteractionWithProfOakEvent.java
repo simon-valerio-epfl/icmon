@@ -50,6 +50,7 @@ public final class FirstInteractionWithProfOakEvent extends ICMonEvent {
      * @param isTheDialogComplete whether the dialog is completed or not
      */
     public void openDialog(String dialogName, boolean isTheDialogComplete) {
+        assert dialogName != null;
         this.dialog = new Dialog(dialogName);
         this.isInDialog = true;
         this.isTheDialogComplete = isTheDialogComplete;

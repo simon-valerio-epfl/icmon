@@ -25,6 +25,7 @@ public final class PokemonFightEvent extends ICMonEvent {
      */
     public PokemonFightEvent(ICMon.ICMonEventManager eventManager, ICMonPlayer player, ICMonFight fightPauseMenu) {
         super(eventManager, player);
+        assert fightPauseMenu != null;
         this.fightPauseMenu = fightPauseMenu;
     }
 
