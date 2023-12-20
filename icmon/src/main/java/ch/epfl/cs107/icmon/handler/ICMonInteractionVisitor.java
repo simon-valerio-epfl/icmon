@@ -12,6 +12,12 @@ import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.play.areagame.area.AreaBehavior;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 
+/**
+ * Represents an entity's ability to interact with other entities in the game.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
 public interface ICMonInteractionVisitor extends AreaInteractionVisitor {
 
     default void interactWith(ICMonBehavior.ICMonCell cell, boolean isCellInteraction) {
