@@ -16,32 +16,36 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * ???
+ * Represents a Pokémon, a monster that can be encountered in the game.
  *
  * @author Hamza REMMAL (hamza.remmal@epfl.ch)
+ * @author Valerio De Santis
+ * @author Simon Lefort
  */
 public abstract class Pokemon extends ICMonActor implements ICMonFightableActor {
     private final RPGSprite sprite;
     private List<PokemonFightAction> actions;
 
+    // properties
     private final String name;
     private float hp;
     private final float maxHp;
     private final int damage;
 
     /**
+     * Creates a new Pokémon in the specified area
      *
-     * @param area
-     * @param orientation
-     * @param spawnPosition
+     * @param area the area where the Pokémon shall spawn
+     * @param orientation the orientation of the Pokémon
+     * @param spawnPosition the position where the Pokémon shall spawn
      * @param pokemonName the pokemon type, e.g. pikachu
-     * @param maxHp the spawning Hp as well, has to be a positive value
+     * @param maxHp the spawning HP as well, has to be a positive value
      * @param damage how hard it will hit his opponents in a fight, has to be a positive value
      */
     public Pokemon(Area area, Orientation orientation, DiscreteCoordinates spawnPosition, String pokemonName, float maxHp, int damage) {
         super(area, orientation, spawnPosition);
-        assert (maxHp >0);
-        assert (damage>0);
+        assert (maxHp > 0);
+        assert (damage > 0);
 
         this.name = pokemonName;
         this.hp = maxHp;
@@ -51,86 +55,44 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
         this.sprite = new RPGSprite("pokemon/" + name, 1, 1, this);
     }
 
+    /**
+     * Sets the actions this pokemon can perform
+     * @param actions the actions this pokemon can perform
+     */
     protected void setActions(PokemonFightAction ...actions) {
         this.actions = new ArrayList<>();
         Collections.addAll(this.actions, actions);
     }
 
-
     /**
-     * another actor can be in the same cell as a pokemon, possibly
-     * interacting with it
-     * @return
-     */
-    @Override
-    public boolean takeCellSpace() {
-        return false;
-    }
-
-    /**
-     * It does not accept distance interactions
-     * @return
-     */
-    @Override
-    public boolean isViewInteractable() {
-        return false;
-    }
-
-    /**
-     * It accepts proximity interactions
-     * @return
-     */
-    @Override
-    public boolean isCellInteractable() {
-        return true;
-    }
-
-    @Override
-    public void draw(Canvas canvas) {
-        this.sprite.draw(canvas);
-    }
-
-    /**
-     * The current instance gets hit, dying if it has
-     * no more hp
+     * Make the current instance gets hit
+     * and dying if it has no more hp
      *
-     * @param damage how many hp the pokemon will lose... if it's still alive
+     * @param damage how many hp the pokemon will lose
      */
     public void damage (int damage) {
-        if (this.hp - damage <= 0) {
-            this.hp = 0;
-        } else {
-            this.hp = hp - damage;
-        }
+        this.hp = Math.max(0, this.hp - damage);
     }
 
     /**
-     *
-     * @return whether it is able to continue the fight
+     * Gets the dead status of the pokemon
+     * @return true if the pokemon is dead
      */
     public boolean isDead () {
         return this.hp <= 0;
     }
 
-    // todo list ou Array
-
     /**
-     *
+     * Gets the actions that the pokemon can perform
      * @return the actions this pokemon can perform
      */
     public List<PokemonFightAction> getActions() {
         return actions;
     }
 
-    @Override
-    public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
-        ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
-    }
-
     /**
-     *
-     * @return a nested class that manages
-     * some sensible methods
+     * Gets the properties of the pokemon
+     * @return a PokemonProperties nested class instance that expose the properties of the pokemon as getters
      */
     public PokemonProperties properties() {
         return new PokemonProperties();
@@ -157,6 +119,16 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
             return damage;
         }
 
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        this.sprite.draw(canvas);
+    }
+
+    @Override
+    public void acceptInteraction(AreaInteractionVisitor v, boolean isCellInteraction) {
+        ((ICMonInteractionVisitor) v).interactWith(this, isCellInteraction);
     }
 
 }

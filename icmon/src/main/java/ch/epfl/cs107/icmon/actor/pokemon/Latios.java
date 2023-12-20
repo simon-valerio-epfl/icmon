@@ -6,6 +6,12 @@ import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
+/**
+ * Represents a Latios, a pokemon that can be encountered in the game.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
 public class Latios extends Pokemon {
 
     private final static String POKEMON_NAME = "latios";
@@ -13,17 +19,16 @@ public class Latios extends Pokemon {
     private final static int DAMAGE = 1;
 
     /**
-     * Every istance of this class has a default name, latios,
-     * a default number of max health points, 12
-     * and a default attack power, 1
+     * Creates a new Latios in the specified area
      *
-     * @param area
-     * @param orientation
-     * @param spawnPosition
+     * @param area the area where the Latios shall spawn
+     * @param orientation the orientation of the Latios
+     * @param spawnPosition the position where the Latios shall spawn
      */
     public Latios(Area area, Orientation orientation, DiscreteCoordinates spawnPosition) {
         super(area, orientation, spawnPosition, POKEMON_NAME, MAX_HP, DAMAGE);
 
+        // Latios can attack and run away
         setActions(
                 new AttackFightAction(this),
                 new RunAwayFightAction(this)
