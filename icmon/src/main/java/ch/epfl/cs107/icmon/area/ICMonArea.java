@@ -7,21 +7,23 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.window.Window;
 
 /**
- * ???
+ * Represents an area in the game.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
  */
 public abstract class ICMonArea extends Area {
 
     /**
-     * Should give a way to go back to the main area
-     * and register the actors and the items spawning
-     * on the area
+     * This method shall create a door to go back to the main area
+     * and register the actors and items
+     * that will spawn in the area
      */
     protected abstract void createArea();
 
     /**
-     *
-     * @return some constant position where the player spawns when he arrives
-     * on this area
+     * Gets the player's spawn position
+     * @return some constant position where the player spawns when they arrive in this area
      */
     public abstract DiscreteCoordinates getPlayerSpawnPosition();
 
@@ -42,7 +44,7 @@ public abstract class ICMonArea extends Area {
     }
 
     /**
-     *
+     * Gets the camera scale factor
      * @return a constant about the drawing dimensions
      */
     @Override

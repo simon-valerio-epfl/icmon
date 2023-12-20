@@ -9,32 +9,22 @@ import ch.epfl.cs107.play.engine.actor.Foreground;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
-public class House extends ICMonArea {
+/**
+ * Represents the house area.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
+public final class House extends ICMonArea {
     final static DiscreteCoordinates SPAWNING_POSITION = new DiscreteCoordinates(6, 2);
-
-    /**
-     * @return the name of this map
-     */
     @Override
     public String getTitle() {
         return "house";
     }
-
-    /**
-     *
-     * @return some default spawning coordinates on this area, namely (6,2)
-     */
     @Override
     public DiscreteCoordinates getPlayerSpawnPosition() {
         return SPAWNING_POSITION;
     }
-
-
-    /**
-     * it adds a door taking back to the main Area, town
-     * this area is created with a character, Garry,
-     * at some default conditions namely (1,3)
-     */
     @Override
     protected void createArea() {
         registerActor(new Background(this));
@@ -45,7 +35,6 @@ public class House extends ICMonArea {
 
         Garry garry = new Garry(this, Orientation.DOWN, new DiscreteCoordinates(1, 3));
         registerActor(garry);
-
     }
 
  }

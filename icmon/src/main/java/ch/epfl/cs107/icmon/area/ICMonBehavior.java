@@ -12,6 +12,12 @@ import ch.epfl.cs107.play.window.Window;
 import java.util.HashMap;
 import java.util.Vector;
 
+/**
+ * Represents the behavior of an area.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
 public final class ICMonBehavior extends AreaBehavior {
     /**
      * Default ICMonBehavior Constructor
@@ -33,18 +39,22 @@ public final class ICMonBehavior extends AreaBehavior {
         }
     }
 
-    /**
-     * the possible walking types a cell can have
-     */
+    // the possible walking types a cell can have
     public enum AllowedWalkingType {
         NONE, // None
         SURF, // Only with surf
         FEET, // Only with feet
-        FEET_OR_UNDERWATER,
-        ENTER_WATER,
+        FEET_OR_UNDERWATER, // The player can walk on the ice or swim under it
+        ENTER_WATER, // Only with surf
         ALL // All previous
     }
 
+    /**
+     * Represents the different types of cells.
+     *
+     * @author Valerio De Santis
+     * @author Simon Lefort
+     */
     public enum ICMonCellType {
         NULL (0, AllowedWalkingType.NONE),
         WALL (-16777216, AllowedWalkingType.NONE),
@@ -60,11 +70,23 @@ public final class ICMonBehavior extends AreaBehavior {
         final int type;
         final AllowedWalkingType walkingType;
 
+        /**
+         * Creates a new cell type
+         *
+         * @param type the int value of the color
+         * @param walkingType the walking type of the cell
+         */
         ICMonCellType(int type, AllowedWalkingType walkingType) {
             this.type = type;
             this.walkingType = walkingType;
         }
 
+        /**
+         * Gets the representation of the cell type
+         *
+         * @param type the int value of the color
+         * @return the cell type
+         */
         public static ICMonCellType toType(int type) {
             for (ICMonCellType ict : ICMonCellType.values()) {
                 if (ict.type == type)
@@ -76,50 +98,59 @@ public final class ICMonBehavior extends AreaBehavior {
         }
     }
 
+
     /**
-     * Cell adapted to the Tuto2 game
+     * Represents a cell in the area.
+     *
+     * @author Valerio De Santis
+     * @author Simon Lefort
      */
     public class ICMonCell extends Cell {
         /// Type of the cell following the enum
         private final ICMonCellType type;
 
         /**
-         * Default Tuto2Cell Constructor
+         * Default ICMonCell Constructor
          *
          * @param x    (int): x coordinate of the cell
          * @param y    (int): y coordinate of the cell
-         * @param type (EnigmeCellType), not null
+         * @param type (ICMonCellType), not null
          */
         public ICMonCell(int x, int y, ICMonCellType type) {
             super(x, y);
             this.type = type;
-            if (this.type.type == ICMonCellType.NULL.type) {
-                System.out.println("NULL CELL");
-                System.out.println("x: " + x + " y: " + y);
-            }
         }
 
+        /**
+         * Gets the walking type of the cell
+         * @return the walking type of the cell
+         */
         public AllowedWalkingType getWalkingType () {
             return this.type.walkingType;
         }
-        public DiscreteCoordinates getCoordinates () {
-            return new DiscreteCoordinates(this.getCurrentCells().get(0).x, this.getCurrentCells().get(0).y);
-        }
 
+        /**
+         * Checks if the entity can leave the cell
+         * @param entity the entity that wants to leave the cell
+         * @return true if the entity can leave the cell, false otherwise
+         */
         @Override
         protected boolean canLeave(Interactable entity) {
             return true;
         }
 
+        /**
+         * Checks if the entity can enter the cell
+         * @param entity the entity that wants to enter the cell
+         * @return true if the entity can enter the cell, false otherwise
+         */
         @Override
         protected boolean canEnter(Interactable entity) {
 
             // this is useful especially for the balloon
             if (!entity.takeCellSpace()) return true;
 
-            if (this.type.walkingType.equals(AllowedWalkingType.NONE)) {
-                return false;
-            }
+            if (this.type.walkingType.equals(AllowedWalkingType.NONE)) return false;
             boolean cellIsTaken = false;
             for (Interactable alreadyThereEntity : this.entities) {
                 if (alreadyThereEntity.takeCellSpace()) {

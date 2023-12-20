@@ -14,28 +14,17 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
 /**
- * ???
+ * Represents the town area.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
  */
 public final class Town extends ICMonArea {
     final static DiscreteCoordinates SPAWNING_POSITION = new DiscreteCoordinates(20,12);
-
-
-    /**
-     *
-     * @return some default spawning coordinates on this area, namely (20, 12)
-     */
     @Override
     public DiscreteCoordinates getPlayerSpawnPosition() {
         return SPAWNING_POSITION;
     }
-
-    /**
-     * Town is the main area of the game
-     * Creating it adds doors going to the every other area
-     *
-     * this area is created with a character, a shop assistant,
-     * at some default conditions namely (6,8) and some other items belonging to the plot
-     */
     @Override
     protected void createArea() {
         registerActor(new Background(this));

@@ -11,7 +11,13 @@ import ch.epfl.cs107.play.engine.actor.Foreground;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
-public class Atlantis extends ICMonArea {
+/**
+ * Represents the shop area.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
+public final class Atlantis extends ICMonArea {
 
     @Override
     public String getTitle() {
@@ -21,7 +27,6 @@ public class Atlantis extends ICMonArea {
     public DiscreteCoordinates getPlayerSpawnPosition() {
         return new DiscreteCoordinates(3, 1);
     }
-
     @Override
     protected void createArea() {
         registerActor(new Background(this));

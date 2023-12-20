@@ -10,8 +10,13 @@ import ch.epfl.cs107.play.engine.actor.Foreground;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
-public class MyPocket extends ICMonArea {
-//This is a fictional area where owned pokemons live between a fight and the next one
+/**
+ * Represents the pocket area (fictional).
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
+public final class MyPocket extends ICMonArea {
 
     @Override
     public String getTitle() {
@@ -21,10 +26,7 @@ public class MyPocket extends ICMonArea {
     public DiscreteCoordinates getPlayerSpawnPosition() {
         return null;
     }
-
     @Override
-    protected void createArea() {
-        // do nothing. it's my pocket.
-    }
+    protected void createArea() {}
 
 }
