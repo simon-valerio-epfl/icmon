@@ -14,23 +14,17 @@ import static ch.epfl.cs107.play.io.ResourcePath.getSprite;
 import static java.util.Objects.nonNull;
 
 /**
- * ???
+ * Represents the graphics of a fight arena.
  *
  * @author Hamza REMMAL (hamza.remmal@epfl.ch)
  */
 public final class ICMonFightArenaGraphics implements Graphics {
 
     private final ImageGraphics background;
-
-    /** ??? */
     private final GraphicsEntity player;
-    /** ??? */
     private final GraphicsEntity opponent;
-
     private final ICMonFightInfoGraphics playerInfo;
-
     private final ICMonFightInfoGraphics opponentInfo;
-
     private ICMonFightInteractionGraphics interactionGraphics;
 
 

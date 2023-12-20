@@ -2,7 +2,6 @@ package ch.epfl.cs107.icmon.actor.pokemon;
 
 import ch.epfl.cs107.icmon.actor.ICMonActor;
 import ch.epfl.cs107.icmon.actor.pokemon.actions.PokemonFightAction;
-import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFightableActor;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
@@ -22,7 +21,7 @@ import java.util.List;
  * @author Valerio De Santis
  * @author Simon Lefort
  */
-public abstract class Pokemon extends ICMonActor implements ICMonFightableActor {
+public abstract class Pokemon extends ICMonActor {
     private final RPGSprite sprite;
     private List<PokemonFightAction> actions;
 

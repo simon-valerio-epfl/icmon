@@ -11,6 +11,7 @@ Welcome to the developer documentation of the ICeMon game.
 * We created a new interface `PokemonOwner`, that applies to `Garry`, `Pedro` and `ICMonPlayer`. It allows us to factorize the code of the `addPokemon()` method and forces the actors to define a `getPokemons()` method.
 * We also created a new area, called `MyPocket`. It is shared between all `PokemonOwner`. It does not serve any concrete feature, but helps to keep the code clean (we think it is better to have a dedicated empty area for Pokémons than selecting a random one that we could remove by mistake without thinking it held the Pokémons).
 * We added a check in the `Arena`, so when the player does not have any pokemon, it throws an error using a dialog.
+* We also reversed the order of the pokemons in the fight (our pokemon is now on the left, and the opponent on the right), as Hamza told us to do so because of a small mistake in the game engine.
 
 ### Actors
 

@@ -17,7 +17,7 @@ import java.awt.*;
 import static ch.epfl.cs107.play.io.ResourcePath.getSprite;
 
 /**
- * ???
+ * Represents the graphics of a fight.
  *
  * @author Hamza REMMAL (hamza.remmal@epfl.ch)
  */

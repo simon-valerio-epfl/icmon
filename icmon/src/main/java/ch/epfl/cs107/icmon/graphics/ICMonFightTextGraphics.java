@@ -9,7 +9,7 @@ import ch.epfl.cs107.play.window.Canvas;
 import java.awt.*;
 
 /**
- * ???
+ * Represents the graphics of a fight text.
  *
  * @author Hamza REMMAL (hamza.remmal@epfl.ch)
  */

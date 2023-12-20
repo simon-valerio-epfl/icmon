@@ -19,25 +19,27 @@ import static java.lang.Math.min;
 import static java.util.Objects.nonNull;
 
 /**
- * ???
+ * Represents the graphics of a fight pokemon selection.
  *
  * @author Hamza REMMAL (hamza.remmal@epfl.ch)
  */
 public final class ICMonFightPokemonSelectionGraphics implements Updatable {
 
     private static final float FONT_SIZE = .6f;
-
     private final Keyboard keyboard;
     private final float scalefactor;
     private final Pokemon[] pokemons;
-
     private final GraphicsEntity[][] selectors;
-
     private Pokemon choice;
-    private ImageGraphics background;
-
     private int currentChoice;
 
+    /**
+     * Creates a new ICMonFightPokemonSelectionGraphics
+     *
+     * @param scaleFactor the scale factor used for centering graphics
+     * @param keyboard the keyboard used for interaction
+     * @param pokemons the pokemons to display
+     */
     public ICMonFightPokemonSelectionGraphics(float scaleFactor, Keyboard keyboard, List<Pokemon> pokemons) {
         assert !pokemons.isEmpty();
         this.keyboard = keyboard;
@@ -72,6 +74,13 @@ public final class ICMonFightPokemonSelectionGraphics implements Updatable {
         }
     }
 
+    /**
+     * Gets the image graphics of a pokemon
+     *
+     * @param pokemon the pokemon to get the graphics from
+     * @param isSelected whether the pokemon is currently selected
+     * @return the image graphics of the pokemon
+     */
     private ImageGraphics getPokemonGraphics(Pokemon pokemon, boolean isSelected) {
         String spriteName = "pokemon/"+ pokemon.properties().name();
         ImageGraphics image = new ImageGraphics(ResourcePath.getSprite(spriteName), scalefactor/2, scalefactor/2);
@@ -79,19 +88,34 @@ public final class ICMonFightPokemonSelectionGraphics implements Updatable {
         return image;
     }
 
+    /**
+     * Creates the selector of a pokemon (image and name graphics)
+     *
+     * @param pokemon the pokemon to create the selector from
+     * @param isSelected whether the pokemon is currently selected
+     * @param positionComparedToMiddle the position of the pokemon compared to the middle one
+     * @return the selector of the pokemon
+     */
     private GraphicsEntity[] createPokemonSelector (Pokemon pokemon, boolean isSelected, int positionComparedToMiddle) {
         ImageGraphics image = getPokemonGraphics(pokemon, isSelected);
-        // todo regarder comment ça fonctionne exactement l'affichage
         GraphicsEntity imageEntity = new GraphicsEntity (new Vector((float) (scalefactor * (positionComparedToMiddle * 0.5) + scalefactor * 1.5 / 3 - 2f), scalefactor / 2 - 4f), image);
         TextGraphics pokemonName = new TextGraphics(pokemon.properties().name(), FONT_SIZE, Color.WHITE, Color.BLACK, 0.0f, isSelected, false, Vector.ZERO, TextAlign.Horizontal.LEFT, TextAlign.Vertical.MIDDLE,  .6f, 1003);
         GraphicsEntity textEntity = new GraphicsEntity (new Vector((float) (scalefactor * (positionComparedToMiddle * 0.5) + scalefactor * 1.5 / 3 - 0.5f), scalefactor / 2 - 5f), pokemonName);
         return new GraphicsEntity[]{imageEntity, textEntity};
     }
 
+    /**
+     * Gets the choice of the player
+     * @return the pokemon chosen
+     */
     public Pokemon choice(){
         return choice;
     }
 
+    /**
+     * Draws the graphics
+     * @param canvas the canvas to draw on
+     */
     public void draw(Canvas canvas) {
         // HR : Draw the selectors that are visible (not null)
         for (var selector : selectors)
