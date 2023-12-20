@@ -1,9 +1,5 @@
 package ch.epfl.cs107.icmon.actor.pokemon;
 
-import ch.epfl.cs107.icmon.actor.pokemon.Bulbizarre;
-import ch.epfl.cs107.icmon.actor.pokemon.Latios;
-import ch.epfl.cs107.icmon.actor.pokemon.Nidoqueen;
-import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.maps.MyPocket;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;

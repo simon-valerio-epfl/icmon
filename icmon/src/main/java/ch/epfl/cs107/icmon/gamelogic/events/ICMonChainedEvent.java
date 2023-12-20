@@ -4,7 +4,6 @@ import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.gamelogic.actions.CompleteEventAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.StartEventAction;
-import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 
 import java.util.Arrays;
 import java.util.LinkedList;

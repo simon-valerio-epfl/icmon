@@ -24,10 +24,10 @@ public abstract class Pokemon extends ICMonActor implements ICMonFightableActor 
     private final RPGSprite sprite;
     private List<PokemonFightAction> actions;
 
-    private String name;
+    private final String name;
     private float hp;
-    private float maxHp;
-    private int damage;
+    private final float maxHp;
+    private final int damage;
 
     /**
      *

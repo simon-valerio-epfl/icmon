@@ -40,7 +40,7 @@ public final class ICMonFighterInfoGraphics implements Graphics, Positionable {
 
     @Override
     public Transform getTransform() {
-        return Transform.I.translated(getPosition().x, getPosition().y);
+        return Transform.I.translated(position.x, position.y);
     }
 
     @Override

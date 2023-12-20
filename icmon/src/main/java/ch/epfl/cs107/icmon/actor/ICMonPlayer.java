@@ -158,7 +158,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
                 orientate(orientation);
                 if (!blockNextMove && lastOrientationChecked) {
                     move(MOVE_DURATION-5);
-                    if (!getMuteWalkingSound()) {
+                    if (!muteWalkingSound) {
                         if (
                                 currentSprite.equals(SpriteType.SWIMMING_SPRITE)
                                 || currentSprite.equals(SpriteType.UNDERWATER_SPRITE)
