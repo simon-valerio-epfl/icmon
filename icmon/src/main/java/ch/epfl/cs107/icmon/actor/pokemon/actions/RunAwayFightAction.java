@@ -2,16 +2,27 @@ package ch.epfl.cs107.icmon.actor.pokemon.actions;
 
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 
-public class RunAwayFightAction extends PokemonFightAction {
+/**
+ * Represents a simple run-away action.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
+final public class RunAwayFightAction extends PokemonFightAction {
 
+    /**
+     * Creates a new run-away action
+     *
+     * @param pokemonDoer the pokemon that will do the action
+     */
     public RunAwayFightAction (Pokemon pokemonDoer) {
         super("Run away", pokemonDoer);
     }
 
     /**
-     * basic action that ends the fight
-     * @param target your opponent
-     * @return
+     * Basic action that ends the fight
+     * @param target the pokemon that will be targeted by the action
+     * @return whether the action had success
      */
     @Override
     public boolean doAction(Pokemon target) {
