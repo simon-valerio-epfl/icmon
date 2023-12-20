@@ -5,9 +5,9 @@ import ch.epfl.cs107.icmon.actor.area_entities.Door;
 import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.actor.items.ICGift;
 import ch.epfl.cs107.icmon.actor.items.ICKey;
-import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
 import ch.epfl.cs107.icmon.actor.npc.ProfOak;
-import ch.epfl.cs107.icmon.actor.pokemon.*;
+import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
+import ch.epfl.cs107.icmon.actor.pokemon.PokemonOwner;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.audio.ICMonSoundManager;
 import ch.epfl.cs107.icmon.gamelogic.actions.AfterPokemonSelectionFightAction;
@@ -29,36 +29,49 @@ import ch.epfl.cs107.play.window.Button;
 import ch.epfl.cs107.play.window.Canvas;
 import ch.epfl.cs107.play.window.Keyboard;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner {
 
+    // Sprite management
     private enum SpriteType { SWIMMING_SPRITE, RUNNING_SPRITE, UNDERWATER_SPRITE }
-
     final private static String SPRITE_NAME = "actors/player";
     final private static String SPRITE_SWIMMING_NAME = "actors/player_water";
     final private static String SPRITE_UNDERWATER_NAME = "actors/player_underwater";
     final private static String SPRITE_SWIMMING_MASK_NAME = "actors/player_swimming_mask";
-    final private static int ANIMATION_DURATION = 8;
-    final private static int MOVE_DURATION = 8;
     private final OrientedAnimation swimmingOrientedAnimation;
     private OrientedAnimation runningOrientedAnimation;
     private final OrientedAnimation underWaterOrientedAnimation;
     private final OrientedAnimation swimmingMaskOrientedAnimation;
     private SpriteType currentSprite = SpriteType.RUNNING_SPRITE;
+    final private static int ANIMATION_DURATION = 8;
+    final private static int MOVE_DURATION = 8;
+    private boolean blockNextMove = false;
+    private boolean lastOrientationChecked = false;
+
+    // Interactions
     final private ICMonPlayerInteractionHandler handler = new ICMonPlayerInteractionHandler();
+
+    // Game states and managers
     final private ICMon.ICMonGameState gameState;
     final private ICMon.ICMonEventManager eventManager;
     private final ICMonSoundManager soundManager;
+
+    // Pokemon management
+    final private List<Pokemon> pokemons = new ArrayList<>();
+
+    // Dialogs management
     private Dialog dialog;
     private boolean inDialog = false;
-    final private ArrayList<Pokemon> pokemons = new ArrayList<>();
-    private boolean blockNextMove = false;
-    private boolean lastOrientationChecked = false;
-    private boolean isDiver = false;
     private boolean dialogIsLocked = false;
+
+    // Current player's state
+    private boolean isDiver = false;
+
+    // Sound management
     private boolean muteWalkingSound = false;
 
     //todo document this class

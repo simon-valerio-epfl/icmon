@@ -14,9 +14,10 @@ import ch.epfl.cs107.play.window.swing.SwingWindow;
 /**
  * Main entry point.
  */
-public class Play {
+public enum Play {
+    ;
 
-	/** One second in nano second */
+    /** One second in nano second */
     private static final float ONE_SEC = 1E9f;
 	public static final int WINDOW_HEIGHT = 550;
 	public static final int WINDOW_WIDTH = 550;
