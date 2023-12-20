@@ -26,14 +26,16 @@ public class AfterPokemonSelectionFightAction implements Action {
     ICMonActor actor;
 
     boolean hasRealOpponent;
-    ICMonEvent toCompleteOnWin;
+    Action executeOnFightWin;
+    Action executeOnFightLose;
 
-    public AfterPokemonSelectionFightAction(ICMonPlayer player, ICMon.ICMonEventManager eventManager, PokemonSelectionMenu pokemonSelectionMenu, Pokemon opponentPokemon, ICMonEvent toCompleteOnWin) {
+    public AfterPokemonSelectionFightAction(ICMonPlayer player, ICMon.ICMonEventManager eventManager, PokemonSelectionMenu pokemonSelectionMenu, Pokemon opponentPokemon, Action executeOnFightWin, Action executeOnFightLose) {
         this.player = player;
         this.eventManager = eventManager;
         this.pokemonSelectionMenu = pokemonSelectionMenu;
         this.opponentPokemon = opponentPokemon;
-        this.toCompleteOnWin = toCompleteOnWin;
+        this.executeOnFightWin = executeOnFightWin;
+        this.executeOnFightLose = executeOnFightLose;
         hasRealOpponent = false;
     }
 
@@ -42,10 +44,11 @@ public class AfterPokemonSelectionFightAction implements Action {
             ICMon.ICMonEventManager eventManager,
             PokemonSelectionMenu pokemonSelectionMenu,
             Pokemon opponentPokemon,
-            ICMonEvent toCompleteOnWin,
+            Action executeOnFightWin,
+            Action executeOnFightLose,
             ICMonActor actor
     ) {
-        this(player, eventManager, pokemonSelectionMenu, opponentPokemon, toCompleteOnWin);
+        this(player, eventManager, pokemonSelectionMenu, opponentPokemon, executeOnFightWin, executeOnFightLose);
         this.actor = actor;
     }
 
@@ -54,17 +57,21 @@ public class AfterPokemonSelectionFightAction implements Action {
         PokemonFightEvent pokemonFightEvent = new PokemonFightEvent(eventManager, player, ourFight);
         player.suspendGameWithFightEvent(pokemonFightEvent);
 
-        if (toCompleteOnWin != null) {
-            pokemonFightEvent.onComplete(new CompleteEventFightAction(toCompleteOnWin, ourFight));
-        }
+        pokemonFightEvent.onComplete(
+                new PerformOnFightResultAction(ourFight, executeOnFightWin, executeOnFightLose)
+        );
 
         if (actor != null) {
-            pokemonFightEvent.onComplete(new LeaveAreaFightAction(actor, ourFight));
+            pokemonFightEvent.onComplete(
+                    new PerformOnFightResultAction(ourFight, new LeaveAreaAction(actor), null)
+            );
         }
 
         // if the pokemon was alone in the countryside, it maybe has to leave
         if (actor == null) {
-            pokemonFightEvent.onComplete(new LeaveAreaFightAction(opponentPokemon, ourFight));
+            pokemonFightEvent.onComplete(
+                    new PerformOnFightResultAction(ourFight, new LeaveAreaAction(player), null)
+            );
         }
     }
 }

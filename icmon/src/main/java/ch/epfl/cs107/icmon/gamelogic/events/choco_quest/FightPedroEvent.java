@@ -6,6 +6,9 @@ import ch.epfl.cs107.icmon.actor.npc.Pedro;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.audio.ICMonSoundManager;
+import ch.epfl.cs107.icmon.gamelogic.actions.CompleteEventAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.DelayedAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.OpenDialogAction;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.play.engine.actor.Dialog;
 
@@ -55,7 +58,11 @@ public final class FightPedroEvent extends ICMonEvent {
             getPlayer().fight(
                     pedroPokemon,
                     pedro, // the one that will disappear if the fight is a win
-                    this // the event that will be completed if the fight is a win
+                    new CompleteEventAction(this), // the event that will be completed if the fight is a win
+                    new DelayedAction(
+                            new OpenDialogAction(this.getPlayer(), new Dialog("pedro_fight_end_lose")),
+                            2000
+                    )
             );
         }
     }

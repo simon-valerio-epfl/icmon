@@ -12,6 +12,7 @@ Welcome to the developer documentation of the ICeMon game.
 * We also created a new area, called `MyPocket`. It is shared between all `PokemonOwner`. It does not serve any concrete feature, but helps to keep the code clean (we think it is better to have a dedicated empty area for Pokémons than selecting a random one that we could remove by mistake without thinking it held the Pokémons).
 * We added a check in the `Arena`, so when the player does not have any pokemon, it throws an error using a dialog.
 * We also reversed the order of the pokemons in the fight (our pokemon is now on the left, and the opponent on the right), as Hamza told us to do so because of a small mistake in the game engine.
+* We decided to implement the `fight` method only in the `ICMonPlayer`. This allows us to prevent code duplication. We removed the `ICMonFightableActor` interface, as the player can only fight pokemons in our game. Their associated owner (can be null if the pokemon is wild) can be passed as a `PokemonOwner` parameter.
 
 ### Actors
 
@@ -36,6 +37,7 @@ Welcome to the developer documentation of the ICeMon game.
 ### Actions
 
 * We created a new `DelayedAction`, that allows us to perform some actions a few seconds after the completion of an event.
+* We created a new `PerformOnFightResult` action, that allows us to execute some actions depending on the result of a fight. This allows us to make Garry disappear from the House when he is defeated, but to keep it otherwise.
 
 ### Areas
 

@@ -11,6 +11,7 @@ import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.actor.pokemon.PokemonOwner;
 import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.audio.ICMonSoundManager;
+import ch.epfl.cs107.icmon.gamelogic.actions.Action;
 import ch.epfl.cs107.icmon.gamelogic.actions.AfterPokemonSelectionFightAction;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.classic_quest.PokemonFightEvent;
@@ -206,7 +207,7 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
      * @param pokemonOwner the owner of the pokemon, null if the pokemon is wild
      * @param toCompleteOnWin the event to complete when the player wins the fight
      */
-    public void fight(Pokemon pokemon, ICMonActor pokemonOwner, ICMonEvent toCompleteOnWin) {
+    public void fight(Pokemon pokemon, ICMonActor pokemonOwner, Action performOnWin, Action performOnLose) {
         if (this.pokemons.isEmpty()) {
             this.orientate(Orientation.DOWN);
             this.move(1);
@@ -216,7 +217,7 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
             PokemonSelectionEvent pokemonSelectionEvent = new PokemonSelectionEvent(eventManager, this, pokemonSelectionMenu);
             this.gameState.createSuspendWithEventMessage(pokemonSelectionEvent);
 
-            pokemonSelectionEvent.onComplete(new AfterPokemonSelectionFightAction(this, this.eventManager, pokemonSelectionMenu, pokemon, toCompleteOnWin, pokemonOwner));
+            pokemonSelectionEvent.onComplete(new AfterPokemonSelectionFightAction(this, this.eventManager, pokemonSelectionMenu, pokemon, performOnWin, performOnLose, pokemonOwner));
         }
 
     }
@@ -458,7 +459,7 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
 
                 // we wait for the player to move, then start the fight
                 CompletableFuture.delayedExecutor((long) (2 * gameState.getFrameDuration()), TimeUnit.MILLISECONDS).execute(() -> {
-                    fight(pokemon, null, null);
+                    fight(pokemon, null, null, null);
                     isFightStarting = false;
                 });
             }
