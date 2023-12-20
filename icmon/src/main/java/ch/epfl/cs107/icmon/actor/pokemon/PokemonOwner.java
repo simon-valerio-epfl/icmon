@@ -5,6 +5,7 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface PokemonOwner {
     //TODO
@@ -41,5 +42,5 @@ public interface PokemonOwner {
      *
      * @return the list of pokemons belonging to the current instance
      */
-    ArrayList<Pokemon> getPokemons();
+    List<Pokemon> getPokemons();
 }

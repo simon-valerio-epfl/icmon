@@ -97,7 +97,7 @@ public class ICMonPlayer extends ICMonActor implements Interactor, PokemonOwner 
     }
 
     @Override
-    public ArrayList<Pokemon> getPokemons() {
+    public List<Pokemon> getPokemons() {
         return pokemons;
     }
 
