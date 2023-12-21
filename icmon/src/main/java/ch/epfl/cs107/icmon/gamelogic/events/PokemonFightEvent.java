@@ -1,4 +1,4 @@
-package ch.epfl.cs107.icmon.gamelogic.events.classic_quest;
+package ch.epfl.cs107.icmon.gamelogic.events;
 
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
