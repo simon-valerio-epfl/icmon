@@ -11,6 +11,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * Represents an event that manages game pause menus (both the welcome/exit and resume menu).
+ *
  * @author Valerio De Santis
  * @author Simon Lefort
  */
@@ -34,7 +36,7 @@ public final class PauseMenuEvent extends ICMonEvent {
     }
 
     /**
-     * This event completes when the fight ends
+     * Handles the user's choice
      * @param deltaTime elapsed time since last update, in seconds, non-negative
      */
     @Override
