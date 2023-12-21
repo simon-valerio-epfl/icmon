@@ -245,7 +245,7 @@ public final class ICMon extends AreaGame {
 
     /**
      * Ends the game.
-     * todo
+     * This method creates a lot of fireworks in the town area!
      */
     @Override
     public void end() {

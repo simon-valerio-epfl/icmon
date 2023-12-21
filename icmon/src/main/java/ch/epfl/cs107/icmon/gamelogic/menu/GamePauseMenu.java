@@ -1,11 +1,5 @@
 package ch.epfl.cs107.icmon.gamelogic.menu;
 
-import ch.epfl.cs107.icmon.actor.ICMonPlayer;
-import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
-import ch.epfl.cs107.icmon.actor.pokemon.actions.PokemonFightAction;
-import ch.epfl.cs107.icmon.graphics.ICMonFightActionSelectionGraphics;
-import ch.epfl.cs107.icmon.graphics.ICMonFightArenaGraphics;
-import ch.epfl.cs107.icmon.graphics.ICMonFightTextGraphics;
 import ch.epfl.cs107.icmon.graphics.ICMonPauseMenuGraphics;
 import ch.epfl.cs107.play.engine.PauseMenu;
 import ch.epfl.cs107.play.window.Canvas;

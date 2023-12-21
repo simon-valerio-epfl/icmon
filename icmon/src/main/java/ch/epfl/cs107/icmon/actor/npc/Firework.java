@@ -11,9 +11,15 @@ import ch.epfl.cs107.play.math.Orientation;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Represents a firework that will explode after a certain amount of time.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
 public final class Firework extends NPCActor {
     private final static String SPRITE_NAME = "actors/firework";
-    private int timeBeforeExplosion = 50;
+    private int timeLeftBeforeExplosion = 50;
     private boolean hasBeenTriggered = false;
     private boolean hasBeenRemoved = false;
     private final int framePerMove;
@@ -22,11 +28,7 @@ public final class Firework extends NPCActor {
     public Firework(ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMonSoundManager soundManager) {
         super(area, orientation, spawnPosition, SPRITE_NAME, 3, 3, 64, 64);
         this.soundManager = soundManager;
-
-        // the more the firework is at the top, the slower it should be
-        // y --> speed
-        // 7 --> 0
-        // 0 --> 8
+        // calculate speed based on where the firework spawns
         this.framePerMove = spawnPosition.y * 4 / 7 + 8;
     }
 
@@ -42,17 +44,21 @@ public final class Firework extends NPCActor {
     public void update(float deltaTime) {
         super.update(deltaTime);
 
+        // play sound!
         if (!hasBeenTriggered) {
             soundManager.playOverlappingSound("firework");
             hasBeenTriggered = true;
         }
 
+        // a firework always go from bottom to top
         orientate(Orientation.UP);
-        if (timeBeforeExplosion > 0) {
+        if (timeLeftBeforeExplosion > 0) {
             move(framePerMove);
+            timeLeftBeforeExplosion--;
         }
 
-        if (timeBeforeExplosion == 0 && !hasBeenRemoved) {
+        // explose!
+        if (timeLeftBeforeExplosion == 0 && !hasBeenRemoved) {
             this.setSpriteName("actors/firework_explosion");
             soundManager.playOverlappingSound("firework_explosion");
 
@@ -60,6 +66,5 @@ public final class Firework extends NPCActor {
             new DelayedAction(new LeaveAreaAction(this), 2000).perform();
         }
 
-        timeBeforeExplosion--;
     }
 }

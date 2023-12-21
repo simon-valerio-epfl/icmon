@@ -8,9 +8,21 @@ import ch.epfl.cs107.play.window.Canvas;
 
 import java.util.List;
 
-// todo doc
+/**
+ * Represents a magic ball item.
+ *
+ * @author Valerio De Santis
+ * @author Simon Lefort
+ */
 public final class ICMagicBall extends ICMonItem {
     final private static String SPRITE_NAME = "items/icmagicball_big";
+
+    /**
+     * Creates a new magic ball
+     *
+     * @param area the area to which the magic ball belongs
+     * @param spawnPosition the position where the magic ball will spawn
+     */
     public ICMagicBall(ICMonArea area, DiscreteCoordinates spawnPosition) {
         super(area, spawnPosition, SPRITE_NAME);
     }

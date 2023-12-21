@@ -1,5 +1,3 @@
-// todo final fabrice ?
-
 package ch.epfl.cs107.icmon.gamelogic.events;
 
 import ch.epfl.cs107.icmon.ICMon;

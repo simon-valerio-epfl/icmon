@@ -27,7 +27,7 @@ public final class ICMonFightActionSelectionGraphics extends ICMonFightInteracti
     private static final float FONT_SIZE = .6f;
 
     private final Keyboard keyboard;
-    private final float scalefactor;
+    private final float scaleFactor;
     private final PokemonFightAction[] actions;
 
     private final GraphicsEntity[] selectors;
@@ -42,7 +42,7 @@ public final class ICMonFightActionSelectionGraphics extends ICMonFightInteracti
         super(scaleFactor);
         assert !actions.isEmpty();
         this.keyboard = keyboard;
-        this.scalefactor = scaleFactor;
+        this.scaleFactor = scaleFactor;
         this.actions = actions.toArray(new PokemonFightAction[0]);
         selectors = new GraphicsEntity[3];
         header = new GraphicsEntity(new Vector(scaleFactor / 2f, scaleFactor / 3 - 1f), new TextGraphics("Please, select an action", FONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.CENTER, TextAlign.Vertical.MIDDLE,  1f, 1003));
@@ -62,15 +62,15 @@ public final class ICMonFightActionSelectionGraphics extends ICMonFightInteracti
         if (currentChoice == 0){
             selectors[0] = null;
         } else {
-            selectors[0] = new GraphicsEntity(new Vector(scalefactor / 3 - 3f, scalefactor / 3 - 2f), new TextGraphics(actions[currentChoice - 1].name(), FONT_SIZE, Color.WHITE, Color.BLACK, 0.0f, false, false, Vector.ZERO, TextAlign.Horizontal.LEFT, TextAlign.Vertical.MIDDLE,  .6f, 1003));
+            selectors[0] = new GraphicsEntity(new Vector(scaleFactor / 3 - 3f, scaleFactor / 3 - 2f), new TextGraphics(actions[currentChoice - 1].name(), FONT_SIZE, Color.WHITE, Color.BLACK, 0.0f, false, false, Vector.ZERO, TextAlign.Horizontal.LEFT, TextAlign.Vertical.MIDDLE,  .6f, 1003));
         }
         // HR : Prepare the middle selector
-        selectors[1] = new GraphicsEntity(new Vector(scalefactor  * 2 / 3 - 3f, scalefactor / 3 - 2f), new TextGraphics(actions[currentChoice].name(), FONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.LEFT, TextAlign.Vertical.MIDDLE,  1.0f, 1003));
+        selectors[1] = new GraphicsEntity(new Vector(scaleFactor  * 2 / 3 - 3f, scaleFactor / 3 - 2f), new TextGraphics(actions[currentChoice].name(), FONT_SIZE, Color.WHITE, null, 0.0f, true, false, Vector.ZERO, TextAlign.Horizontal.LEFT, TextAlign.Vertical.MIDDLE,  1.0f, 1003));
         // HR : Prepare the Right selector
         if (currentChoice == actions.length - 1 ){
             selectors[2] = null;
         } else {
-            selectors[2] = new GraphicsEntity(new Vector(scalefactor * 2 / 3 + 1f, scalefactor / 3 - 2f), new TextGraphics(actions[currentChoice + 1].name(), FONT_SIZE, Color.WHITE, null, 0.0f, false, false, Vector.ZERO, TextAlign.Horizontal.LEFT, TextAlign.Vertical.MIDDLE,  .6f, 1003));
+            selectors[2] = new GraphicsEntity(new Vector(scaleFactor * 2 / 3 + 1f, scaleFactor / 3 - 2f), new TextGraphics(actions[currentChoice + 1].name(), FONT_SIZE, Color.WHITE, null, 0.0f, false, false, Vector.ZERO, TextAlign.Horizontal.LEFT, TextAlign.Vertical.MIDDLE,  .6f, 1003));
         }
     }
 

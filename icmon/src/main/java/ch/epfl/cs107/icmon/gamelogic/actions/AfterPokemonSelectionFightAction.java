@@ -8,8 +8,6 @@ import ch.epfl.cs107.icmon.gamelogic.events.PokemonFightEvent;
 import ch.epfl.cs107.icmon.gamelogic.fights.ICMonFight;
 import ch.epfl.cs107.icmon.gamelogic.fights.PokemonSelectionMenu;
 
-// todo complete this
-
 /**
  * Represents an action that is performed after a pokemon selection.
  *
@@ -28,6 +26,16 @@ public class AfterPokemonSelectionFightAction implements Action {
     Action executeOnFightWin;
     Action executeOnFightLose;
 
+    /**
+     * Creates a new action that will be performed after a pokemon selection.
+     *
+     * @param player the player who selected the pokemon
+     * @param eventManager the event manager to register the event
+     * @param pokemonSelectionMenu the menu that was used to select the pokemon
+     * @param opponentPokemon the opponent pokemon
+     * @param executeOnFightWin the action to perform if the player wins the fight
+     * @param executeOnFightLose the action to perform if the player loses the fight
+     */
     public AfterPokemonSelectionFightAction(ICMonPlayer player, ICMon.ICMonEventManager eventManager, PokemonSelectionMenu pokemonSelectionMenu, Pokemon opponentPokemon, Action executeOnFightWin, Action executeOnFightLose) {
         assert player != null;
         assert eventManager != null;
@@ -42,6 +50,17 @@ public class AfterPokemonSelectionFightAction implements Action {
         hasRealOpponent = false;
     }
 
+    /**
+     * Creates a new action that will be performed after a pokemon selection.
+     *
+     * @param player the player who selected the pokemon
+     * @param eventManager the event manager to register the event
+     * @param pokemonSelectionMenu the menu that was used to select the pokemon
+     * @param opponentPokemon the opponent pokemon
+     * @param executeOnFightWin the action to perform if the player wins the fight
+     * @param executeOnFightLose the action to perform if the player loses the fight
+     * @param actor the actor that will leave the area if the pokemon wins
+     */
     public AfterPokemonSelectionFightAction(
             ICMonPlayer player,
             ICMon.ICMonEventManager eventManager,
@@ -56,6 +75,10 @@ public class AfterPokemonSelectionFightAction implements Action {
         this.actor = actor;
     }
 
+    /**
+     * Creates a new fight based on the pokemon selection result.
+     * Calls the actions to perform after the fight.
+     */
     public void perform() {
         ICMonFight ourFight = new ICMonFight(pokemonSelectionMenu.getPokemon(), opponentPokemon);
         PokemonFightEvent pokemonFightEvent = new PokemonFightEvent(eventManager, player, ourFight);

@@ -27,7 +27,7 @@ public final class ICMonFightPokemonSelectionGraphics implements Updatable {
 
     private static final float FONT_SIZE = .6f;
     private final Keyboard keyboard;
-    private final float scalefactor;
+    private final float scaleFactor;
     private final Pokemon[] pokemons;
     private final GraphicsEntity[][] selectors;
     private Pokemon choice;
@@ -43,7 +43,7 @@ public final class ICMonFightPokemonSelectionGraphics implements Updatable {
     public ICMonFightPokemonSelectionGraphics(float scaleFactor, Keyboard keyboard, List<Pokemon> pokemons) {
         assert !pokemons.isEmpty();
         this.keyboard = keyboard;
-        this.scalefactor = scaleFactor;
+        this.scaleFactor = scaleFactor;
         this.pokemons = pokemons.toArray(new Pokemon[0]);
         selectors = new GraphicsEntity[3][2];
         currentChoice = 0;
@@ -83,7 +83,7 @@ public final class ICMonFightPokemonSelectionGraphics implements Updatable {
      */
     private ImageGraphics getPokemonGraphics(Pokemon pokemon, boolean isSelected) {
         String spriteName = "pokemon/"+ pokemon.properties().name();
-        ImageGraphics image = new ImageGraphics(ResourcePath.getSprite(spriteName), scalefactor/2, scalefactor/2);
+        ImageGraphics image = new ImageGraphics(ResourcePath.getSprite(spriteName), scaleFactor/2, scaleFactor/2);
         image.setAlpha(isSelected ? 1 : .6f);
         return image;
     }
@@ -98,9 +98,9 @@ public final class ICMonFightPokemonSelectionGraphics implements Updatable {
      */
     private GraphicsEntity[] createPokemonSelector (Pokemon pokemon, boolean isSelected, int positionComparedToMiddle) {
         ImageGraphics image = getPokemonGraphics(pokemon, isSelected);
-        GraphicsEntity imageEntity = new GraphicsEntity (new Vector((float) (scalefactor * (positionComparedToMiddle * 0.5) + scalefactor * 1.5 / 3 - 2f), scalefactor / 2 - 4f), image);
+        GraphicsEntity imageEntity = new GraphicsEntity (new Vector((float) (scaleFactor * (positionComparedToMiddle * 0.5) + scaleFactor * 1.5 / 3 - 2f), scaleFactor / 2 - 4f), image);
         TextGraphics pokemonName = new TextGraphics(pokemon.properties().name(), FONT_SIZE, Color.WHITE, Color.BLACK, 0.0f, isSelected, false, Vector.ZERO, TextAlign.Horizontal.LEFT, TextAlign.Vertical.MIDDLE,  .6f, 1003);
-        GraphicsEntity textEntity = new GraphicsEntity (new Vector((float) (scalefactor * (positionComparedToMiddle * 0.5) + scalefactor * 1.5 / 3 - 0.5f), scalefactor / 2 - 5f), pokemonName);
+        GraphicsEntity textEntity = new GraphicsEntity (new Vector((float) (scaleFactor * (positionComparedToMiddle * 0.5) + scaleFactor * 1.5 / 3 - 0.5f), scaleFactor / 2 - 5f), pokemonName);
         return new GraphicsEntity[]{imageEntity, textEntity};
     }
 

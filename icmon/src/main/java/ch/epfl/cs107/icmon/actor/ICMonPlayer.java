@@ -236,7 +236,10 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
         getOwnerArea().setViewCandidate(this);
     }
 
-    //TODO DOC THIS
+    /**
+     * Checks whether a dialog needs to be updated or if the player wants to move
+     * @param deltaTime elapsed time since last update, in seconds, non-negative
+     */
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);

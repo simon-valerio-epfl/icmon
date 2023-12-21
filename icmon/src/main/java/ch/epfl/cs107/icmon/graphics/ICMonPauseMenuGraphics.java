@@ -17,7 +17,7 @@ import ch.epfl.cs107.play.window.Keyboard;
  * @author Valerio De Santis
  * @author Simon Lefort
  */
-public class ICMonPauseMenuGraphics implements Graphics {
+public final class ICMonPauseMenuGraphics implements Graphics {
     private GamePauseMenu.PauseOption choice;
     private GamePauseMenu.PauseOption currentState = GamePauseMenu.PauseOption.FIRST;
     private final ImageGraphics background;
