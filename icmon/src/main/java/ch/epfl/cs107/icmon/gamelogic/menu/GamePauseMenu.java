@@ -19,8 +19,9 @@ import ch.epfl.cs107.play.window.Keyboard;
  */
 public final class GamePauseMenu extends PauseMenu {
 
-    public enum PauseOption { FIRST, SECOND };
-    public enum PauseMenuType { EXIT, RESUME };
+    public enum PauseOption { FIRST, SECOND }
+
+    public enum PauseMenuType { EXIT, RESUME }
 
     // menu details
     private final ICMonPauseMenuGraphics menu;

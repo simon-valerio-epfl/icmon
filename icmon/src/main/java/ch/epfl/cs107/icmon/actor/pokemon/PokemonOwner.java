@@ -16,7 +16,7 @@ import java.util.List;
 public interface PokemonOwner {
 
     // all the pokemons that can be owned by a PokemonOwner
-    enum PokemonName { LATIOS, BULBIZARRE, NIDOQUEEN };
+    enum PokemonName { LATIOS, BULBIZARRE, NIDOQUEEN }
 
     // this area is designed to store the pokemons of all the PokemonOwner instances
     MyPocket pocket = new MyPocket();

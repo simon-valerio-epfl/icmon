@@ -16,7 +16,7 @@ public final class Firework extends NPCActor {
     private int timeBeforeExplosion = 50;
     private boolean hasBeenTriggered = false;
     private boolean hasBeenRemoved = false;
-    private int framePerMove;
+    private final int framePerMove;
     private final ICMonSoundManager soundManager;
 
     public Firework(ICMonArea area, Orientation orientation, DiscreteCoordinates spawnPosition, ICMonSoundManager soundManager) {
