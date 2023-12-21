@@ -55,10 +55,10 @@ public final class Town extends ICMonArea {
         registerActor(balloon);
 
         DiscreteCoordinates[] magicBallPositions = {
-                new DiscreteCoordinates(4, 12),
-                new DiscreteCoordinates(23, 16),
-                new DiscreteCoordinates(20, 10),
-                new DiscreteCoordinates(8, 11)
+                new DiscreteCoordinates(4, 10),
+                new DiscreteCoordinates(20, 13),
+                new DiscreteCoordinates(25, 19),
+                new DiscreteCoordinates(10, 11)
         };
 
         for (DiscreteCoordinates position : magicBallPositions) {
