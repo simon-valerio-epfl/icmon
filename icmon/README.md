@@ -20,6 +20,8 @@ Après avoir visité la Pokétown, l'arène, la maison, le laboratoire, ou le sh
 
 ## Quête 1 : combattre Garry 🐉
 
+ℹ️ Pour gagner du temps sur la compréhension de la quête, [une vidéo de 45s est disponible](https://www.youtube.com/watch?v=0XiMwsA8_E4).
+
 * Rendez-vous dans le laboratoire.
 * Discutez avec le professeur Oak.
 * Allez dans la Pokétown récupérer la Pokéball IC.
@@ -27,9 +29,11 @@ Après avoir visité la Pokétown, l'arène, la maison, le laboratoire, ou le sh
 * Combattez Garry.
 * Attention à gagner le combat, sinon Garry ne disparaitra pas de la Pokétown !
 
-## Quête 2 : sauver Chocopoly ☕ 
+## Quête 2 : sauver Chocopoly ☕
 
 La clef du local de Chocopoly (situé au sud-est de la Pokétown) a été dérobée. Saurez-vous la retrouver ?
+
+ℹ️ Pour gagner du temps sur la compréhension de la quête, [une vidéo de 1min30s est disponible](https://www.youtube.com/watch?v=FVqo8Pi08UM).
 
 ### Mise en contexte
 * Discutez avec Fabrice, le personnage avec un bonnet vert devant le local de Chocopoly.
