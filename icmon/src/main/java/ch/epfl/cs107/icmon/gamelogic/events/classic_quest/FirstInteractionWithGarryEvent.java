@@ -6,6 +6,7 @@ import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.gamelogic.actions.CompleteEventAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.DelayedAction;
+import ch.epfl.cs107.icmon.gamelogic.actions.LogAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.OpenDialogAction;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 import ch.epfl.cs107.play.engine.actor.Dialog;
@@ -51,7 +52,6 @@ public final class FirstInteractionWithGarryEvent extends ICMonEvent {
                             1000
                     )
             );
-            this.complete();
         }
     }
 
