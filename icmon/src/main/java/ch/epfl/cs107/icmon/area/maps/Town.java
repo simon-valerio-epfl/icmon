@@ -54,8 +54,17 @@ public final class Town extends ICMonArea {
         Balloon balloon = new Balloon(this, Orientation.UP, Balloon.getSpawnPosition());
         registerActor(balloon);
 
-        ICMagicBall magicBall = new ICMagicBall(this, new DiscreteCoordinates(4, 12));
-        registerActor(magicBall);
+        DiscreteCoordinates[] magicBallPositions = {
+                new DiscreteCoordinates(4, 12),
+                new DiscreteCoordinates(23, 16),
+                new DiscreteCoordinates(20, 10),
+                new DiscreteCoordinates(8, 11)
+        };
+
+        for (DiscreteCoordinates position : magicBallPositions) {
+            ICMagicBall magicBall = new ICMagicBall(this, position);
+            registerActor(magicBall);
+        }
 
         Fabrice fabrice = new Fabrice(this, Orientation.DOWN, new DiscreteCoordinates(20, 7));
         registerActor(fabrice);

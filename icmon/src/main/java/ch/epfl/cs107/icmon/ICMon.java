@@ -44,6 +44,7 @@ import java.util.Map;
 public final class ICMon extends AreaGame {
 
     public final static float CAMERA_SCALE_FACTOR = 13.f;
+    private boolean hasGameStartedOnce = false;
 
     // areas management
     private final static String STARTING_MAP = "house";
@@ -121,9 +122,13 @@ public final class ICMon extends AreaGame {
             createAreas();
             initArea(STARTING_MAP);
 
-            GamePauseMenu pauseMenu = new GamePauseMenu(getWindow().getKeyboard(), GamePauseMenu.PauseMenuType.EXIT);
-            PauseMenuEvent pauseMenuEvent = new PauseMenuEvent(eventManager, player, pauseMenu, gameState);
-            gameState.createSuspendWithEventMessage(pauseMenuEvent);
+            if (!hasGameStartedOnce) {
+                hasGameStartedOnce = true;
+
+                GamePauseMenu pauseMenu = new GamePauseMenu(getWindow().getKeyboard(), GamePauseMenu.PauseMenuType.EXIT);
+                PauseMenuEvent pauseMenuEvent = new PauseMenuEvent(eventManager, player, pauseMenu, gameState);
+                gameState.createSuspendWithEventMessage(pauseMenuEvent);
+            }
 
             setupOfficialQuest();
             setupChocoQuest();

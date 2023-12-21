@@ -49,7 +49,11 @@ public final class Balloon extends NPCActor {
     public static DiscreteCoordinates getSpawnPosition() {
         return new DiscreteCoordinates(5, 7);
     }
-//TODO DOCUMENT THIS METHOD
+
+    /**
+     * Makes the balloon follow its sequence of moves
+     * @param deltaTime the time elapsed since the last update
+     */
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
