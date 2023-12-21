@@ -12,11 +12,13 @@ import ch.epfl.cs107.icmon.audio.ICMonSoundManager;
 import ch.epfl.cs107.icmon.gamelogic.actions.*;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonChainedEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
+import ch.epfl.cs107.icmon.gamelogic.events.PauseMenuEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.choco_quest.CollectGiftEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.choco_quest.CollectKeyAtlantisEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.choco_quest.FightPedroEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.choco_quest.GiveKeyFabriceEvent;
 import ch.epfl.cs107.icmon.gamelogic.events.classic_quest.*;
+import ch.epfl.cs107.icmon.gamelogic.menu.GamePauseMenu;
 import ch.epfl.cs107.play.areagame.AreaGame;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.area.Area;
@@ -115,8 +117,13 @@ public final class ICMon extends AreaGame {
         events.clear();
 
         if (super.begin(window, fileSystem)) {
+
             createAreas();
             initArea(STARTING_MAP);
+
+            GamePauseMenu pauseMenu = new GamePauseMenu(getWindow().getKeyboard(), GamePauseMenu.PauseMenuType.EXIT);
+            PauseMenuEvent pauseMenuEvent = new PauseMenuEvent(eventManager, player, pauseMenu, gameState);
+            gameState.createSuspendWithEventMessage(pauseMenuEvent);
 
             setupOfficialQuest();
             setupChocoQuest();
@@ -192,6 +199,13 @@ public final class ICMon extends AreaGame {
         Button resetButton = keyboard.get(Keyboard.R);
         if (resetButton.isDown()) {
             reset();
+        }
+
+        Button pauseButton = keyboard.get(Keyboard.P);
+        if (pauseButton.isPressed()) {
+            GamePauseMenu pauseMenu = new GamePauseMenu(keyboard, GamePauseMenu.PauseMenuType.RESUME);
+            PauseMenuEvent pauseMenuEvent = new PauseMenuEvent(eventManager, player, pauseMenu, gameState);
+            gameState.createSuspendWithEventMessage(pauseMenuEvent);
         }
 
         events.addAll(startingEvents);
@@ -408,6 +422,10 @@ public final class ICMon extends AreaGame {
          */
         public float getFrameDuration() {
             return (float) 1000 / getFrameRate();
+        }
+
+        public void resetGame() {
+            reset();
         }
 
         /**
