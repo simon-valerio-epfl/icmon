@@ -457,6 +457,7 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
          */
         @Override
         public void interactWith(Pokemon pokemon, boolean isCellInteraction) {
+
             if (isCellInteraction) {
                 if (isFightStarting) return;
 
@@ -465,8 +466,11 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
 
                 // to orientate the player, we have to reset motion
                 resetMotion();
-                orientate(getOrientation().opposite());
-                move(0);
+                CompletableFuture.delayedExecutor((long) (2 * gameState.getFrameDuration()), TimeUnit.MILLISECONDS).execute(() -> {
+                    orientate(getOrientation().opposite());
+                    move(0);
+                });
+
 
                 // we wait for the player to move, then start the fight
                 CompletableFuture.delayedExecutor((long) (2 * gameState.getFrameDuration()), TimeUnit.MILLISECONDS).execute(() -> {
