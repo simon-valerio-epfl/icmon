@@ -71,7 +71,7 @@ public class AfterPokemonSelectionFightAction implements Action {
             ICMonActor actor
     ) {
         this(player, eventManager, pokemonSelectionMenu, opponentPokemon, executeOnFightWin, executeOnFightLose);
-        assert actor != null;
+
         this.actor = actor;
     }
 
@@ -97,7 +97,7 @@ public class AfterPokemonSelectionFightAction implements Action {
         // if the pokemon was alone in the countryside, it maybe has to leave
         if (actor == null) {
             pokemonFightEvent.onComplete(
-                    new PerformOnFightResultAction(ourFight, new LeaveAreaAction(player), null)
+                    new PerformOnFightResultAction(ourFight, new LeaveAreaAction(opponentPokemon), null)
             );
         }
     }
