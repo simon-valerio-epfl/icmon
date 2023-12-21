@@ -13,6 +13,8 @@ Après avoir visité la Pokétown, l'arène, la maison, le laboratoire, ou le sh
 * Se déplacer : *utiliser les flèches*
 * Interagir : *presser L*
 * Plonger sous l'eau : *avancer en pressant W*
+* Sprinter : *presser X*
+* Mettre le jeu en pause : *presser P*
 
 ⚠️ (beaucoup) d'efforts ont été mis dans l'ambiance du jeu, que ce soit au niveau des graphismes (nouvelles maps dont nouveaux area behaviors), mais aussi **dans la gestion des sons**. Si possible, activez-le pour jouer avec une meilleure immersion !
 

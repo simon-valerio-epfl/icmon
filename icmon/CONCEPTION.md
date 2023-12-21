@@ -62,3 +62,4 @@ Welcome to the developer documentation of the ICeMon game.
 
 ### Other changes
 
+* New pause menu (with a new `PauseMenu` class).

@@ -155,7 +155,7 @@ public final class ICMon extends AreaGame {
         collectKeyItem.onStart(registerKey);
 
         FightPedroEvent fightPedroEvent = new FightPedroEvent(eventManager, soundManager, player);
-        fightPedroEvent.onComplete(new DelayedAction(new OpenDialogAction(player, new Dialog("pedro_fight_end_win")), 2000));
+        fightPedroEvent.onComplete(new DelayedAction(new OpenDialogAction(player, new Dialog("pedro_fight_end_win")), 500));
 
         GiveKeyFabriceEvent giveKeyFabriceEvent = new GiveKeyFabriceEvent(eventManager, player);
         giveKeyFabriceEvent.onComplete(new EndGameAction(gameState));
