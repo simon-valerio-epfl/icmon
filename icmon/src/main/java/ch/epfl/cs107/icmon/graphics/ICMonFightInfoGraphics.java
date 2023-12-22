@@ -75,8 +75,8 @@ public final class ICMonFightInfoGraphics implements Graphics, Positionable {
         hpBar.draw(canvas);
     }
 
-    private Vector computeHpBarEnd(float hp, float maxhp){
-        return hpBarStart.add(HP_BAR_SIZE * hp / maxhp, 0);
+    private Vector computeHpBarEnd(float hp, float maxHp){
+        return hpBarStart.add(HP_BAR_SIZE * hp / maxHp, 0);
     }
 
     @Override

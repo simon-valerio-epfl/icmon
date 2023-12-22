@@ -308,11 +308,6 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
         return true;
     }
 
-    @Override
-    public List<DiscreteCoordinates> getCurrentCells() {
-        return super.getCurrentCells();
-    }
-
     /**
      * Gets the coordinates of the cell in front of the player
      * @return the cell in front of the player

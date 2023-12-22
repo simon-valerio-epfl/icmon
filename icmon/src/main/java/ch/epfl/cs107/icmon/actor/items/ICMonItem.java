@@ -20,8 +20,8 @@ public abstract class ICMonItem extends CollectableAreaEntity {
      * Creates a new collectable item in the specified area
      *
      * @param area where the item shall spawn
-     * @param spawnPosition
-     * @param spriteName
+     * @param spawnPosition where the item shall spawn
+     * @param spriteName name of the sprite
      * @param scaleFactor dimension of the item
      */
     public ICMonItem(ICMonArea area, DiscreteCoordinates spawnPosition, String spriteName, double scaleFactor) {

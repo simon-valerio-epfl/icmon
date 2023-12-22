@@ -4,7 +4,6 @@ import ch.epfl.cs107.icmon.actor.ICMonActor;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.play.engine.actor.RPGSprite;
 import ch.epfl.cs107.play.engine.actor.Sprite;
-import ch.epfl.cs107.play.io.ResourcePath;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.math.RegionOfInterest;

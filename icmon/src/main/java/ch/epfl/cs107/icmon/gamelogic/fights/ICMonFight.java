@@ -128,18 +128,10 @@ public final class ICMonFight extends PauseMenu {
             case CONCLUSION -> {
 
                 switch (conclusionReason) {
-                    case PLAYER_DEAD -> {
-                        this.arena.setInteractionGraphics(deadConclusionTextGraphics);
-                    }
-                    case OPPONENT_DEAD -> {
-                        this.arena.setInteractionGraphics(wonConclusionTextGraphics);
-                    }
-                    case PLAYER_LEFT -> {
-                        this.arena.setInteractionGraphics(cancelledConclusionTextGraphics);
-                    }
-                    case OPPONENT_LEFT -> {
-                        this.arena.setInteractionGraphics(cancelledOpponentConclusionTextGraphics);
-                    }
+                    case PLAYER_DEAD -> this.arena.setInteractionGraphics(deadConclusionTextGraphics);
+                    case OPPONENT_DEAD -> this.arena.setInteractionGraphics(wonConclusionTextGraphics);
+                    case PLAYER_LEFT -> this.arena.setInteractionGraphics(cancelledConclusionTextGraphics);
+                    case OPPONENT_LEFT -> this.arena.setInteractionGraphics(cancelledOpponentConclusionTextGraphics);
                 }
 
                 Keyboard keyboard = getKeyboard();

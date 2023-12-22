@@ -38,9 +38,6 @@ public final class Town extends ICMonArea {
         registerActor(new Background(this));
         registerActor(new Foreground(this));
 
-        //ICShopAssistant assistant = new ICShopAssistant(this, Orientation.DOWN, new DiscreteCoordinates(8, 8));
-        //assistant.enterArea(this, new DiscreteCoordinates(6, 8));
-
         Door doorToLab = new Door("lab", new DiscreteCoordinates(6, 2), this, new DiscreteCoordinates(15, 24));
         registerActor(doorToLab);
         Door doorToArena = new Door("arena", new DiscreteCoordinates(4, 2), this, new DiscreteCoordinates(20, 16));
