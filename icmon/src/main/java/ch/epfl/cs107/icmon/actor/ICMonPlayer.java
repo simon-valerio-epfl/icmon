@@ -67,7 +67,6 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
 
     // Pokemons' management
     final private List<Pokemon> pokemons = new ArrayList<>();
-    private boolean isFightStarting = false;
 
     // Dialogs' management
     private Dialog dialog;
@@ -459,22 +458,14 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
         public void interactWith(Pokemon pokemon, boolean isCellInteraction) {
 
             if (isCellInteraction) {
-                //if (isFightStarting) return;
-
-                // this prevents a double interaction with the pokemon
-                //isFightStarting = true;
 
                 // to orientate the player, we have to reset motion
                 resetMotion();
                 orientate(getOrientation().opposite());
                 move(0);
 
-                // we wait for the player to move, then start the fight
-                //CompletableFuture.delayedExecutor((long) ((1/2) * gameState.getFrameDuration()), TimeUnit.MILLISECONDS).execute(() -> {
-
+                // we move the player, then stat the fight
                 fight(pokemon, null, null, null);
-                    //isFightStarting = false;
-                //});
 
             }
         }
