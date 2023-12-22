@@ -77,7 +77,7 @@ public final class FightPedroEvent extends ICMonEvent {
                     new CompleteEventAction(this), // the event that will be completed if the fight is a win
                     new DelayedAction(
                             new OpenDialogAction(this.getPlayer(), new Dialog("pedro_fight_end_lose")),
-                            1000
+                            250
                     )
             );
         }

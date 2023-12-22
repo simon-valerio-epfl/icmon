@@ -466,17 +466,19 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
 
                 // to orientate the player, we have to reset motion
                 resetMotion();
-                CompletableFuture.delayedExecutor((long) (2 * gameState.getFrameDuration()), TimeUnit.MILLISECONDS).execute(() -> {
-                    orientate(getOrientation().opposite());
-                    move(0);
-                });
+                orientate(getOrientation().opposite());
+                move(0);
+
 
 
                 // we wait for the player to move, then start the fight
-                CompletableFuture.delayedExecutor((long) (2 * gameState.getFrameDuration()), TimeUnit.MILLISECONDS).execute(() -> {
+                CompletableFuture.delayedExecutor((long) ((1/2) * gameState.getFrameDuration()), TimeUnit.MILLISECONDS).execute(() -> {
+
                     fight(pokemon, null, null, null);
                     isFightStarting = false;
+                    //
                 });
+
             }
         }
 
