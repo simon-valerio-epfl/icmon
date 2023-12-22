@@ -57,7 +57,7 @@ public final class Firework extends NPCActor {
 
         // explose!
         if (timeLeftBeforeExplosion == 0 && !hasBeenRemoved) {
-            this.setSpriteName(ResourcePath.getSprite("actors/firework-explosion"));
+            this.setSpriteName(ResourcePath.getSprite("actors/firework_explosion"));
             soundManager.playOverlappingSound("firework_explosion");
 
             hasBeenRemoved = true;
