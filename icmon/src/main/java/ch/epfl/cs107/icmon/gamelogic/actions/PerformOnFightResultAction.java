@@ -12,20 +12,20 @@ public final class PerformOnFightResultAction implements Action {
 
     private final ICMonFight fight;
     private final Action performOnWin;
-    private final Action performOnLose;
+    private final Action performOnLoss;
 
     /**
      * Creates a new action that will perform the specified actions depending on the fight result.
      *
      * @param fight the fight to check
      * @param performOnWin the action to perform if the fight is a win
-     * @param performOnLose the action to perform if the fight is a lose
+     * @param performOnLoss the action to perform if the fight is a loss
      */
-    public PerformOnFightResultAction(ICMonFight fight, Action performOnWin, Action performOnLose) {
+    public PerformOnFightResultAction(ICMonFight fight, Action performOnWin, Action performOnLoss) {
         assert fight != null;
         this.fight = fight;
         this.performOnWin = performOnWin;
-        this.performOnLose = performOnLose;
+        this.performOnLoss = performOnLoss;
     }
 
     @Override
@@ -34,8 +34,8 @@ public final class PerformOnFightResultAction implements Action {
             if (performOnWin != null)
                 performOnWin.perform();
         } else {
-            if (performOnLose != null)
-                performOnLose.perform();
+            if (performOnLoss != null)
+                performOnLoss.perform();
         }
     }
 }

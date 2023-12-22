@@ -5,9 +5,6 @@ import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.gamelogic.actions.CompleteEventAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.StartEventAction;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-
 /**
  * Represents an event that includes a bus of events that will be executed in order.
  *

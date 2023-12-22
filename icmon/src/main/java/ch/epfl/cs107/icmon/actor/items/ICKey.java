@@ -26,7 +26,7 @@ public final class ICKey extends ICMonItem {
 
     /**
      * a key accepts distance interactions
-     * @return
+     * @return true
      */
     @Override
     public boolean isViewInteractable() {

@@ -1,6 +1,5 @@
 package ch.epfl.cs107.icmon.graphics;
 
-import ch.epfl.cs107.icmon.actor.pokemon.Pokemon;
 import ch.epfl.cs107.icmon.gamelogic.menu.GamePauseMenu;
 import ch.epfl.cs107.play.engine.actor.Graphics;
 import ch.epfl.cs107.play.engine.actor.GraphicsEntity;
@@ -47,9 +46,8 @@ public final class ICMonPauseMenuGraphics implements Graphics {
 
     /**
      * Draws the menu interface once the pause menu is activated
-     * @param deltaTime elapsed time since last update, in seconds, non-negative
      */
-    public void update(float deltaTime) {
+    public void update() {
         // HR : Keyboard management
         if (keyboard.get(Keyboard.DOWN).isPressed()){
             this.currentState = GamePauseMenu.PauseOption.SECOND;

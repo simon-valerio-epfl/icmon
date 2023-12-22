@@ -4,13 +4,7 @@ import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.Interactable;
 import ch.epfl.cs107.play.areagame.area.AreaBehavior;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
-import ch.epfl.cs107.play.engine.actor.Entity;
-import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.window.Window;
-
-import java.util.HashMap;
-import java.util.Vector;
 
 /**
  * Represents the behavior of an area.

@@ -4,7 +4,6 @@ import ch.epfl.cs107.icmon.area.maps.MyPocket;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,18 +27,10 @@ public interface PokemonOwner {
      */
     default void addPokemon(PokemonName pokemonName) {
         switch (pokemonName) {
-            case LATIOS -> {
-                getPokemons().add(new Latios(pocket, Orientation.UP, new DiscreteCoordinates(0, 0)));
-            }
-            case BULBIZARRE -> {
-                getPokemons().add(new Bulbizarre(pocket, Orientation.UP, new DiscreteCoordinates(0, 0)));
-            }
-            case NIDOQUEEN -> {
-                getPokemons().add(new Nidoqueen(pocket, Orientation.UP, new DiscreteCoordinates(0, 0)));
-            }
-            default -> {
-                System.out.println("addPokemon() : unknown pokemon name: " + pokemonName);
-            }
+            case LATIOS -> getPokemons().add(new Latios(pocket, Orientation.UP, new DiscreteCoordinates(0, 0)));
+            case BULBIZARRE -> getPokemons().add(new Bulbizarre(pocket, Orientation.UP, new DiscreteCoordinates(0, 0)));
+            case NIDOQUEEN -> getPokemons().add(new Nidoqueen(pocket, Orientation.UP, new DiscreteCoordinates(0, 0)));
+            default -> System.out.println("addPokemon() : unknown pokemon name: " + pokemonName);
         }
     }
 

@@ -16,15 +16,14 @@ import ch.epfl.cs107.icmon.gamelogic.fights.PokemonSelectionMenu;
  */
 public class AfterPokemonSelectionFightAction implements Action {
 
-    PokemonSelectionMenu pokemonSelectionMenu;
-    ICMonPlayer player;
-    ICMon.ICMonEventManager eventManager;
-    Pokemon opponentPokemon;
-    ICMonActor actor;
+    private final PokemonSelectionMenu pokemonSelectionMenu;
+    private final ICMonPlayer player;
+    private final ICMon.ICMonEventManager eventManager;
+    private final Pokemon opponentPokemon;
+    private ICMonActor actor;
 
-    boolean hasRealOpponent;
-    Action executeOnFightWin;
-    Action executeOnFightLose;
+    private final Action performOnWin;
+    private final Action performOnLoss;
 
     /**
      * Creates a new action that will be performed after a pokemon selection.
@@ -33,10 +32,10 @@ public class AfterPokemonSelectionFightAction implements Action {
      * @param eventManager the event manager to register the event
      * @param pokemonSelectionMenu the menu that was used to select the pokemon
      * @param opponentPokemon the opponent pokemon
-     * @param executeOnFightWin the action to perform if the player wins the fight
-     * @param executeOnFightLose the action to perform if the player loses the fight
+     * @param performOnWin the action to perform if the player wins the fight
+     * @param performOnLoss the action to perform if the player loses the fight
      */
-    public AfterPokemonSelectionFightAction(ICMonPlayer player, ICMon.ICMonEventManager eventManager, PokemonSelectionMenu pokemonSelectionMenu, Pokemon opponentPokemon, Action executeOnFightWin, Action executeOnFightLose) {
+    public AfterPokemonSelectionFightAction(ICMonPlayer player, ICMon.ICMonEventManager eventManager, PokemonSelectionMenu pokemonSelectionMenu, Pokemon opponentPokemon, Action performOnWin, Action performOnLoss) {
         assert player != null;
         assert eventManager != null;
         assert pokemonSelectionMenu != null;
@@ -45,9 +44,8 @@ public class AfterPokemonSelectionFightAction implements Action {
         this.eventManager = eventManager;
         this.pokemonSelectionMenu = pokemonSelectionMenu;
         this.opponentPokemon = opponentPokemon;
-        this.executeOnFightWin = executeOnFightWin;
-        this.executeOnFightLose = executeOnFightLose;
-        hasRealOpponent = false;
+        this.performOnWin = performOnWin;
+        this.performOnLoss = performOnLoss;
     }
 
     /**
@@ -57,8 +55,8 @@ public class AfterPokemonSelectionFightAction implements Action {
      * @param eventManager the event manager to register the event
      * @param pokemonSelectionMenu the menu that was used to select the pokemon
      * @param opponentPokemon the opponent pokemon
-     * @param executeOnFightWin the action to perform if the player wins the fight
-     * @param executeOnFightLose the action to perform if the player loses the fight
+     * @param performOnWin the action to perform if the player wins the fight
+     * @param performOnLoss the action to perform if the player loses the fight
      * @param actor the actor that will leave the area if the pokemon wins
      */
     public AfterPokemonSelectionFightAction(
@@ -66,11 +64,11 @@ public class AfterPokemonSelectionFightAction implements Action {
             ICMon.ICMonEventManager eventManager,
             PokemonSelectionMenu pokemonSelectionMenu,
             Pokemon opponentPokemon,
-            Action executeOnFightWin,
-            Action executeOnFightLose,
+            Action performOnWin,
+            Action performOnLoss,
             ICMonActor actor
     ) {
-        this(player, eventManager, pokemonSelectionMenu, opponentPokemon, executeOnFightWin, executeOnFightLose);
+        this(player, eventManager, pokemonSelectionMenu, opponentPokemon, performOnWin, performOnLoss);
 
         this.actor = actor;
     }
@@ -85,7 +83,7 @@ public class AfterPokemonSelectionFightAction implements Action {
         player.suspendGameWithFightEvent(pokemonFightEvent);
 
         pokemonFightEvent.onComplete(
-                new PerformOnFightResultAction(ourFight, executeOnFightWin, executeOnFightLose)
+                new PerformOnFightResultAction(ourFight, performOnWin, performOnLoss)
         );
 
         if (actor != null) {

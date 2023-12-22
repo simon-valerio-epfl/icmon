@@ -98,9 +98,10 @@ public final class ICMonFightPokemonSelectionGraphics implements Updatable {
      */
     private GraphicsEntity[] createPokemonSelector (Pokemon pokemon, boolean isSelected, int positionComparedToMiddle) {
         ImageGraphics image = getPokemonGraphics(pokemon, isSelected);
-        GraphicsEntity imageEntity = new GraphicsEntity (new Vector((float) (scaleFactor * (positionComparedToMiddle * 0.5) + scaleFactor * 1.5 / 3 - 2f), scaleFactor / 2 - 4f), image);
+        double position = scaleFactor * (positionComparedToMiddle * 0.5) + scaleFactor * 1.5 / 3;
+        GraphicsEntity imageEntity = new GraphicsEntity (new Vector((float) (position - 2f), scaleFactor / 2 - 4f), image);
         TextGraphics pokemonName = new TextGraphics(pokemon.properties().name(), FONT_SIZE, Color.WHITE, Color.BLACK, 0.0f, isSelected, false, Vector.ZERO, TextAlign.Horizontal.LEFT, TextAlign.Vertical.MIDDLE,  .6f, 1003);
-        GraphicsEntity textEntity = new GraphicsEntity (new Vector((float) (scaleFactor * (positionComparedToMiddle * 0.5) + scaleFactor * 1.5 / 3 - 0.5f), scaleFactor / 2 - 5f), pokemonName);
+        GraphicsEntity textEntity = new GraphicsEntity (new Vector((float) (position - 0.5f), scaleFactor / 2 - 5f), pokemonName);
         return new GraphicsEntity[]{imageEntity, textEntity};
     }
 

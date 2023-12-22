@@ -60,7 +60,7 @@ public final class GamePauseMenu extends PauseMenu {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-        this.menu.update(deltaTime);
+        this.menu.update();
         if (this.menu.choice() != null) {
             this.isSelected = true;
         }

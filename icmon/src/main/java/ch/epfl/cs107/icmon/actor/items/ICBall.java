@@ -4,9 +4,6 @@ import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
-import ch.epfl.cs107.play.window.Canvas;
-
-import java.util.List;
 
 /**
  * Represents a ball that can be picked up by the player.

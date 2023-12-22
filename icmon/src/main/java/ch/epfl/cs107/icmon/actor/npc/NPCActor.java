@@ -10,9 +10,6 @@ import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.math.RegionOfInterest;
 import ch.epfl.cs107.play.window.Canvas;
 
-import java.util.Collections;
-import java.util.List;
-
 /**
  * Represents a NPC (Non-Playable Character) in the game.
  *
@@ -53,10 +50,9 @@ abstract class NPCActor extends ICMonActor {
 
     /**
      * Updates the NPC sprite name
-     * @param name the new name of the sprite
      */
-    protected void setSpriteName(String name) {
-        this.sprite.setName(ResourcePath.getSprite("actors/firework_explosion"));
+    protected void setSpriteName(String spriteName) {
+        this.sprite.setName(spriteName);
     }
 
     @Override

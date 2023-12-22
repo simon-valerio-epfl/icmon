@@ -3,7 +3,6 @@ package ch.epfl.cs107.icmon.gamelogic.events.choco_quest;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.npc.Fabrice;
-import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.gamelogic.events.ICMonEvent;
 
 /**

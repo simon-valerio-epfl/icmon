@@ -2,12 +2,10 @@ package ch.epfl.cs107.icmon.actor.items;
 
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.play.areagame.actor.CollectableAreaEntity;
-import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.engine.actor.RPGSprite;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.window.Canvas;
-import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 
 import java.util.Collections;
 import java.util.List;

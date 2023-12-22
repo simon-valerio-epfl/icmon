@@ -46,10 +46,6 @@ public interface ICMonInteractionVisitor extends AreaInteractionVisitor {
 
     }
 
-    default void interactWith(AreaBehavior.Cell cell, boolean isCellInteraction) {
-
-    }
-
     default void interactWith(Balloon balloon, boolean isCellInteraction) {
 
     }

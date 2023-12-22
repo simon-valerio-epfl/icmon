@@ -1,6 +1,5 @@
 package ch.epfl.cs107.icmon.actor.area_entities;
 
-import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.actor.AreaEntity;
 import ch.epfl.cs107.play.areagame.area.Area;
@@ -9,7 +8,6 @@ import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
 import ch.epfl.cs107.play.window.Canvas;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

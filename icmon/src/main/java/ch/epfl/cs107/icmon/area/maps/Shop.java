@@ -1,9 +1,7 @@
 package ch.epfl.cs107.icmon.area.maps;
 
 import ch.epfl.cs107.icmon.actor.area_entities.Door;
-import ch.epfl.cs107.icmon.actor.npc.Garry;
 import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
-import ch.epfl.cs107.icmon.actor.pokemon.Bulbizarre;
 import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.play.engine.actor.Background;
 import ch.epfl.cs107.play.engine.actor.Foreground;

@@ -5,11 +5,9 @@ import ch.epfl.cs107.icmon.audio.ICMonSoundManager;
 import ch.epfl.cs107.icmon.gamelogic.actions.DelayedAction;
 import ch.epfl.cs107.icmon.gamelogic.actions.LeaveAreaAction;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
+import ch.epfl.cs107.play.io.ResourcePath;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;
 import ch.epfl.cs107.play.math.Orientation;
-
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Represents a firework that will explode after a certain amount of time.
@@ -59,7 +57,7 @@ public final class Firework extends NPCActor {
 
         // explose!
         if (timeLeftBeforeExplosion == 0 && !hasBeenRemoved) {
-            this.setSpriteName("actors/firework_explosion");
+            this.setSpriteName(ResourcePath.getSprite("actors/firework-explosion"));
             soundManager.playOverlappingSound("firework_explosion");
 
             hasBeenRemoved = true;

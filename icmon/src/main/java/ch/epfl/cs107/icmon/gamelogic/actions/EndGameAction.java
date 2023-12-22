@@ -2,8 +2,6 @@ package ch.epfl.cs107.icmon.gamelogic.actions;
 
 import ch.epfl.cs107.icmon.ICMon;
 
-import java.util.concurrent.CompletableFuture;
-
 /**
  * Represents an action that ends the game.
  *

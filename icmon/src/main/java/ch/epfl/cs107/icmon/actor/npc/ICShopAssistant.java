@@ -1,9 +1,6 @@
 package ch.epfl.cs107.icmon.actor.npc;
 
-import ch.epfl.cs107.icmon.actor.ICMonPlayer;
-import ch.epfl.cs107.icmon.actor.items.ICBall;
 import ch.epfl.cs107.icmon.area.ICMonArea;
-import ch.epfl.cs107.icmon.area.ICMonBehavior;
 import ch.epfl.cs107.icmon.handler.ICMonInteractionVisitor;
 import ch.epfl.cs107.play.areagame.handler.AreaInteractionVisitor;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;

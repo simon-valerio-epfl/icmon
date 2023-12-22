@@ -1,6 +1,5 @@
 package ch.epfl.cs107.icmon.actor;
 
-import ch.epfl.cs107.icmon.area.ICMonArea;
 import ch.epfl.cs107.play.areagame.actor.MovableAreaEntity;
 import ch.epfl.cs107.play.areagame.area.Area;
 import ch.epfl.cs107.play.math.DiscreteCoordinates;

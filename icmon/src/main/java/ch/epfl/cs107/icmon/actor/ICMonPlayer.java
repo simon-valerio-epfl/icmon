@@ -166,7 +166,7 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
      * @param dialog the dialog to display, not null
      */
     public void openDialog (Dialog dialog) {
-        assert dialog!=null;
+        assert dialog != null;
         this.dialog = dialog;
         this.inDialog = true;
     }
@@ -176,7 +176,7 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
      * @param pokemonFightEvent the event that will handle the pause, not null
      */
     public void suspendGameWithFightEvent(PokemonFightEvent pokemonFightEvent) {
-        assert pokemonFightEvent!=null;
+        assert pokemonFightEvent != null;
         this.gameState.createSuspendWithEventMessage(pokemonFightEvent);
     }
 
@@ -244,15 +244,13 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
         super.update(deltaTime);
 
         // update dialogs
+        Keyboard keyboard = getOwnerArea().getKeyboard();
         if (this.inDialog) {
-            Keyboard keyboard = getOwnerArea().getKeyboard();
             if (keyboard.get(Keyboard.SPACE).isDown() && !dialogIsLocked){
                 this.dialog.update(deltaTime);
                 dialogIsLocked = true;
                 // wait some time before unlocking the dialog (to prevent double press)
-                CompletableFuture.delayedExecutor(200, TimeUnit.MILLISECONDS).execute(() -> {
-                    dialogIsLocked = false;
-                });
+                CompletableFuture.delayedExecutor(200, TimeUnit.MILLISECONDS).execute(() -> dialogIsLocked = false);
             }
             if (this.dialog.isCompleted()) {
                 this.dialog = null;
@@ -262,7 +260,6 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
 
         // if there is no dialog running, we allow the player to move
         else {
-            Keyboard keyboard = getOwnerArea().getKeyboard();
             moveIfPressed(Orientation.LEFT, keyboard.get(Keyboard.LEFT));
             moveIfPressed(Orientation.UP, keyboard.get(Keyboard.UP));
             moveIfPressed(Orientation.RIGHT, keyboard.get(Keyboard.RIGHT));
@@ -388,12 +385,8 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
                             }
                         }
                     }
-                    case FEET -> {
-                        currentSprite = SpriteType.RUNNING_SPRITE;
-                    }
-                    case SURF, ENTER_WATER -> {
-                        currentSprite = SpriteType.SWIMMING_SPRITE;
-                    }
+                    case FEET -> currentSprite = SpriteType.RUNNING_SPRITE;
+                    case SURF, ENTER_WATER -> currentSprite = SpriteType.SWIMMING_SPRITE;
                     default -> {
                         // do nothing
                     }
@@ -433,7 +426,7 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
                 soundManager.playSound("collect", 100, true);
                 openDialog(new Dialog("collect_gift"));
                 isDiver = true;
-                runningOrientedAnimation = swimmingMaskOrientedAnimation ;
+                runningOrientedAnimation = swimmingMaskOrientedAnimation;
             }
         }
 
@@ -473,8 +466,8 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
         /**
          * Lets the player speak with prof Oaf if he wants so,
          * through a distance interaction
-         * @param profOak
-         * @param isCellInteraction
+         * @param profOak the professor the player shall interact with
+         * @param isCellInteraction true if it's a contact interaction, false otherwise
          */
         @Override
         public void interactWith(ProfOak profOak, boolean isCellInteraction) {

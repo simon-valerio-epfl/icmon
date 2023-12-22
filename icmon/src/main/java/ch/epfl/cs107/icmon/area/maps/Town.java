@@ -1,7 +1,6 @@
 package ch.epfl.cs107.icmon.area.maps;
 
 import ch.epfl.cs107.icmon.actor.area_entities.Door;
-import ch.epfl.cs107.icmon.actor.items.ICGift;
 import ch.epfl.cs107.icmon.actor.items.ICMagicBall;
 import ch.epfl.cs107.icmon.actor.npc.*;
 import ch.epfl.cs107.icmon.area.ICMonArea;

@@ -3,8 +3,6 @@ package ch.epfl.cs107.icmon.gamelogic.events;
 import ch.epfl.cs107.icmon.ICMon;
 import ch.epfl.cs107.icmon.actor.ICMonPlayer;
 import ch.epfl.cs107.icmon.actor.items.ICMonItem;
-import ch.epfl.cs107.icmon.actor.npc.ICShopAssistant;
-import ch.epfl.cs107.play.engine.actor.Dialog;
 
 /**
  * Abstract class that represents an event that is completed when the player collects an item.
