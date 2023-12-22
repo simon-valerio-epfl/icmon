@@ -459,25 +459,22 @@ public final class ICMonPlayer extends ICMonActor implements Interactor, Pokemon
         public void interactWith(Pokemon pokemon, boolean isCellInteraction) {
 
             if (isCellInteraction) {
-                if (isFightStarting) return;
+                //if (isFightStarting) return;
 
                 // this prevents a double interaction with the pokemon
-                isFightStarting = true;
+                //isFightStarting = true;
 
                 // to orientate the player, we have to reset motion
                 resetMotion();
                 orientate(getOrientation().opposite());
                 move(0);
 
-
-
                 // we wait for the player to move, then start the fight
-                CompletableFuture.delayedExecutor((long) ((1/2) * gameState.getFrameDuration()), TimeUnit.MILLISECONDS).execute(() -> {
+                //CompletableFuture.delayedExecutor((long) ((1/2) * gameState.getFrameDuration()), TimeUnit.MILLISECONDS).execute(() -> {
 
-                    fight(pokemon, null, null, null);
-                    isFightStarting = false;
-                    //
-                });
+                fight(pokemon, null, null, null);
+                    //isFightStarting = false;
+                //});
 
             }
         }
