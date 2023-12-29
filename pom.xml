@@ -6,7 +6,7 @@
 
     <groupId>ch.epfl.cs107</groupId>
     <artifactId>mp2</artifactId>
-    <version>2023</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
 
     <properties>
