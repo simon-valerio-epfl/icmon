@@ -7,6 +7,7 @@ import ch.epfl.cs107.play.window.swing.SwingSound;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
+import java.io.BufferedInputStream;
 import java.io.InputStream;
 
 /**
@@ -42,7 +43,8 @@ public final class ICMonSoundManager {
     private SwingSound readSwingSound(String soundName) {
         try {
             InputStream inputStream = fileSystem.read(ResourcePath.getSound(soundName));
-            return new SwingSound(inputStream);
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+            return new SwingSound(bufferedInputStream);
         } catch (Exception e) {
             System.out.println("Can not read sound... " + soundName);
             return null;
