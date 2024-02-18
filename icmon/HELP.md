@@ -68,3 +68,5 @@ La clef du local de Chocopoly (situé au sud-est de la Pokétown) a été dérob
 
 Toutes les images utilisées dans ce projet ont été soit créées à la main (avec l'outil libre Gimp), soit générées par Dall-E (dont les images sont libres de droit).
 Concernant les sons, ceux-ci viennent tous du site Pixabay.
+
+LE DOSSIER `game-engine` A ETE ENTIEREMENT DEVELOPPE PAR L'EQUIPE DU COURS CS-107 DE L'EPFL. LES DROITS SUR CE CODE NE NOUS APPARTIENNENT PAS.
